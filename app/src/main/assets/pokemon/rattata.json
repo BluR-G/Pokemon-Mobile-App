@@ -1,0 +1,32 @@
+{
+  "baseExperienceReward": 51,
+  "baseStateAttack": 56,
+  "baseStatDefense": 35,
+  "baseStateMaxHp": 30,
+  "baseStatSpecialAttack": 25,
+  "baseStatSpecialDefense": 35,
+  "baseStatSpeed": 72,
+  "pokemonNumber": 19,
+  "species": "rattata",
+  "types": [
+    "normal"
+  ],
+  "moves": [
+    {
+      "move": "tackle",
+      "level_learned_at": 1
+    },
+    {
+      "move": "tail-whip",
+      "level_learned_at": 1
+    },
+    {
+      "move": "quick-attack",
+      "level_learned_at": 7
+    },
+    {
+      "move": "hyper-fang",
+      "level_learned_at": 14
+    }
+  ]
+}

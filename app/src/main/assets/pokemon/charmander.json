@@ -1,0 +1,32 @@
+{
+  "baseExperienceReward": 62,
+  "baseStateAttack": 52,
+  "baseStatDefense": 43,
+  "baseStateMaxHp": 39,
+  "baseStatSpecialAttack": 60,
+  "baseStatSpecialDefense": 50,
+  "baseStatSpeed": 65,
+  "pokemonNumber": 4,
+  "species": "charmander",
+  "types": [
+    "fire"
+  ],
+  "moves": [
+    {
+      "move": "growl",
+      "level_learned_at": 1
+    },
+    {
+      "move": "scratch",
+      "level_learned_at": 1
+    },
+    {
+      "move": "ember",
+      "level_learned_at": 9
+    },
+    {
+      "move": "slash",
+      "level_learned_at": 30
+    }
+  ]
+}
