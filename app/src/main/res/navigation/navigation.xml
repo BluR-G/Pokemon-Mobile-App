@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/titleFragment">
+
+    <fragment
+        android:id="@+id/titleFragment"
+        android:name="com.example.pokemon.TitleFragment"
+        android:label="fragment_title"
+        tools:layout="@layout/fragment_title" />
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="com.example.pokemon.IntroFragment"
+        android:label="fragment_intro"
+        tools:layout="@layout/fragment_intro" />
+    <fragment
+        android:id="@+id/pokeCenterFragment"
+        android:name="com.example.pokemon.PokeCenterFragment"
+        android:label="fragment_poke_center"
+        tools:layout="@layout/fragment_poke_center" />
+    <fragment
+        android:id="@+id/mainMenuFragment"
+        android:name="com.example.pokemon.MainMenuFragment"
+        android:label="fragment_main_menu"
+        tools:layout="@layout/fragment_main_menu" />
+    <fragment
+        android:id="@+id/teamFragment"
+        android:name="com.example.pokemon.TeamFragment"
+        android:label="fragment_team"
+        tools:layout="@layout/fragment_team" />
+</navigation>
