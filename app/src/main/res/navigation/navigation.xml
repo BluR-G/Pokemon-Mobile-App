@@ -9,25 +9,48 @@
         android:id="@+id/titleFragment"
         android:name="com.example.pokemon.TitleFragment"
         android:label="fragment_title"
-        tools:layout="@layout/fragment_title" />
+        tools:layout="@layout/fragment_title" >
+        <action
+            android:id="@+id/action_titleFragment_to_introFragment"
+            app:destination="@id/introFragment" />
+    </fragment>
     <fragment
         android:id="@+id/introFragment"
         android:name="com.example.pokemon.IntroFragment"
         android:label="fragment_intro"
-        tools:layout="@layout/fragment_intro" />
+        tools:layout="@layout/fragment_intro" >
+        <action
+            android:id="@+id/action_introFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/pokeCenterFragment"
         android:name="com.example.pokemon.PokeCenterFragment"
         android:label="fragment_poke_center"
-        tools:layout="@layout/fragment_poke_center" />
+        tools:layout="@layout/fragment_poke_center" >
+        <action
+            android:id="@+id/action_pokeCenterFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mainMenuFragment"
         android:name="com.example.pokemon.MainMenuFragment"
         android:label="fragment_main_menu"
-        tools:layout="@layout/fragment_main_menu" />
+        tools:layout="@layout/fragment_main_menu" >
+        <action
+            android:id="@+id/action_mainMenuFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_pokeCenterFragment"
+            app:destination="@id/pokeCenterFragment" />
+    </fragment>
     <fragment
         android:id="@+id/teamFragment"
         android:name="com.example.pokemon.TeamFragment"
         android:label="fragment_team"
-        tools:layout="@layout/fragment_team" />
+        tools:layout="@layout/fragment_team" >
+        <action
+            android:id="@+id/action_teamFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
+    </fragment>
 </navigation>
