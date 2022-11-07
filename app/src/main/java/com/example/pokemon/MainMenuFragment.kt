@@ -28,6 +28,10 @@ class MainMenuFragment : Fragment() {
             val intent = Intent(activity,FightActivity::class.java)
             startActivity(intent)
         }
+        binding.goToWildBattle.setOnClickListener{ view: View ->
+            val intent = Intent(activity,FightActivity::class.java)
+            startActivity(intent)
+        }
 
         return binding.root
     }
