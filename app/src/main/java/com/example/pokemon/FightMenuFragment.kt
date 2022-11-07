@@ -26,6 +26,8 @@ class FightMenuFragment : Fragment()  {
             view.findNavController().navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
         }
         binding.selectRun.setOnClickListener{ view: View ->
+        val intent = Intent(activity, MainActivity::class.java)
+        startActivity(intent)
         }
         return binding.root
     }
