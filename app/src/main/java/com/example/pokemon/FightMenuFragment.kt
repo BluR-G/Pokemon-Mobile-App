@@ -1,5 +1,6 @@
 package com.example.pokemon
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,17 @@ class FightMenuFragment : Fragment()  {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentFightMenuBinding.inflate(layoutInflater)
+        binding.selectFight.setOnClickListener { view : View ->
+            view.findNavController().navigate(R.id.action_fightMenuFragment_to_fightFragment)
+        }
+        binding.selectBag.setOnClickListener { view: View ->
+            view.findNavController().navigate(R.id.action_fightMenuFragment_to_bagFragment)
+        }
+        binding.selectTeam.setOnClickListener { view: View ->
+            view.findNavController().navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
+        }
+        binding.selectRun.setOnClickListener{ view: View ->
+        }
         return binding.root
     }
 }
