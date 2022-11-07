@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".FightActivity"
+    android:orientation="vertical"
+    android:weightSum="2">
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/fightScreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/pokemonFightText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:text="POKEMON FIGHT"
+          />
+    </LinearLayout>
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fightNavHostFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:navGraph="@navigation/fight_navigation"
+        app:defaultNavHost="true"
+        app:layout_constraintTop_toBottomOf="@id/fightScreen" />
+
+</LinearLayout>
