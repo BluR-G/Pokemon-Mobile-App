@@ -1,5 +1,6 @@
 package com.example.pokemon
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,8 +17,9 @@ class IntroFragment : Fragment() {
     ): View? {
         val binding = FragmentIntroBinding.inflate(layoutInflater)
 
-        binding.IntroGoToMainMenu.setOnClickListener { view : View ->
-            view.findNavController().navigate(R.id.action_introFragment_to_mainMenuFragment)
+        binding.IntroGoToMainMenu.setOnClickListener {
+            val intent = Intent(activity, MenuActivity::class.java)
+            startActivity(intent)
         }
 
         return binding.root
