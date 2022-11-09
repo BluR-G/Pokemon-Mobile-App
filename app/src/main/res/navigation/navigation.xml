@@ -3,26 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/titleFragment">
+    app:startDestination="@id/mainMenuFragment">
 
-    <fragment
-        android:id="@+id/titleFragment"
-        android:name="com.example.pokemon.TitleFragment"
-        android:label="fragment_title"
-        tools:layout="@layout/fragment_title" >
-        <action
-            android:id="@+id/action_titleFragment_to_introFragment"
-            app:destination="@id/introFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/introFragment"
-        android:name="com.example.pokemon.IntroFragment"
-        android:label="fragment_intro"
-        tools:layout="@layout/fragment_intro" >
-        <action
-            android:id="@+id/action_introFragment_to_mainMenuFragment"
-            app:destination="@id/mainMenuFragment" />
-    </fragment>
     <fragment
         android:id="@+id/pokeCenterFragment"
         android:name="com.example.pokemon.PokeCenterFragment"
