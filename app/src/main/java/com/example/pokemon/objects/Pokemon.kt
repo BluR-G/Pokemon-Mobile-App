@@ -1,33 +1,40 @@
 package com.example.pokemon.objects
 
+import kotlin.math.floor
+import kotlin.math.pow
+
 class Pokemon {
     private var species: String = ""
     private var name: String = ""
     private var level: Int = 0
     private var experience: Int = 0
     private lateinit var types: Array<String>
-    private var maxHp: Int = 0
     private var currentHp: Int = 0
+
+    private var maxHp: Int = 0
     private var attack: Int = 0
     private var defense: Int = 0
     private var specialAttack: Int = 0
     private var specialDefense: Int = 0
     private var speed: Int = 0
-    private lateinit var moves: ArrayList<Move>
 
-    constructor(species: String, name: String, level: Int, experience: Int, types: Array<String>, maxHp: Int, currentHp: Int, attack: Int, defense: Int, specialAttack: Int, specialDefense: Int, speed: Int, moves: ArrayList<Move>){
+    private lateinit var moves: ArrayList<MoveData>
+
+    constructor(species: String, name: String, level: Int, types: Array<String>, maxHp: Int, attack: Int, defense: Int, specialAttack: Int, specialDefense: Int, speed: Int, moves: ArrayList<MoveData>){
         this.species = species
         this.name = name
         this.level = level
-        this.experience = experience
+        this.experience = level.toDouble().pow(3.0).toInt()
         this.types = types
-        this.maxHp - maxHp
-        this.currentHp = currentHp
-        this.attack = attack
-        this.defense = defense
-        this.specialAttack = specialAttack
-        this.specialDefense = specialDefense
-        this.speed = speed
+        this.currentHp = maxHp
+
+        this.maxHp = maxHp * (50 + level) / 50
+        this.attack = attack * (50 + level) / 50
+        this.defense = defense * (50 + level) / 50
+        this.specialAttack = specialAttack * (50 + level) / 50
+        this.specialDefense = specialDefense * (50 + level) / 50
+        this.speed = speed * (50 + level) / 50
+
         this.moves = moves
     }
 
@@ -42,15 +49,29 @@ class Pokemon {
     fun getLevel(): Int{
         return this.level
     }
-    fun setLevel(level: Int){
+    private fun setLevel(level: Int){
         this.level = level
     }
 
     fun getExperience(): Int{
         return this.experience
     }
-    fun setExperience(experience: Int){
-        this.experience = experience
+    private fun setExperience(){
+        this.experience = this.level.toDouble().pow(3.0).toInt()
+    }
+    fun addExperience(exp: Int){
+        this.experience += exp
+        val newLevel = floor(Math.cbrt(this.experience.toDouble())).toInt()
+        if(newLevel > this.level){
+            setExperience()
+            setMaxHp()
+            setAttack()
+            setDefense()
+            setSpecialAttack()
+            setSpecialDefense()
+            setSpeed()
+            setLevel(newLevel)
+        }
     }
 
     fun getTypes(): Array<String>{
@@ -60,8 +81,8 @@ class Pokemon {
     fun getMaxHp(): Int{
         return this.maxHp
     }
-    fun setMaxHp(maxHp: Int){
-        this.maxHp = maxHp
+    private fun setMaxHp(){
+        this.maxHp = this.maxHp + (this.maxHp / (50 + this.level))
     }
 
     fun getCurrentHp(): Int{
@@ -74,43 +95,60 @@ class Pokemon {
     fun getAttack(): Int{
         return this.attack
     }
-    fun setAttack(attack: Int){
-        this.attack = attack
+    private fun setAttack(){
+        this.attack = this.attack + (this.attack / (50 + this.level))
     }
 
     fun getDefense(): Int{
         return this.defense
     }
-    fun setDefense(defense: Int){
-        this.defense = defense
+    private fun setDefense(){
+        this.defense = this.defense + (this.defense / (50 + this.level))
     }
 
     fun getSpecialAttack(): Int{
         return this.specialAttack
     }
-    fun setSpecialAttack(specialAttack: Int){
-       this.specialAttack = specialAttack
+    private fun setSpecialAttack(){
+       this.specialAttack = this.specialAttack + (this.specialAttack / (50 + this.level))
     }
 
     fun getSpecialDefense(): Int{
         return this.specialDefense
     }
-    fun setSpecialDefense(specialDefense: Int){
-        this.specialDefense = specialDefense
+    private fun setSpecialDefense(){
+        this.specialDefense = this.specialDefense + (this.specialDefense / (50 + this.level))
     }
 
     fun getSpeed(): Int{
         return this.speed
     }
-    fun setSpeed(speed: Int){
-        this.speed = speed
+    private fun setSpeed(){
+        this.speed = this.speed + (this.speed / (50 + this.level))
     }
 
-    fun getMoves(): ArrayList<Move>{
+    fun getMoves(): ArrayList<MoveData>{
         return this.moves
     }
-    fun addMove(move: Move){
-        this.moves.add(move)
+    fun addMove(move: MoveData): Boolean{
+        if(this.moves.size < 4){
+            this.moves.add(move)
+            return true
+        }
+        return false
     }
-
+    fun addMoves(moves: Array<MoveData>): Boolean{
+        this.moves.clear()
+        if (moves.size <= 4){
+            for (move in moves){
+                if (move.level_learned_at <= this.level){
+                    this.moves.add(move)
+                }else{
+                    return false
+                }
+            }
+            return true
+        }
+        return false
+    }
 }
