@@ -1,5 +1,6 @@
 package com.example.pokemon.objects
 
+import android.graphics.drawable.Drawable
 import kotlin.math.floor
 import kotlin.math.pow
 
@@ -19,8 +20,9 @@ class Pokemon {
     private var speed: Int = 0
 
     private lateinit var moves: ArrayList<MoveData>
+    private lateinit var images: Array<Drawable>
 
-    constructor(species: String, name: String, level: Int, types: Array<String>, maxHp: Int, attack: Int, defense: Int, specialAttack: Int, specialDefense: Int, speed: Int, moves: ArrayList<MoveData>){
+    constructor(species: String, name: String, level: Int, types: Array<String>, maxHp: Int, attack: Int, defense: Int, specialAttack: Int, specialDefense: Int, speed: Int, moves: ArrayList<MoveData>, images: Array<Drawable>){
         this.species = species
         this.name = name
         this.level = level
@@ -36,6 +38,7 @@ class Pokemon {
         this.speed = speed * (50 + level) / 50
 
         this.moves = moves
+        this.images = images
     }
 
     fun getSpecies(): String{
@@ -150,5 +153,9 @@ class Pokemon {
             return true
         }
         return false
+    }
+
+    fun getImages(): Array<Drawable>{
+        return this.images
     }
 }
