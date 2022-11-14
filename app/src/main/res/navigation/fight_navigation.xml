@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fight_navigation"
+    app:startDestination="@id/fightMenuFragment">
+    <fragment
+        android:id="@+id/fightMenuFragment"
+        android:name="com.example.pokemon.FightMenuFragment"
+        android:label="fragment_fight_menu"
+        tools:layout="@layout/fragment_fight_menu" >
+        <action
+            android:id="@+id/action_fightMenuFragment_to_fightFragment"
+            app:destination="@id/fightFragment" />
+        <action
+            android:id="@+id/action_fightMenuFragment_to_fightPokemonTeamFragment"
+            app:destination="@id/fightPokemonTeamFragment" />
+        <action
+            android:id="@+id/action_fightMenuFragment_to_bagFragment"
+            app:destination="@id/bagFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fightFragment"
+        android:name="com.example.pokemon.FightFragment"
+        android:label="fragment_fight"
+        tools:layout="@layout/fragment_fight" >
+        <action
+            android:id="@+id/action_fightFragment_to_fightMenuFragment"
+            app:destination="@id/fightMenuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bagFragment"
+        android:name="com.example.pokemon.BagFragment"
+        android:label="fragment_bag"
+        tools:layout="@layout/fragment_bag" >
+        <action
+            android:id="@+id/action_bagFragment_to_fightMenuFragment"
+            app:destination="@id/fightMenuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fightPokemonTeamFragment"
+        android:name="com.example.pokemon.FightPokemonTeamFragment"
+        android:label="fragment_fight_pokemon_team"
+        tools:layout="@layout/fragment_fight_pokemon_team" >
+        <action
+            android:id="@+id/action_fightPokemonTeamFragment_to_fightMenuFragment"
+            app:destination="@id/fightMenuFragment" />
+    </fragment>
+</navigation>

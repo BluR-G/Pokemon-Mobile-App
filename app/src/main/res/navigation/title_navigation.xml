@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/title_navigation"
+    app:startDestination="@id/titleFragment">
+    <fragment
+        android:id="@+id/titleFragment"
+        android:name="com.example.pokemon.TitleFragment"
+        android:label="fragment_title"
+        tools:layout="@layout/fragment_title" >
+        <action
+            android:id="@+id/action_titleFragment_to_introFragment"
+            app:destination="@id/introFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="com.example.pokemon.IntroFragment"
+        android:label="fragment_intro"
+        tools:layout="@layout/fragment_intro" />
+</navigation>
