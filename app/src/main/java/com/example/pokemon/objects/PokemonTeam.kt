@@ -3,6 +3,9 @@ package com.example.pokemon.objects
 class PokemonTeam {
     private lateinit var pokemons: ArrayList<Pokemon>
 
+    constructor(){
+        pokemons = ArrayList<Pokemon>()
+    }
     fun addPokemonToTeam(pokemon: Pokemon): Boolean{
         if(pokemons.size < 6){
             this.pokemons.add(pokemon)
@@ -27,5 +30,9 @@ class PokemonTeam {
         for(pokemon in pokemons){
             pokemon.setCurrentHp(pokemon.getMaxHp())
         }
+    }
+
+    fun getPokemonTeam() : ArrayList<Pokemon>{
+        return pokemons
     }
 }
