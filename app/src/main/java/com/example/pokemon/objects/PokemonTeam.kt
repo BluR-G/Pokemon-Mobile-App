@@ -28,4 +28,8 @@ class PokemonTeam {
             pokemon.setCurrentHp(pokemon.getMaxHp())
         }
     }
+
+    fun getSize(): Int{
+        return this.pokemons.size
+    }
 }
