@@ -33,7 +33,7 @@ class PokemonTeam {
     fun getSize(): Int {
         return this.pokemons.size
     }
-    
+
     fun getPokemon(index: Int): Pokemon {
         if (index < pokemons.size){
             return pokemons[index]

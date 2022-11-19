@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pokemon.objects.PokemonCollection
 import com.example.pokemon.objects.PokemonTeam
 
 class PokemonTeamMenuAdaptor(team: PokemonTeam) : RecyclerView.Adapter<PokemonTeamMenuAdaptor.PokemonViewHolder>(){
@@ -23,6 +22,7 @@ class PokemonTeamMenuAdaptor(team: PokemonTeam) : RecyclerView.Adapter<PokemonTe
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
+        holder.pokemonName.text = pokemonTeam.getPokemon(position).getName()
     }
 
     override fun getItemCount(): Int = pokemonTeam.getSize()
