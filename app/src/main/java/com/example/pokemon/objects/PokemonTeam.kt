@@ -1,7 +1,7 @@
 package com.example.pokemon.objects
 
 class PokemonTeam {
-    private var pokemons: ArrayList<Pokemon> = ArrayList<Pokemon>()
+    private var pokemons: ArrayList<Pokemon> = ArrayList()
 
     fun addPokemonToTeam(pokemon: Pokemon): Boolean{
         if(pokemons.size < 6){

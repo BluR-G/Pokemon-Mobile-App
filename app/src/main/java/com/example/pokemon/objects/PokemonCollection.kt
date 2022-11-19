@@ -3,7 +3,7 @@ package com.example.pokemon.objects
 import android.widget.Toast
 
 class PokemonCollection {
-    private lateinit var pokemons: ArrayList<Pokemon>
+    private var pokemons: ArrayList<Pokemon> = ArrayList()
 
     fun addPokemonToCollection(pokemon: Pokemon){
             this.pokemons.add(pokemon)
@@ -23,5 +23,18 @@ class PokemonCollection {
         pokemonTeam.removePokemonFromTeam(pokemonInTeam)
         addPokemonToCollection(pokemonInTeam)
         pokemonTeam.addPokemonToTeam(pokemonInCollection)
+    }
+
+    fun getSize(): Int {
+        return this.pokemons.size
+    }
+
+    fun getPokemon(index: Int): Pokemon {
+        if (index < pokemons.size){
+            return pokemons[index]
+        }
+        // if index incorrect, returns the last pokemon
+        return pokemons[pokemons.size - 1]
+
     }
 }

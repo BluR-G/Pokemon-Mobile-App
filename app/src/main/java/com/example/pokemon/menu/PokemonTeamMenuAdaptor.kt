@@ -1,10 +1,11 @@
-package com.example.pokemon
+package com.example.pokemon.menu
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pokemon.R
 import com.example.pokemon.objects.PokemonTeam
 
 class PokemonTeamMenuAdaptor(team: PokemonTeam) : RecyclerView.Adapter<PokemonTeamMenuAdaptor.PokemonViewHolder>(){
