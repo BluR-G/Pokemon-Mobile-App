@@ -31,9 +31,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="415dp"
-        android:layout_height="266dp"
-        android:layout_marginBottom="336dp"
+        android:layout_width="389dp"
+        android:layout_height="269dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="324dp"
         android:src="@drawable/pokemoncenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

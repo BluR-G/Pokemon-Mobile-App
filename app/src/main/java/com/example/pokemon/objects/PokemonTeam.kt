@@ -28,4 +28,12 @@ class PokemonTeam {
             pokemon.setCurrentHp(pokemon.getMaxHp())
         }
     }
+
+    fun getPokemon(index: Int): Pokemon {
+        if (index < pokemons.size){
+            return pokemons[index]
+        }
+        // if index incorrect, returns the last pokemon
+        return pokemons[pokemons.size - 1]
+    }
 }

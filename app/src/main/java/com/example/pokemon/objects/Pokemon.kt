@@ -28,9 +28,8 @@ class Pokemon {
         this.level = level
         this.experience = level.toDouble().pow(3.0).toInt()
         this.types = types
-        this.currentHp = maxHp
-
         this.maxHp = maxHp * (50 + level) / 50
+        this.currentHp = this.maxHp
         this.attack = attack * (50 + level) / 50
         this.defense = defense * (50 + level) / 50
         this.specialAttack = specialAttack * (50 + level) / 50
