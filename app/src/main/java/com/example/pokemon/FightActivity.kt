@@ -15,18 +15,21 @@ import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonTeam
 
 class FightActivity : AppCompatActivity(){
-    lateinit var binding: ActivityFightBinding
+    private lateinit var binding: ActivityFightBinding
+    private lateinit var currentPokemon : Pokemon
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFightBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val team = initializeTeam()
-        val adapter = FightPokemonTeamAdapter(team, this)
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        Log.d("recycler", recyclerView.toString())
-        recyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
-        recyclerView.adapter = adapter
+        currentPokemon = team.getPokemonTeam()[0]
+        binding.pokemonFightText.text=currentPokemon.getName()
+//        val adapter = FightPokemonTeamAdapter(team, this)
+//        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+//        Log.d("recycler", recyclerView.toString())
+//        recyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+//        recyclerView.adapter = adapter
 
     }
 
@@ -39,5 +42,14 @@ class FightActivity : AppCompatActivity(){
         pokemonTeam.addPokemonToTeam(Pokemon("charizard","charizard",36,types,
             200,30,40,100,200,100, moves, images))
         return pokemonTeam
+    }
+    public fun getBinding() : ActivityFightBinding{
+        return this.binding;
+    }
+    public fun getCurrentPokemon() : Pokemon{
+        return this.currentPokemon;
+    }
+    public fun setCurrentPokemon(pokemon : Pokemon){
+        this.currentPokemon = pokemon;
     }
 }

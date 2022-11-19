@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_bagFragment_to_fightMenuFragment"
             app:destination="@id/fightMenuFragment" />
+        <action
+            android:id="@+id/action_bagFragment_to_fightPokemonTeamFragment"
+            app:destination="@id/fightPokemonTeamFragment" />
     </fragment>
     <fragment
         android:id="@+id/fightPokemonTeamFragment"

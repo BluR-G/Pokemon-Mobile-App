@@ -8,7 +8,6 @@
     android:orientation="vertical"
     android:weightSum="2">
 
-
     <LinearLayout
         android:id="@+id/fightScreen"
         android:layout_width="match_parent"
@@ -19,11 +18,11 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <TextView
             android:id="@+id/pokemonFightText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="40dp"
             android:layout_marginTop="72dp"
             android:text="POKEMON FIGHT" />
     </LinearLayout>
@@ -37,6 +36,9 @@
         app:defaultNavHost="true"
         app:layout_constraintTop_toBottomOf="@id/fightScreen"
         app:navGraph="@navigation/fight_navigation"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp">
+
+    </androidx.fragment.app.FragmentContainerView>
+
 
 </LinearLayout>

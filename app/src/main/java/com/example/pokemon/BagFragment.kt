@@ -19,6 +19,12 @@ class BagFragment : Fragment() {
         binding.bagGoToFightMenu.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.action_bagFragment_to_fightMenuFragment)
         }
+        binding.pokeball.setOnClickListener { view: View ->
+            view.findNavController().navigate(R.id.action_bagFragment_to_fightMenuFragment)
+        }
+        binding.potion.setOnClickListener { view: View ->
+            view.findNavController().navigate(R.id.action_bagFragment_to_fightPokemonTeamFragment)
+        }
         return binding.root
     }
 }
