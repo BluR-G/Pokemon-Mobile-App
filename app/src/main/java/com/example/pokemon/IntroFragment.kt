@@ -1,4 +1,4 @@
-package com.example.pokemon.fragments
+package com.example.pokemon
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.pokemon.activities.MenuActivity
 import com.example.pokemon.databinding.FragmentIntroBinding
 
 class IntroFragment : Fragment() {

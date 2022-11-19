@@ -1,4 +1,4 @@
-package com.example.pokemon.fragments
+package com.example.pokemon.fight
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,9 +9,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemon.R
-import com.example.pokemon.activities.FightActivity
-import com.example.pokemon.adapters.FightPokemonTeamAdapter
-import com.example.pokemon.adapters.PokemonMovesAdapter
 import com.example.pokemon.databinding.FragmentFightBinding
 
 class FightFragment : Fragment()  {

@@ -1,4 +1,4 @@
-package com.example.pokemon.adapters
+package com.example.pokemon.fight
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemon.R
-import com.example.pokemon.activities.FightActivity
 import com.example.pokemon.objects.Pokemon
 
 class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Context): RecyclerView.Adapter<PokemonMovesAdapter.MovesViewHolder>() {

@@ -6,7 +6,7 @@
     app:startDestination="@id/fightMenuFragment">
     <fragment
         android:id="@+id/fightMenuFragment"
-        android:name="com.example.pokemon.fragments.FightMenuFragment"
+        android:name="com.example.pokemon.fight.FightMenuFragment"
         android:label="fragment_fight_menu"
         tools:layout="@layout/fragment_fight_menu" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/fightFragment"
-        android:name="com.example.pokemon.fragments.FightFragment"
+        android:name="com.example.pokemon.fight.FightFragment"
         android:label="fragment_fight"
         tools:layout="@layout/fragment_fight" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/bagFragment"
-        android:name="com.example.pokemon.fragments.BagFragment"
+        android:name="com.example.pokemon.fight.BagFragment"
         android:label="fragment_bag"
         tools:layout="@layout/fragment_bag" >
         <action
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/fightPokemonTeamFragment"
-        android:name="com.example.pokemon.fragments.FightPokemonTeamFragment"
+        android:name="com.example.pokemon.fight.FightPokemonTeamFragment"
         android:label="fragment_fight_pokemon_team"
         tools:layout="@layout/fragment_fight_pokemon_team" >
         <action

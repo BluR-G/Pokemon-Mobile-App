@@ -1,6 +1,5 @@
-package com.example.pokemon.fragments
+package com.example.pokemon.fight
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pokemon.adapters.FightPokemonTeamAdapter
 import com.example.pokemon.R
-import com.example.pokemon.activities.FightActivity
 import com.example.pokemon.databinding.FragmentFightPokemonTeamBinding
-import com.example.pokemon.objects.MoveData
-import com.example.pokemon.objects.Pokemon
-import com.example.pokemon.objects.PokemonTeam
 
 
 class FightPokemonTeamFragment : Fragment()  {

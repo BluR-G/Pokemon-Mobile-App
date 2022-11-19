@@ -1,4 +1,4 @@
-package com.example.pokemon.adapters
+package com.example.pokemon.fight
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,7 +10,6 @@ import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemon.R
-import com.example.pokemon.activities.FightActivity
 import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonTeam
 
@@ -55,19 +54,20 @@ class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val
 
         val previousFragmentId = view.findNavController().previousBackStackEntry?.destination?.id
         if (previousFragmentId == potionFragmentId) {
-            healPokemon(pokemon)
+            healPokemon(view, pokemon)
         } else if (previousFragmentId == teamFragmentId) {
             swapPokemon(view, pokemon)
         }
     }
 
-    private fun healPokemon(pokemon: Pokemon) {
+    private fun healPokemon(view : View, pokemon: Pokemon) {
         val name = pokemon.getName()
         Log.d("fragmentcheck", "heal $name")
         Log.d("heal", "before: $name ${pokemon.getCurrentHp()}")
         pokemon.setCurrentHp(pokemon.getCurrentHp() + 20)
         notifyDataSetChanged()
         Log.d("heal", "after: $name ${pokemon.getCurrentHp()}")
+        view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
     }
     private fun swapPokemon(view: View, pokemon: Pokemon){
         if(fightActivity.getCurrentPokemon() != pokemon){

@@ -1,4 +1,4 @@
-package com.example.pokemon.activities
+package com.example.pokemon.fight
 
 import android.app.Activity
 import android.graphics.drawable.Drawable
