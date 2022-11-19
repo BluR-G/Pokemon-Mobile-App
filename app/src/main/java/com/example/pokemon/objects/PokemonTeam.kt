@@ -29,7 +29,17 @@ class PokemonTeam {
         }
     }
 
-    fun getSize(): Int{
+
+    fun getSize(): Int {
         return this.pokemons.size
+    }
+    
+    fun getPokemon(index: Int): Pokemon {
+        if (index < pokemons.size){
+            return pokemons[index]
+        }
+        // if index incorrect, returns the last pokemon
+        return pokemons[pokemons.size - 1]
+
     }
 }

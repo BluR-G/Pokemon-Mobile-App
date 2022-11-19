@@ -3,6 +3,7 @@ package com.example.pokemon
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.pokemon.databinding.ActivityMenuBinding
 import com.example.pokemon.objects.*
 
