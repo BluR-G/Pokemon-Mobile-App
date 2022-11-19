@@ -24,6 +24,9 @@ class PokeCenterFragment : Fragment() {
         menuActivity = context as MenuActivity
         var pokemonTeam = menuActivity.getTeam()
 
+        binding.healButton.setOnClickListener {
+            pokemonTeam.healAllPokemons()
+        }
         return binding.root
     }
 }

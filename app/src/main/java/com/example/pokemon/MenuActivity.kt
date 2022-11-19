@@ -50,5 +50,9 @@ class MenuActivity : AppCompatActivity() {
         return this.pokemonTeam
     }
 
+    public fun getCollect() : PokemonCollection {
+        return this.pokemonCollection
+    }
+
 
 }
