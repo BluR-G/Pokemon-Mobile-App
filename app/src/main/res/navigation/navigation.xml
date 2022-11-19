@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/pokeCenterFragment"
-        android:name="com.example.pokemon.PokeCenterFragment"
+        android:name="com.example.pokemon.fragments.PokeCenterFragment"
         android:label="fragment_poke_center"
         tools:layout="@layout/fragment_poke_center" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainMenuFragment"
-        android:name="com.example.pokemon.MainMenuFragment"
+        android:name="com.example.pokemon.fragments.MainMenuFragment"
         android:label="fragment_main_menu"
         tools:layout="@layout/fragment_main_menu" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/teamFragment"
-        android:name="com.example.pokemon.TeamFragment"
+        android:name="com.example.pokemon.fragments.TeamFragment"
         android:label="fragment_team"
         tools:layout="@layout/fragment_team" >
         <action

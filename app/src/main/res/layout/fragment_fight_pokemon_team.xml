@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FightPokemonTeamFragment"
+    tools:context=".fragments.FightPokemonTeamFragment"
     android:background="@color/gray">
 
     <!-- TODO: Update blank fragment layout -->

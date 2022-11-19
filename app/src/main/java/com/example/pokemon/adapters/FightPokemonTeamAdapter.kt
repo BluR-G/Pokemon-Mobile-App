@@ -1,4 +1,4 @@
-package com.example.pokemon
+package com.example.pokemon.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,9 +9,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pokemon.R
+import com.example.pokemon.activities.FightActivity
 import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonTeam
-import com.google.android.material.internal.ContextUtils.getActivity
 
 class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val context: Context) : RecyclerView.Adapter<FightPokemonTeamAdapter.TeamViewHolder>() {
     //Define viewholder for managing roll textViews
@@ -56,7 +57,7 @@ class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val
         if (previousFragmentId == potionFragmentId) {
             healPokemon(pokemon)
         } else if (previousFragmentId == teamFragmentId) {
-            swapPokemon(pokemon)
+            swapPokemon(view, pokemon)
         }
     }
 
@@ -68,12 +69,13 @@ class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val
         notifyDataSetChanged()
         Log.d("heal", "after: $name ${pokemon.getCurrentHp()}")
     }
-    private fun swapPokemon(pokemon: Pokemon){
+    private fun swapPokemon(view: View, pokemon: Pokemon){
         if(fightActivity.getCurrentPokemon() != pokemon){
             Log.d("swap", pokemon.getName())
             fightActivity.setCurrentPokemon(pokemon)
             Log.d("swap", fightActivity.getCurrentPokemon().getName())
             fightActivity.getBinding().pokemonFightText.text = pokemon.getName()
+            view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
         } else {
             Log.d("swap", "cannot swap")
         }

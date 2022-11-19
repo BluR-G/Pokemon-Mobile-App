@@ -1,4 +1,4 @@
-package com.example.pokemon
+package com.example.pokemon.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.example.pokemon.R
+import com.example.pokemon.activities.MenuActivity
 import com.example.pokemon.databinding.FragmentFightMenuBinding
 
 

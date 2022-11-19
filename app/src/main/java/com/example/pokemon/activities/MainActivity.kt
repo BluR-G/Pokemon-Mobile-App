@@ -1,17 +1,16 @@
-package com.example.pokemon
+package com.example.pokemon.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.pokemon.databinding.ActivityMainBinding
-import com.example.pokemon.databinding.ActivityMenuBinding
 
-class MenuActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMenuBinding
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMenuBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 }
