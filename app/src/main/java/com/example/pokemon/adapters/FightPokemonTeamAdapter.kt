@@ -71,15 +71,12 @@ class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val
     }
     private fun swapPokemon(view: View, pokemon: Pokemon){
         if(fightActivity.getCurrentPokemon() != pokemon){
-            Log.d("swap", pokemon.getName())
             fightActivity.setCurrentPokemon(pokemon)
-            Log.d("swap", fightActivity.getCurrentPokemon().getName())
             fightActivity.getBinding().pokemonFightText.text = pokemon.getName()
             view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
         } else {
             Log.d("swap", "cannot swap")
         }
-
     }
 
     override fun getItemCount(): Int {

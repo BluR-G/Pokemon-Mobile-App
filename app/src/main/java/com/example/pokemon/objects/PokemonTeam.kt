@@ -1,6 +1,8 @@
 package com.example.pokemon.objects
 
-class PokemonTeam {
+import java.io.Serializable
+
+class PokemonTeam : Serializable {
     private lateinit var pokemons: ArrayList<Pokemon>
 
     constructor(){

@@ -19,8 +19,6 @@ import com.example.pokemon.objects.PokemonTeam
 
 
 class FightPokemonTeamFragment : Fragment()  {
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<FightPokemonTeamAdapter.TeamViewHolder>? = null
     lateinit var fightActivity: FightActivity
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
