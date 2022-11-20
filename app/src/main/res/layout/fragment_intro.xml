@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     tools:context=".IntroFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -15,6 +16,15 @@
         android:layout_height="wrap_content"
         android:src="@drawable/pokemon_logo"
         android:layout_marginHorizontal="50dp"
+        />
+
+    <TextView
+        android:id="@+id/introText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/intro_text"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
         />
 
 <!--    <TextView-->
