@@ -46,7 +46,7 @@ class TeamFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.pokemon_team_recycler_view)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            recyclerView.adapter = PokemonTeamAdaptor(pokemonTeam)
+            recyclerView.adapter = PokemonTeamAdapter(pokemonTeam, view.context)
         }
     }
 }

@@ -33,7 +33,7 @@ class TeamRemovePokemonFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.remove_pokemon_recycler_view)
         recyclerView.apply {
             layoutManager = GridLayoutManager(activity, 3)
-            recyclerView.adapter = PokemonTeamAdaptor(pokemonTeam)
+            recyclerView.adapter = PokemonTeamAdapter(pokemonTeam, view.context)
         }
     }
 }
