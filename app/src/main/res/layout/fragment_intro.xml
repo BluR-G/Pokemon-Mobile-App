@@ -131,31 +131,21 @@
         android:hint="@string/nickname_input_hint"
         />
 
+    <TextView
+        android:id="@+id/readyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ready_text"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
     <Button
         android:id="@+id/IntroGoToMainMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ready"
         />
-<!--    <TextView-->
-<!--        android:id="@+id/textView2"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="120dp"-->
-<!--        android:text="intro"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/IntroGoToMainMenu"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Go to main menu"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/textView2"-->
-<!--        app:layout_constraintVertical_bias="0.119" />-->
 
 </LinearLayout>
