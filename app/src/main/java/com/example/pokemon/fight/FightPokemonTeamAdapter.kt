@@ -37,25 +37,21 @@ class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val
         val level = pokemon.getLevel()
         val currentHp = pokemon.getCurrentHp()
         val maxHp = pokemon.getMaxHp()
-        val potionFragmentId = context.getResources().getInteger(R.integer.potionFragmentId)
-        val teamFragmentId = context.getResources().getInteger(R.integer.teamFragmentId)
         holder.pokemonButton.text = "${name} Lv.${level} HP:${currentHp}/${maxHp}"
         holder.pokemonButton.setOnClickListener{ view: View ->
-            handleEvent(view, pokemon,potionFragmentId, teamFragmentId)
+            handleEvent(view, pokemon)
         }
     }
 
+    @SuppressLint("RestrictedApi")
     private fun handleEvent(
         view: View,
-        pokemon: Pokemon,
-        potionFragmentId: Int,
-        teamFragmentId: Int
+        pokemon: Pokemon
     ) {
-
-        val previousFragmentId = view.findNavController().previousBackStackEntry?.destination?.id
-        if (previousFragmentId == potionFragmentId) {
+        val previousFragmentId = view.findNavController().previousBackStackEntry?.destination?.displayName
+        if (previousFragmentId == context.getString(R.string.teamFightFragment)) {
             healPokemon(view, pokemon)
-        } else if (previousFragmentId == teamFragmentId) {
+        } else if (previousFragmentId == context.getString(R.string.potionFragment)) {
             swapPokemon(view, pokemon)
         }
     }
@@ -70,6 +66,7 @@ class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val
         view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
     }
     private fun swapPokemon(view: View, pokemon: Pokemon){
+        Log.d("testing", "reached")
         if(fightActivity.getCurrentPokemon() != pokemon){
             fightActivity.setCurrentPokemon(pokemon)
             fightActivity.getBinding().pokemonFightText.text = pokemon.getName()
