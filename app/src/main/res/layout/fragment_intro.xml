@@ -79,14 +79,44 @@
             />
     </LinearLayout>
 
-
-
-        <Button
-            android:id="@+id/IntroGoToMainMenu"
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
+        >
+        <RadioButton
+            android:id="@+id/bulbasaurRBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ready"
+            android:background="@android:color/transparent"
+            android:minWidth="0dp"
+            android:layout_marginHorizontal="30dp"
             />
+        <RadioButton
+            android:id="@+id/charmanderRBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:minWidth="0dp"
+            android:layout_marginHorizontal="30dp"
+            />
+        <RadioButton
+            android:id="@+id/squirtleRBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:minWidth="0dp"
+            android:layout_marginHorizontal="30dp"
+            />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/IntroGoToMainMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ready"
+        />
 <!--    <TextView-->
 <!--        android:id="@+id/textView2"-->
 <!--        android:layout_width="wrap_content"-->
