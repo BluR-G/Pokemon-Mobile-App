@@ -5,8 +5,8 @@
     <string name="intro_text">Hello there!\nWelcome to the world of Pokemon!\nThis world is inhabited by creatures called Pokemon.\nFor some people, Pokemon are pets. Some study them.\nOthers use them for fights.</string>
     <string name="username_text">What is your name?</string>
     <string name="starter_text">Choose your starter Pokemon.</string>
-    <string name="nickname_text">Do you want to give a nickname to your Pokemon?</string>
-    <string name="nickname_input_hint">Pokemon nickname is optional</string>
+    <string name="nickname_text">What is your Pokemon\'s nickname?</string>
+    <string name="nickname_input_hint">Leave this blank for default name</string>
     <string name="ready_text">Your very own Pokemon legend is about to unfold.\nA world of dreams and adventures with Pokemon awaits!\nAre you ready?</string>
     <string name="ready">Ready</string>
 </resources>
