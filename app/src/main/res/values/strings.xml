@@ -9,4 +9,5 @@
     <string name="nickname_input_hint">Leave this blank for default name</string>
     <string name="ready_text">Your very own Pokemon legend is about to unfold.\nA world of dreams and adventures with Pokemon awaits!\nAre you ready?</string>
     <string name="ready">Ready</string>
+    <string name="new_game">New Game</string>
 </resources>
