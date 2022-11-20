@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_teamFragment_to_viewCollectionFragment"
             app:destination="@id/viewCollectionFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_changeTeamOrderFragment"
+            app:destination="@id/changeTeamOrderFragment" />
     </fragment>
     <fragment
         android:id="@+id/teamAddPokemonFragment"
@@ -69,6 +72,15 @@
         tools:layout="@layout/fragment_view_collection" >
         <action
             android:id="@+id/action_viewCollectionFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeTeamOrderFragment"
+        android:name="com.example.pokemon.menu.ChangeTeamOrderFragment"
+        android:label="fragment_change_team_order"
+        tools:layout="@layout/fragment_change_team_order" >
+        <action
+            android:id="@+id/action_changeTeamOrderFragment_to_teamFragment"
             app:destination="@id/teamFragment" />
     </fragment>
 </navigation>

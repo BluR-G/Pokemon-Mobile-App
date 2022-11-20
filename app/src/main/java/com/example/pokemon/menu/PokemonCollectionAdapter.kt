@@ -18,7 +18,7 @@ class CollectionAdaptor(collection : PokemonCollection) : RecyclerView.Adapter<C
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
         val layout = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.pokemon_collection_adaptor, parent, false)
+            .inflate(R.layout.pokemon_collection_adapter, parent, false)
         return PokemonViewHolder(layout)
     }
 

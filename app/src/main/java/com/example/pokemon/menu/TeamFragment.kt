@@ -32,6 +32,9 @@ class TeamFragment : Fragment() {
         binding.viewCollection.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_viewCollectionFragment)
         }
+        binding.changeOrder.setOnClickListener { view : View ->
+            view.findNavController().navigate(R.id.action_teamFragment_to_changeTeamOrderFragment)
+        }
         menuActivity = context as MenuActivity
 
         return binding.root
