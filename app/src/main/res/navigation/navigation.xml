@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_teamFragment_to_teamRemovePokemonFragment"
             app:destination="@id/teamRemovePokemonFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_viewCollectionFragment"
+            app:destination="@id/viewCollectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/teamAddPokemonFragment"
@@ -57,6 +60,15 @@
         tools:layout="@layout/fragment_team_remove_pokemon" >
         <action
             android:id="@+id/action_teamRemovePokemonFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewCollectionFragment"
+        android:name="com.example.pokemon.menu.ViewCollectionFragment"
+        android:label="fragment_view_collection"
+        tools:layout="@layout/fragment_view_collection" >
+        <action
+            android:id="@+id/action_viewCollectionFragment_to_teamFragment"
             app:destination="@id/teamFragment" />
     </fragment>
 </navigation>

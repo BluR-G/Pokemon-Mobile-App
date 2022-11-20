@@ -29,6 +29,9 @@ class TeamFragment : Fragment() {
         binding.removeTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_teamRemovePokemonFragment)
         }
+        binding.viewCollection.setOnClickListener { view : View ->
+            view.findNavController().navigate(R.id.action_teamFragment_to_viewCollectionFragment)
+        }
         menuActivity = context as MenuActivity
 
         return binding.root

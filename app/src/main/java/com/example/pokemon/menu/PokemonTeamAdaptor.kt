@@ -23,6 +23,7 @@ class PokemonTeamAdaptor(team: PokemonTeam) : RecyclerView.Adapter<PokemonTeamAd
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
+        //TODO: create click event depending where the adapter is being used from
         holder.pokemonName.text = pokemonTeam.getPokemon(position).getName()
     }
 
