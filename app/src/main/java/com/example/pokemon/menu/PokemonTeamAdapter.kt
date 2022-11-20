@@ -1,7 +1,6 @@
 package com.example.pokemon.menu
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import com.example.pokemon.R
 import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonTeam
 import android.content.Context
+import android.widget.Toast
 
 class PokemonTeamAdapter(team: PokemonTeam, private val context: Context) : RecyclerView.Adapter<PokemonTeamAdapter.PokemonViewHolder>(){
     private var pokemonTeam = team
@@ -31,7 +31,6 @@ class PokemonTeamAdapter(team: PokemonTeam, private val context: Context) : Recy
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         val pokemon = pokemonTeam.getPokemon(position)
-        //TODO: create click event depending where the adapter is being used from (team menu / remove pokemon)
         holder.pokemonName.text = pokemon.getName()
         holder.pokemonName.setOnClickListener { view: View ->
             handleEvent(view,pokemon)
@@ -40,10 +39,7 @@ class PokemonTeamAdapter(team: PokemonTeam, private val context: Context) : Recy
 
     @SuppressLint("RestrictedApi")
     private fun handleEvent(view: View, pokemon: Pokemon) {
-        val previousFragmentId = view.findNavController().previousBackStackEntry?.destination?.displayName
-        if (previousFragmentId != null) {
-            Log.d("prev frag", previousFragmentId)
-        }
+        val previousFragmentId = view.findNavController().currentBackStackEntry?.destination?.displayName
         if(previousFragmentId == context.getString(R.string.remove_pokemon_fragment)){
             removeFromTeam(view, pokemon)
         }
@@ -54,8 +50,8 @@ class PokemonTeamAdapter(team: PokemonTeam, private val context: Context) : Recy
         val collection = menuActivity.getCollect()
         val team = menuActivity.getTeam()
         collection.switchPokemonToCollection(pokemon,team)
+        Toast.makeText(context, "${pokemon.getName()} moved into collection",Toast.LENGTH_SHORT).show()
         view.findNavController().navigate(R.id.action_teamRemovePokemonFragment_to_teamFragment)
-
     }
 
     override fun getItemCount(): Int = pokemonTeam.getSize()

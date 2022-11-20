@@ -4,5 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="apply">Apply</string>
     <string name="go_back">Go Back</string>
-    <string name="remove_pokemon_fragment">com.example.pokemon:id/teamFragment</string>
+    <string name="remove_pokemon_fragment">com.example.pokemon:id/teamRemovePokemonFragment</string>
+    <string name="add_pokemon_fragment">com.example.pokemon:id/teamAddPokemonFragment</string>
 </resources>

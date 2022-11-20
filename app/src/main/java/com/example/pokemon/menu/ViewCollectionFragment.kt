@@ -32,7 +32,7 @@ class ViewCollectionFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.view_collection_recycler_view)
         recyclerView.apply {
             layoutManager = GridLayoutManager(activity, 4)
-            recyclerView.adapter = CollectionAdaptor(pokemonCollection)
+            recyclerView.adapter = CollectionAdaptor(pokemonCollection, view.context)
         }
     }
 

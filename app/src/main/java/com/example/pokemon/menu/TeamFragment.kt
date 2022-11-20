@@ -19,23 +19,39 @@ class TeamFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        menuActivity = context as MenuActivity
         val binding = FragmentTeamBinding.inflate(layoutInflater)
-        binding.TeamGoToMainMenu.setOnClickListener { view : View ->
-            view.findNavController().navigate(R.id.action_teamFragment_to_mainMenuFragment)
+        val team = menuActivity.getTeam()
+
+        if(team.getSize() >= 6){
+            binding.addTeam.visibility = View.GONE;
+        } else {
+            binding.addTeam.visibility = View.VISIBLE;
         }
         binding.addTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_teamAddPokemonFragment)
         }
+
+        if(team.getSize() == 0){
+            binding.removeTeam.visibility = View.GONE
+        } else {
+            binding.removeTeam.visibility = View.VISIBLE
+        }
         binding.removeTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_teamRemovePokemonFragment)
         }
+
         binding.viewCollection.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_viewCollectionFragment)
         }
+
         binding.changeOrder.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_changeTeamOrderFragment)
         }
-        menuActivity = context as MenuActivity
+
+        binding.TeamGoToMainMenu.setOnClickListener { view : View ->
+            view.findNavController().navigate(R.id.action_teamFragment_to_mainMenuFragment)
+        }
 
         return binding.root
     }

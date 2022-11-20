@@ -33,7 +33,7 @@ class TeamAddPokemonFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.add_pokemon_recycler_view)
         recyclerView.apply {
             layoutManager = GridLayoutManager(activity, 4)
-            recyclerView.adapter = CollectionAdaptor(pokemonCollection)
+            recyclerView.adapter = CollectionAdaptor(pokemonCollection, view.context)
         }
 
     }

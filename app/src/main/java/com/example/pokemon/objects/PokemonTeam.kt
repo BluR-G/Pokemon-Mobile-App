@@ -17,10 +17,7 @@ class PokemonTeam {
 
     fun switchPokemonToTeam(pokemon: Pokemon, pokemonCollection: PokemonCollection){
         pokemonCollection.removePokemonFromCollection(pokemon)
-        val isSuccess = addPokemonToTeam(pokemon)
-        if (!isSuccess){
-            //Toast.makeText(this@MainMenuActivity, "Pokemon Team is full", Toast.LENGTH_SHORT).show()
-        }
+        addPokemonToTeam(pokemon)
     }
 
     fun healAllPokemons(){
