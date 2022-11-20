@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemon.R
 import com.example.pokemon.objects.PokemonTeam
 
-class PokemonTeamMenuAdaptor(team: PokemonTeam) : RecyclerView.Adapter<PokemonTeamMenuAdaptor.PokemonViewHolder>(){
+class PokemonTeamAdaptor(team: PokemonTeam) : RecyclerView.Adapter<PokemonTeamAdaptor.PokemonViewHolder>(){
     private var pokemonTeam = team
 
     class PokemonViewHolder(view: View) : RecyclerView.ViewHolder(view){

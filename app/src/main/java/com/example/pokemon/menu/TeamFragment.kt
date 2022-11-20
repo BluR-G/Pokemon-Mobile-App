@@ -26,6 +26,9 @@ class TeamFragment : Fragment() {
         binding.addTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_teamAddPokemonFragment)
         }
+        binding.removeTeam.setOnClickListener { view : View ->
+            view.findNavController().navigate(R.id.action_teamFragment_to_teamRemovePokemonFragment)
+        }
         menuActivity = context as MenuActivity
 
         return binding.root
@@ -37,7 +40,7 @@ class TeamFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.pokemon_team_recycler_view)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            recyclerView.adapter = PokemonTeamMenuAdaptor(pokemonTeam)
+            recyclerView.adapter = PokemonTeamAdaptor(pokemonTeam)
         }
     }
 }
