@@ -4,4 +4,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="intro_text">Hello there!\nWelcome to the world of Pokemon!\nThis world is inhabited by creatures called Pokemon.\nFor some people, Pokemon are pets. Some study them.\nOthers use them for fights.</string>
     <string name="username_text">What is your name?</string>
+    <string name="starter_text">Choose your starter Pokemon.</string>
 </resources>
