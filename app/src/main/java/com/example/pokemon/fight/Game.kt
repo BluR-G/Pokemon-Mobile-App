@@ -14,8 +14,10 @@ class Game() {
     private lateinit var enemyTeam: PokemonTeam
     private lateinit var currentAllyPokemon : Pokemon
     private lateinit var currentEnemyPokemon: Pokemon
+    private lateinit var activity: FightActivity
 
-    constructor(pokemonTeam: PokemonTeam) : this() {
+    constructor(pokemonTeam: PokemonTeam, activity: FightActivity) : this() {
+        this.activity = activity
         this.pokemonTeam = pokemonTeam
         this.enemyTeam = generateEnemyTeam()
         this.currentAllyPokemon = pokemonTeam.getPokemonTeam()[0]
@@ -26,22 +28,25 @@ class Game() {
         //fight
 
     }
-    public fun attack(movedata : MoveData){
+    public fun attack(allyMovedata : MoveData){
         val random = Random()
         val moveNumber = random.nextInt(4)
         val enemyMove = currentEnemyPokemon.getMoves()[moveNumber]
-        val move = movedata.move
+        val move = allyMovedata.move
         // Ally Fight
         Log.d("fight","Ally Pokemon:${currentAllyPokemon.getName()} HP: ${currentAllyPokemon.getCurrentHp()}" )
         Log.d("fight","Enemy Pokemon:${currentEnemyPokemon.getName()} HP: ${currentEnemyPokemon.getCurrentHp()}" )
-        Log.d("fight", "${currentAllyPokemon.getName()} used ${movedata.moveName}!")
+        Log.d("fight", "${currentAllyPokemon.getName()} used ${allyMovedata.moveName}!")
         Thread.sleep(1500)
         // Enemy Fight
-        currentEnemyPokemon.setCurrentHp(currentEnemyPokemon.getCurrentHp()-move.getPower())
+        attackPokemonTarget(currentAllyPokemon, currentEnemyPokemon, move)
         Log.d("fight","After, Enemy Pokemon:${currentEnemyPokemon.getName()} HP: ${currentEnemyPokemon.getCurrentHp()}" )
         Log.d("fight", "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!")
-        currentAllyPokemon.setCurrentHp(currentAllyPokemon.getCurrentHp()-enemyMove.move.getPower())
+        attackPokemonTarget(currentEnemyPokemon, currentAllyPokemon, enemyMove.move)
         Log.d("fight","After, Ally Pokemon:${currentAllyPokemon.getName()} HP: ${currentAllyPokemon.getCurrentHp()}" )
+    }
+    private fun attackPokemonTarget(attacker: Pokemon, target: Pokemon, move: Move){
+        target.setCurrentHp(target.getCurrentHp()-move.getPower())
     }
     private fun generateEnemyTeam() : PokemonTeam {
         // generate enemy team according to average lvl

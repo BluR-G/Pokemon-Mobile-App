@@ -25,7 +25,7 @@ class FightActivity : AppCompatActivity(){
         binding = ActivityFightBinding.inflate(layoutInflater)
         setContentView(binding.root)
         this.pokemonTeam =intent.getSerializableExtra("pokemonTeam") as PokemonTeam
-        this.game = Game(pokemonTeam)
+        this.game = Game(pokemonTeam, this)
         currentPokemon = this.pokemonTeam.getPokemonTeam()[0]
         binding.pokemonFightText.text=currentPokemon.getName()
 
