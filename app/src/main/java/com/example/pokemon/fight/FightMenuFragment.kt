@@ -33,11 +33,7 @@ class FightMenuFragment : Fragment()  {
             view.findNavController().navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
         }
         binding.selectRun.setOnClickListener{
-        val intent = Intent(fightActivity, MenuActivity::class.java)
-            intent.putExtra("pokemonTeam", fightActivity.getPokemonTeam())
-            Log.d("fullteam", "sending ${fightActivity.getPokemonTeam().getPokemonTeam()[0].getName()}")
-            fightActivity.setResult(RESULT_OK, intent)
-            fightActivity.finish()
+            fightActivity.getGame().run()
         }
         return binding.root
     }

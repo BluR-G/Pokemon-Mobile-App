@@ -28,6 +28,7 @@ class FightActivity : AppCompatActivity(){
         this.game = Game(pokemonTeam, this)
         currentPokemon = this.pokemonTeam.getPokemonTeam()[0]
         binding.pokemonFightText.text=currentPokemon.getName()
+        binding.allyPokemonHp.text="HP: ${currentPokemon.getCurrentHp()}/${currentPokemon.getMaxHp()}"
 
     }
 

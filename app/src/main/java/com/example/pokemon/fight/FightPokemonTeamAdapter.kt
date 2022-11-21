@@ -51,29 +51,9 @@ class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val
     ) {
         val previousFragmentId = view.findNavController().previousBackStackEntry?.destination?.displayName
         if (previousFragmentId == context.getString(R.string.teamFightFragment)) {
-            healPokemon(view, pokemon)
+            fightActivity.getGame().usePotion(view, pokemon)
         } else if (previousFragmentId == context.getString(R.string.potionFragment)) {
-            swapPokemon(view, pokemon)
-        }
-    }
-
-    private fun healPokemon(view : View, pokemon: Pokemon) {
-        val name = pokemon.getName()
-        Log.d("fragmentcheck", "heal $name")
-        Log.d("heal", "before: $name ${pokemon.getCurrentHp()}")
-        pokemon.setCurrentHp(pokemon.getCurrentHp() + 20)
-        notifyDataSetChanged()
-        Log.d("heal", "after: $name ${pokemon.getCurrentHp()}")
-        view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
-    }
-    private fun swapPokemon(view: View, pokemon: Pokemon){
-        Log.d("testing", "reached")
-        if(fightActivity.getCurrentPokemon() != pokemon){
-            fightActivity.setCurrentPokemon(pokemon)
-            fightActivity.getBinding().pokemonFightText.text = pokemon.getName()
-            view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
-        } else {
-            Log.d("swap", "cannot swap")
+            fightActivity.getGame().swapPokemon(view, pokemon)
         }
     }
 

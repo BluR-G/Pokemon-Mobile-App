@@ -22,9 +22,33 @@
             android:id="@+id/pokemonFightText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="40dp"
+            android:textSize="20dp"
             android:layout_marginTop="72dp"
             android:text="POKEMON FIGHT" />
+        <TextView
+            android:id="@+id/allyPokemonHp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="hp"
+            android:layout_marginTop="75dp"
+            />
+        <TextView
+            android:id="@+id/enemyPokemonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:textSize="20dp"
+            android:text="ENEMY POKEMON" />
+        <TextView
+            android:id="@+id/enemyPokemonHp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="hp"
+            android:layout_marginBottom="80dp"
+            />
+            />
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView

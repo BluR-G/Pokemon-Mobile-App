@@ -37,7 +37,7 @@ class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Co
     }
 
     private fun handleEvent(view: View, pokemon: Pokemon, move: MoveData) {
-        game.attack(move)
+        game.fight(view,move)
     }
 
     override fun getItemCount(): Int {
