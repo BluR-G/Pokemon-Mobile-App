@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.pokemon.MenuActivity
 import com.example.pokemon.R
@@ -37,25 +38,11 @@ class Game() {
         val enemyMove = pickEnemyRandomMove()
         val move = allyMoveData.move
         // Ally Fight
-        Log.d("fight", "${currentAllyPokemon.getName()} used ${allyMoveData.moveName}!")
         view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
         // Enemy Fight
-        Log.d("fight", "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!")
         attackPokemonTarget(currentEnemyPokemon, move, view)
-
-        Log.d("fight","After, Enemy Pokemon:${currentEnemyPokemon.getName()} HP: ${currentEnemyPokemon.getCurrentHp()}" )
-        //Thread.sleep(2000)
         attackPokemonTarget(currentAllyPokemon, enemyMove.move,view)
-
-        Log.d("fight","After, Ally Pokemon:${currentAllyPokemon.getName()} HP: ${currentAllyPokemon.getCurrentHp()}" )
-        runBlocking {
-
-                withContext(Dispatchers.Main){
-                    activity.getBinding().enemyPokemonHp.text="HP:${currentEnemyPokemon.getCurrentHp()}/${currentEnemyPokemon.getMaxHp()}"
-                    delay(1500)
-                    activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
-                }
-        }
+        updateFightMessage(currentEnemyPokemon,currentAllyPokemon,allyMoveData,enemyMove)
         if(!isAlive(currentEnemyPokemon)){
             // TODO gain exp
             // TODO swap pokemon
@@ -73,37 +60,84 @@ class Game() {
     }
     // Swap pokemon
     public fun swapPokemon(view: View, pokemon: Pokemon){
+        lateinit var enemyMove : MoveData
         if(isAlive(pokemon)){
             currentAllyPokemon = pokemon
             if(activity.getCurrentPokemon() != pokemon){
-                activity.setCurrentPokemon(pokemon)
-                activity.getBinding().pokemonFightText.text = pokemon.getName()
-                view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
+                enemyMove = pickEnemyRandomMove()
+                updateSwapMessage(pokemon, currentEnemyPokemon,enemyMove, view)
             } else {
                 Log.d("swap", "cannot swap")
             }
-            var enemyMove = pickEnemyRandomMove()
-            Log.d("fight", "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!")
-            attackPokemonTarget(currentAllyPokemon,enemyMove.move,view)
-            activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
-            Log.d("fight","After, Ally Pokemon:${currentAllyPokemon.getName()} HP: ${currentAllyPokemon.getCurrentHp()}" )
         }
     }
     // Apply potion effect to pokemon
     public fun usePotion(view: View, pokemon: Pokemon){
         heal(pokemon)
         // navigate back to menu
-        view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
-        Log.d("fight","After, Ally Pokemon Healed:${currentAllyPokemon.getName()} HP: ${currentAllyPokemon.getCurrentHp()}" )
-        var enemyMove = pickEnemyRandomMove()
-        Log.d("fight", "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!")
-        attackPokemonTarget(currentAllyPokemon,enemyMove.move,view)
-        Log.d("fight","After, Ally Pokemon:${currentAllyPokemon.getName()} HP: ${currentAllyPokemon.getCurrentHp()}" )
-        activity.getBinding().allyPokemonHp.text="${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
+        updateHealMessage(view, pokemon)
     }
     // Attempt to catch wild pokemon
     public fun throwPokeball(view:View){
         view.findNavController().navigate(R.id.action_bagFragment_to_fightMenuFragment)
+    }
+    private fun updateFightMessage(firstAttacked: Pokemon, secondAttacked: Pokemon, firstMove : MoveData, secondMove: MoveData){
+        activity.lifecycleScope.launch(Dispatchers.Default){
+            withContext(Dispatchers.Main){
+                activity.getBinding().gameMessage.text="${secondAttacked.getName()} used ${firstMove.moveName}!"
+                delay(1500)
+                activity.getBinding().enemyPokemonHp.text="HP:${firstAttacked.getCurrentHp()}/${firstAttacked.getMaxHp()}"
+                activity.getBinding().gameMessage.text=""
+            }
+            delay(1000)
+            withContext(Dispatchers.Main){
+                activity.getBinding().gameMessage.text="${firstAttacked.getName()} used ${secondMove.moveName}!"
+                delay(1500)
+                activity.getBinding().allyPokemonHp.text="HP:${firstAttacked.getCurrentHp()}/${firstAttacked.getMaxHp()}"
+                activity.getBinding().gameMessage.text=""
+            }
+        }
+    }
+    private fun updateSwapMessage(pokemon: Pokemon, enemyPokemon: Pokemon, enemyMove: MoveData, view:View){
+        activity.lifecycleScope.launch(Dispatchers.Default){
+            withContext(Dispatchers.Main){
+                activity.getBinding().gameMessage.text="Swapping to ${pokemon.getName()} !"
+                view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
+                delay(1000)
+                activity.getBinding().pokemonFightText.text=pokemon.getName()
+                activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
+            }
+            delay(1000)
+            withContext(Dispatchers.Main){
+                activity.getBinding().gameMessage.text=""
+                activity.getBinding().gameMessage.text="${enemyPokemon.getName()} used ${enemyMove.moveName}!"
+                delay(1500)
+                attackPokemonTarget(currentAllyPokemon,enemyMove.move,view)
+                activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
+                activity.getBinding().gameMessage.text=""
+            }
+        }
+    }
+    private fun updateHealMessage(view:View, pokemon: Pokemon){
+        activity.lifecycleScope.launch(Dispatchers.Default){
+            withContext(Dispatchers.Main){
+                view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
+                activity.getBinding().gameMessage.text="${pokemon.getName()} has now ${pokemon.getCurrentHp()} HP!"
+                activity.getBinding().allyPokemonHp.text="${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
+                delay(1000)
+                activity.getBinding().gameMessage.text=""
+            }
+            delay(1000)
+            withContext(Dispatchers.Main){
+                var enemyMove = pickEnemyRandomMove()
+                attackPokemonTarget(currentAllyPokemon,enemyMove.move,view)
+                activity.getBinding().gameMessage.text="${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!"
+                delay(1000)
+                activity.getBinding().gameMessage.text=""
+                delay(1500)
+                activity.getBinding().allyPokemonHp.text="${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
+            }
+        }
     }
     // Heal Pokemon
     private fun heal(pokemon: Pokemon){
