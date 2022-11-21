@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/fightScreen"
         android:layout_width="match_parent"
-        android:layout_height="405dp"
+        android:layout_height="370dp"
         android:layout_weight="1"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,9 +48,17 @@
             android:text="hp"
             android:layout_marginBottom="80dp"
             />
-            />
-    </LinearLayout>
 
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/gameMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="game message"
+        android:layout_gravity="center"
+        />
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fightNavHostFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"

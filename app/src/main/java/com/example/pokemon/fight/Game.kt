@@ -12,6 +12,7 @@ import com.example.pokemon.objects.Move
 import com.example.pokemon.objects.MoveData
 import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonTeam
+import kotlinx.coroutines.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -39,13 +40,22 @@ class Game() {
         Log.d("fight", "${currentAllyPokemon.getName()} used ${allyMoveData.moveName}!")
         view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
         // Enemy Fight
-        attackPokemonTarget(currentEnemyPokemon, move, view)
-        activity.getBinding().enemyPokemonHp.text="${currentEnemyPokemon.getCurrentHp()}/${currentEnemyPokemon.getMaxHp()}"
-        Log.d("fight","After, Enemy Pokemon:${currentEnemyPokemon.getName()} HP: ${currentEnemyPokemon.getCurrentHp()}" )
         Log.d("fight", "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!")
+        attackPokemonTarget(currentEnemyPokemon, move, view)
+
+        Log.d("fight","After, Enemy Pokemon:${currentEnemyPokemon.getName()} HP: ${currentEnemyPokemon.getCurrentHp()}" )
+        //Thread.sleep(2000)
         attackPokemonTarget(currentAllyPokemon, enemyMove.move,view)
-        activity.getBinding().allyPokemonHp.text="${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
+
         Log.d("fight","After, Ally Pokemon:${currentAllyPokemon.getName()} HP: ${currentAllyPokemon.getCurrentHp()}" )
+        runBlocking {
+
+                withContext(Dispatchers.Main){
+                    activity.getBinding().enemyPokemonHp.text="HP:${currentEnemyPokemon.getCurrentHp()}/${currentEnemyPokemon.getMaxHp()}"
+                    delay(1500)
+                    activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
+                }
+        }
         if(!isAlive(currentEnemyPokemon)){
             // TODO gain exp
             // TODO swap pokemon
@@ -75,7 +85,7 @@ class Game() {
             var enemyMove = pickEnemyRandomMove()
             Log.d("fight", "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!")
             attackPokemonTarget(currentAllyPokemon,enemyMove.move,view)
-            activity.getBinding().allyPokemonHp.text="${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
+            activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
             Log.d("fight","After, Ally Pokemon:${currentAllyPokemon.getName()} HP: ${currentAllyPokemon.getCurrentHp()}" )
         }
     }
@@ -123,6 +133,7 @@ class Game() {
     }
     // Attack pokemon target with move
     private fun attackPokemonTarget(target: Pokemon, move: Move,view:View){
+        //Thread.sleep(1500)
         val targetHp = target.getCurrentHp() - move.getPower()
         if (targetHp < 0){
             target.setCurrentHp(0)
