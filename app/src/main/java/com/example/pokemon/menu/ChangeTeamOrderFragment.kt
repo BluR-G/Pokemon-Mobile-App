@@ -40,6 +40,9 @@ class ChangeTeamOrderFragment : Fragment() {
             }
 
         }
+        binding.cancelButton.setOnClickListener { view : View ->
+            view.findNavController().navigate(R.id.action_changeTeamOrderFragment_to_teamFragment)
+        }
         menuActivity = context as MenuActivity
         return binding.root
     }
