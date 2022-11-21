@@ -39,4 +39,12 @@ class PokemonTeam {
         return pokemons[pokemons.size - 1]
 
     }
+
+    fun setNewTeamOrder(teamOrder : MutableMap<Int, Pokemon>) {
+        val newTeam: ArrayList<Pokemon> = ArrayList()
+        for(i in 0 until pokemons.size){
+            teamOrder[i]?.let { newTeam.add(it) }
+        }
+        pokemons = newTeam
+    }
 }

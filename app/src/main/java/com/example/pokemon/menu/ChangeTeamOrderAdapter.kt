@@ -26,7 +26,6 @@ class ChangeTeamOrderAdapter(team: PokemonTeam) : RecyclerView.Adapter<ChangeTea
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        Log.d("position", position.toString())
         holder.pokemonName.text = pokemonTeam.getPokemon(position).getName()
         holder.orderNumber.setText(position.toString())
     }
