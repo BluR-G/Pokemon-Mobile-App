@@ -41,6 +41,7 @@ class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val
         holder.pokemonButton.setOnClickListener{ view: View ->
             handleEvent(view, pokemon)
         }
+        holder.pokemonButton.isClickable
     }
 
     @SuppressLint("RestrictedApi")

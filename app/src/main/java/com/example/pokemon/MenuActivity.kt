@@ -74,10 +74,13 @@ class MenuActivity : AppCompatActivity() {
     private fun addMoves(moves: ArrayList<MoveData>){
         val types = arrayOf("fire")
         val move1 = Move(100,40,"other","special", "", 40, types)
+        val move2 = Move(100,70,"other","special", "", 40, types)
+        val move3 = Move(100,10,"other","special", "", 40, types)
+        val move4 = Move(100,35,"other","special", "", 40, types)
         moves.add(MoveData("ember", 5,move1))
-        moves.add(MoveData("whip", 5,move1))
-        moves.add(MoveData("tackle", 5,move1))
-        moves.add(MoveData("sleep", 5,move1))
+        moves.add(MoveData("whip", 5,move2))
+        moves.add(MoveData("tackle", 5,move3))
+        moves.add(MoveData("sleep", 5,move4))
     }
     private fun addPikachuMoves(moves: ArrayList<MoveData>){
         val types= arrayOf("electric")

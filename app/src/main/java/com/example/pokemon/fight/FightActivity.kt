@@ -18,13 +18,14 @@ class FightActivity : AppCompatActivity(){
     private lateinit var binding: ActivityFightBinding
     private lateinit var currentPokemon : Pokemon
     private lateinit var pokemonTeam: PokemonTeam
-
+    private lateinit var game: Game
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFightBinding.inflate(layoutInflater)
         setContentView(binding.root)
         this.pokemonTeam =intent.getSerializableExtra("pokemonTeam") as PokemonTeam
+        this.game = Game(pokemonTeam)
         currentPokemon = this.pokemonTeam.getPokemonTeam()[0]
         binding.pokemonFightText.text=currentPokemon.getName()
 
@@ -41,5 +42,8 @@ class FightActivity : AppCompatActivity(){
     }
     public fun getPokemonTeam() : PokemonTeam {
         return this.pokemonTeam
+    }
+    public fun getGame():Game{
+        return this.game
     }
 }
