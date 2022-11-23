@@ -66,7 +66,15 @@ class TrainerBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(
 
     // Attempt to catch wild pokemon
     public override fun throwPokeball(view:View){
-        view.findNavController().navigate(R.id.action_bagFragment_to_fightMenuFragment)
+        activity.getBinding().gameMessage.text="You cannot catch a trainer's pokemon!"
+        activity.lifecycleScope.launch(Dispatchers.Default){
+            withContext(Dispatchers.Main){
+                activity.getBinding().gameMessage.text="You cannot catch a trainer's pokemon!"
+                delay(2000)
+                activity.getBinding().gameMessage.text=""
+            }
+        }
+
     }
     private fun swapEnemy(): Boolean{
         val enemyTeam = enemyTeam.getPokemonTeam()

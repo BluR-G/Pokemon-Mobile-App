@@ -26,17 +26,24 @@ class MainMenuFragment : Fragment() {
         binding.goToPokeCenter.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.action_mainMenuFragment_to_pokeCenterFragment)
         }
-        binding.goToTrainerBattle.setOnClickListener { switchFight() }
-        binding.goToWildBattle.setOnClickListener{ switchFight() }
+        binding.goToTrainerBattle.setOnClickListener { switchTrainerBattle() }
+        binding.goToWildBattle.setOnClickListener{ switchWildBattle() }
 
         return binding.root
     }
-
-    private fun switchFight() {
+    private fun switchBattle(type:String){
         val intent = Intent(menuActivity, FightActivity::class.java)
         intent.putExtra("pokemonTeam", menuActivity.getPokemonTeam())
+        intent.putExtra("battleType", type)
         menuActivity.getResult.launch(intent)
     }
+    private fun switchTrainerBattle() {
+        switchBattle("trainer")
+    }
+    private fun switchWildBattle() {
+        switchBattle("wild")
+    }
+
 
 
 }
