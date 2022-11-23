@@ -5,7 +5,9 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.pokemon.MenuActivity
 import com.example.pokemon.R
 import com.example.pokemon.objects.Move
@@ -50,7 +52,7 @@ abstract class Battle {
                 enemyMove = pickEnemyRandomMove()
                 updateSwapMessage(pokemon, currentEnemyPokemon,enemyMove, view)
             } else {
-                Log.d("swap", "cannot swap")
+                displayCannotSwapMessage()
             }
         }
     }
@@ -65,6 +67,15 @@ abstract class Battle {
                 activity.getBinding().gameMessage.text=message
                 delay(3000)
                 run()
+            }
+        }
+    }
+    private fun displayCannotSwapMessage(){
+        activity.lifecycleScope.launch(Dispatchers.Default){
+            withContext(Dispatchers.Main){
+                activity.getBinding().gameMessage.text="Cannot swap to to the same pokemon!"
+                delay(1000)
+                activity.getBinding().gameMessage.text = ""
             }
         }
     }
@@ -163,7 +174,9 @@ abstract class Battle {
         if (targetHp < 0){
             target.setCurrentHp(0)
             if(target == currentAllyPokemon){
-                view.findNavController().navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
+                val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
+                val navController = navHostFragment.navController
+                navController.navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
             }
         } else {
             target.setCurrentHp(targetHp)
@@ -174,7 +187,7 @@ abstract class Battle {
     public fun isAllyTeamDead():Boolean{
         return isTeamDead(allyPokemonTeam)
     }
-    // Check if team is pokemon dead
+    // Check if pokemon team dead
     public fun isTeamDead(pokemonTeam: PokemonTeam):Boolean{
         var check = false
         for(pokemon in pokemonTeam.getPokemonTeam()){
