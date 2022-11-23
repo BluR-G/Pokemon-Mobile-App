@@ -1,7 +1,6 @@
 package com.example.pokemon.fight
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import com.example.pokemon.R
 import com.example.pokemon.objects.MoveData
 import com.example.pokemon.objects.Pokemon
 
-class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Context, private val game: Game): RecyclerView.Adapter<PokemonMovesAdapter.MovesViewHolder>() {
+class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Context, private val trainerBattle: TrainerBattle): RecyclerView.Adapter<PokemonMovesAdapter.MovesViewHolder>() {
     lateinit var fightActivity: FightActivity
     class MovesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val moveButton: Button = view.findViewById<Button>(R.id.move_text_item)
@@ -37,7 +36,7 @@ class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Co
     }
 
     private fun handleEvent(view: View, pokemon: Pokemon, move: MoveData) {
-        game.fight(view,move)
+        trainerBattle.fight(view,move)
     }
 
     override fun getItemCount(): Int {

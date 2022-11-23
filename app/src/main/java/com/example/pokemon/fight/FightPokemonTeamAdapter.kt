@@ -51,9 +51,9 @@ class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val
     ) {
         val previousFragmentId = view.findNavController().previousBackStackEntry?.destination?.displayName
         if (previousFragmentId == context.getString(R.string.teamFightFragment)) {
-            fightActivity.getGame().usePotion(view, pokemon)
+            fightActivity.getBattle().usePotion(view, pokemon)
         } else if (previousFragmentId == context.getString(R.string.potionFragment)) {
-            fightActivity.getGame().swapPokemon(view, pokemon)
+            fightActivity.getBattle().swapPokemon(view, pokemon)
         }
     }
 

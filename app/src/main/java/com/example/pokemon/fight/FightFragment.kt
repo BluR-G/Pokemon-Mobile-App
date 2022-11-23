@@ -30,7 +30,7 @@ class FightFragment : Fragment()  {
         var recyclerView = itemView.findViewById<RecyclerView>(R.id.move_recycler_view)
         recyclerView.apply {
             layoutManager = GridLayoutManager(activity,2)
-            recyclerView.adapter = PokemonMovesAdapter(pokemon, itemView.context, fightActivity.getGame())
+            recyclerView.adapter = PokemonMovesAdapter(pokemon, itemView.context, fightActivity.getBattle())
         }
     }
 }

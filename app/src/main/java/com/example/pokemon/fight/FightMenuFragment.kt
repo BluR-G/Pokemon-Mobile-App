@@ -33,7 +33,7 @@ class FightMenuFragment : Fragment()  {
             view.findNavController().navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
         }
         binding.selectRun.setOnClickListener{
-            fightActivity.getGame().run()
+            fightActivity.getBattle().run()
         }
         return binding.root
     }
