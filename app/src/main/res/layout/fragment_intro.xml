@@ -47,6 +47,10 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:layout_marginBottom="20dp"
+            android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:inputType="textPersonName|textCapWords"
+            android:gravity="center_horizontal"
+            android:maxLength="10"
             />
 
         <TextView
@@ -132,6 +136,10 @@
             android:layout_marginBottom="20dp"
             android:textSize="12sp"
             android:hint="@string/nickname_input_hint"
+            android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:inputType="textPersonName|textCapWords"
+            android:gravity="center_horizontal"
+            android:maxLength="10"
             />
 
         <TextView
