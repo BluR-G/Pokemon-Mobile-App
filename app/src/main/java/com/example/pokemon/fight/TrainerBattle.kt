@@ -1,40 +1,31 @@
 package com.example.pokemon.fight
 
-import android.app.Activity
-import android.content.Intent
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import com.example.pokemon.MenuActivity
 import com.example.pokemon.R
 import com.example.pokemon.objects.Move
 import com.example.pokemon.objects.MoveData
 import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonTeam
 import kotlinx.coroutines.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 class TrainerBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(pokemonTeam, activity) {
-    private lateinit var allyPokemonTeam: PokemonTeam
     private lateinit var enemyTeam: PokemonTeam
-    private lateinit var currentAllyPokemon : Pokemon
-    private lateinit var activity: FightActivity
-
     private var count = 0
 
     init {
-        this.activity = activity
-        this.allyPokemonTeam = pokemonTeam
         this.enemyTeam = generateEnemyTeam()
-        this.currentAllyPokemon = pokemonTeam.getPokemonTeam()[0]
         setCurrentEnemyPokemon(enemyTeam.getPokemonTeam()[0])
-        activity.getBinding().enemyPokemonText.text=getCurrentEnemyPokemon().getName()
-        activity.getBinding().enemyPokemonHp.text="HP: ${getCurrentEnemyPokemon().getCurrentHp()}/${getCurrentEnemyPokemon().getMaxHp()}"
+        initializeMessage()
     }
-
+    private fun initializeMessage(){
+        activity.getBinding().enemyPokemonText.text=getCurrentEnemyPokemon().getSpecies()
+        activity.getBinding().enemyPokemonHp.text="HP: ${getCurrentEnemyPokemon().getCurrentHp()}/${getCurrentEnemyPokemon().getMaxHp()}"
+        activity.getBinding().enemyLevel.text = "lv.${getCurrentEnemyPokemon().getLevel()}"
+    }
     public override fun checkPokemonStatus(pokemonTarget: Pokemon, pokemonAttacker: Pokemon, attackerMove : MoveData, view : View){
         if(!isAlive(pokemonTarget)){
             if(pokemonTarget == getCurrentEnemyPokemon()){
@@ -43,7 +34,7 @@ class TrainerBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(
         } else {
             if(isAlive(pokemonAttacker)){
                 attackPokemonTarget(pokemonTarget, attackerMove.move, view)
-                updateMessage(pokemonTarget,pokemonAttacker,attackerMove)
+                updateFightMessage(pokemonTarget,pokemonAttacker,attackerMove)
             }
         }
     }
@@ -66,7 +57,6 @@ class TrainerBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(
 
     // Attempt to catch wild pokemon
     public override fun throwPokeball(view:View){
-        activity.getBinding().gameMessage.text="You cannot catch a trainer's pokemon!"
         activity.lifecycleScope.launch(Dispatchers.Default){
             withContext(Dispatchers.Main){
                 activity.getBinding().gameMessage.text="You cannot catch a trainer's pokemon!"
@@ -85,8 +75,7 @@ class TrainerBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(
                 withContext(Dispatchers.Main){
                     delay(3000)
                     activity.getBinding().gameMessage.text="Enemy swapping to ${getCurrentEnemyPokemon().getName()}!"
-                    activity.getBinding().enemyPokemonText.text=getCurrentEnemyPokemon().getName()
-                    activity.getBinding().enemyPokemonHp.text="HP:${getCurrentEnemyPokemon().getCurrentHp()}/${getCurrentEnemyPokemon().getMaxHp()}"
+                    initializeMessage()
                     delay(1000)
                     activity.getBinding().gameMessage.text=""
                 }
@@ -125,7 +114,7 @@ class TrainerBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(
                 20,30,40,100,200,100, moves, images)
         )
         enemyTeam.addPokemonToTeam(
-            Pokemon("bulbausar","bulbausar",36,types,
+            Pokemon("bulbausar","bulbausar",17,types,
                 60,30,40,100,200,100, moves, images)
         )
 //        enemyTeam.addPokemonToTeam(

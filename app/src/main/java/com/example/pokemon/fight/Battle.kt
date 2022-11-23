@@ -2,7 +2,6 @@ package com.example.pokemon.fight
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
@@ -18,13 +17,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
-import kotlin.collections.ArrayList
 
 abstract class Battle {
-    private lateinit var allyPokemonTeam: PokemonTeam
-    private lateinit var currentAllyPokemon : Pokemon
+    public lateinit var allyPokemonTeam: PokemonTeam
+    public lateinit var currentAllyPokemon : Pokemon
     private lateinit var currentEnemyPokemon: Pokemon
-    private lateinit var activity: FightActivity
+    public lateinit var activity: FightActivity
 
     constructor(pokemonTeam: PokemonTeam, activity: FightActivity) {
         this.activity = activity
@@ -37,10 +35,11 @@ abstract class Battle {
     public fun getCurrentEnemyPokemon(): Pokemon{
         return this.currentEnemyPokemon
     }
-    // Fight between the current pokemon
+
     abstract fun checkPokemonStatus(pokemonTarget: Pokemon, pokemonAttacker: Pokemon, attackerMove : MoveData, view : View)
     abstract fun fight(view: View, allyMoveData : MoveData)
     abstract fun throwPokeball(view: View)
+
     // Swap pokemon
     public fun swapPokemon(view: View, pokemon: Pokemon){
         lateinit var enemyMove : MoveData
@@ -58,7 +57,6 @@ abstract class Battle {
     // Apply potion effect to pokemon
     public fun usePotion(view: View, pokemon: Pokemon){
         heal(pokemon)
-        // navigate back to menu
         updateHealMessage(view, pokemon)
     }
     public fun displayFinalMessage(message:String){
@@ -70,7 +68,8 @@ abstract class Battle {
             }
         }
     }
-    public fun updateMessage(firstAttacked: Pokemon, secondAttacked: Pokemon, firstMove: MoveData){
+    // Update the messages after fight sequence
+    public fun updateFightMessage(firstAttacked: Pokemon, secondAttacked: Pokemon, firstMove: MoveData){
         activity.lifecycleScope.launch(Dispatchers.Default){
             withContext(Dispatchers.Main){
                 activity.getBinding().gameMessage.text="${secondAttacked.getName()} used ${firstMove.moveName}!"
@@ -85,14 +84,16 @@ abstract class Battle {
             }
         }
     }
+    // Updates game message when current pokemon is swapped
     public fun updateSwapMessage(pokemon: Pokemon, enemyPokemon: Pokemon, enemyMove: MoveData, view: View){
         activity.lifecycleScope.launch(Dispatchers.Default){
             withContext(Dispatchers.Main){
                 activity.getBinding().gameMessage.text="Swapping to ${pokemon.getName()} !"
                 view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
                 delay(1000)
-                activity.getBinding().pokemonFightText.text=pokemon.getName()
+                activity.getBinding().allyPokemon.text=pokemon.getName()
                 activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
+                activity.getBinding().allyLevel.text = "lv.${currentAllyPokemon.getLevel()}"
             }
             delay(1000)
             withContext(Dispatchers.Main){
@@ -105,10 +106,12 @@ abstract class Battle {
             }
         }
     }
+    // Updates game message when current pokemon is healed
     public fun updateHealMessage(view: View, pokemon: Pokemon){
         activity.lifecycleScope.launch(Dispatchers.Default){
             withContext(Dispatchers.Main){
                 view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
+                // Show current hp
                 activity.getBinding().gameMessage.text="${pokemon.getName()} has now ${pokemon.getCurrentHp()} HP!"
                 activity.getBinding().allyPokemonHp.text="${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
                 delay(1000)
@@ -117,11 +120,13 @@ abstract class Battle {
             delay(1000)
             withContext(Dispatchers.Main){
                 var enemyMove = pickEnemyRandomMove()
+                // Attacks swapped Pokemon
                 attackPokemonTarget(currentAllyPokemon,enemyMove.move,view)
                 activity.getBinding().gameMessage.text="${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!"
                 delay(1000)
                 activity.getBinding().gameMessage.text=""
                 delay(1500)
+                // Updates pokemon text
                 activity.getBinding().allyPokemonHp.text="${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
             }
         }

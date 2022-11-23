@@ -46,23 +46,23 @@ class MenuActivity : AppCompatActivity() {
                 200,30,40,100,200,100, moves, images)
         )
         pokemonTeam.addPokemonToTeam(
-            Pokemon("pikachu","pikachu",36,types,
+            Pokemon("pikachu","pikachu",25,types,
                 60,30,40,100,200,100, pikachuMoves, images)
         )
         pokemonTeam.addPokemonToTeam(
-            Pokemon("raichu","raichu",36,types,
+            Pokemon("raichu","raichu",12,types,
                 60,30,40,100,200,100, moves, images)
         )
         pokemonTeam.addPokemonToTeam(
-            Pokemon("garyados","gyarados",36,types,
+            Pokemon("garyados","gyarados",18,types,
                 60,30,40,100,200,100, moves, images)
         )
         pokemonTeam.addPokemonToTeam(
-            Pokemon("raichu","zekrom",36,types,
+            Pokemon("raichu","zekrom",76,types,
                 60,30,40,100,200,100, moves, images)
         )
         pokemonTeam.addPokemonToTeam(
-            Pokemon("garyados","reshiram",36,types,
+            Pokemon("garyados","reshiram",84,types,
                 60,30,40,100,200,100, moves, images)
         )
 
