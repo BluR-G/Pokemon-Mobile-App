@@ -4,15 +4,26 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import com.example.pokemon.data.PokemonCreation
 import com.example.pokemon.databinding.FragmentIntroBinding
+import com.example.pokemon.objects.Pokemon
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class IntroFragment : Fragment() {
+
+    private var starterPokemon : String = ""
+    private var nickname : String = ""
+    private var username : String = "";
+    private lateinit var pokemon: Pokemon
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,14 +33,6 @@ class IntroFragment : Fragment() {
 
         var isUserNameValid : Boolean = false;
         var isStarterPicked : Boolean = false;
-        var username : String = "";
-        var starterPokemon : String = "";
-        var nickname : String = "";
-
-        binding.IntroGoToMainMenu.setOnClickListener {
-            val intent = Intent(activity, MenuActivity::class.java)
-            startActivity(intent)
-        }
 
         // Enable button if username is provided and a radiobutton is checked
         binding.usernameInput.addTextChangedListener(object : TextWatcher {
@@ -80,7 +83,19 @@ class IntroFragment : Fragment() {
             }
         })
 
+        binding.IntroGoToMainMenu.setOnClickListener {
+            handleThreading()
+            val intent = Intent(activity, MenuActivity::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
+    }
+
+    private fun handleThreading() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            pokemon = PokemonCreation().createPokemon(starterPokemon, nickname, 5)
+        }
     }
 
 }

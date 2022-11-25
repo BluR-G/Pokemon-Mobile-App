@@ -1,29 +1,23 @@
 package com.example.pokemon.data
 
-import android.os.Handler
-import android.os.Looper
-import android.widget.Toast
 import com.example.pokemon.objects.Move
 import com.example.pokemon.objects.MoveData
 import com.example.pokemon.objects.Pokemon
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
 class PokemonCreation {
 
-    private lateinit var pokemonObject: JsonObject
-    private lateinit var moveObject: JsonObject
-    private lateinit var effectObject: JsonObject
+    private var pokemonObject: JsonObject = JsonObject()
+    private var moveObject: JsonObject = JsonObject()
 
     // search for pokemon on DB and if not there, search on the web
     private suspend fun searchPokemon(input : String){
-
         val GSON: Gson = GsonBuilder().setPrettyPrinting().create()
-        val url = URL("https://pokeapi.co/api/v2/pokemon/$input")
+        val url = URL("https://pokeapi.co/api/v2/pokemon/${input.lowercase()}")
         val conn: HttpsURLConnection = url.openConnection() as HttpsURLConnection
 
         conn.requestMethod = "GET"
@@ -52,23 +46,12 @@ class PokemonCreation {
         }
     }
 
-    private suspend fun searchEffect(url : String){
-
-        val GSON: Gson = GsonBuilder().setPrettyPrinting().create()
-        val url = URL(url)
-        val conn: HttpsURLConnection = url.openConnection() as HttpsURLConnection
-
-        conn.requestMethod = "GET"
-        conn.connect()
-
-        if (conn.responseCode == HttpsURLConnection.HTTP_OK) {
-            val response = conn.inputStream.bufferedReader()
-            val json: JsonObject = GSON.fromJson(response, JsonObject::class.java)
-            effectObject = json
-        }
-    }
-
-    public suspend fun createPokemon(nickname: String, initialLevel: Int): Pokemon {
+    public suspend fun createPokemon(
+        species: String,
+        nickname: String,
+        initialLevel: Int
+    ): Pokemon {
+        searchPokemon(species)
         val images = getImages(pokemonObject)
         val species = getName(pokemonObject)
         val id = getId(pokemonObject)
@@ -81,16 +64,20 @@ class PokemonCreation {
         val exp = getExperience(pokemonObject)
         val types = getTypes(pokemonObject)
         val moves = getMoves(pokemonObject)
-        return Pokemon(species, nickname, initialLevel, types, hp, attack, defense, spAttack, spDefense, speed, moves, images)
+        var pokemonNickname = nickname
+        if (nickname == "") {
+            pokemonNickname = species
+        }
+        return Pokemon(species, pokemonNickname, initialLevel, types, hp, attack, defense, spAttack, spDefense, speed, moves, images)
     }
 
     private fun getImages(pokemon: JsonObject): ArrayList<String> {
         val list = ArrayList<String>()
         val imageObject = pokemon.get("sprites").asJsonObject
-        val imageFrontUrl = URL(imageObject.get("front").asString)
-        val imageBackUrl = URL(imageObject.get("back").asString)
-        list.add(imageFrontUrl.toString())
-        list.add(imageBackUrl.toString())
+        val imageFrontUrl = imageObject.get("front").asString
+        val imageBackUrl = imageObject.get("back").asString
+        list.add(imageFrontUrl)
+        list.add(imageBackUrl)
         return list
     }
 
@@ -156,16 +143,15 @@ class PokemonCreation {
             val level = Integer.parseInt(moves[i].asJsonObject.get("level_learned_at").asString)
             val moveUrl = moves[i].asJsonObject.get("url").asString
             searchMove(moveUrl)
-            val accuracy = Integer.parseInt(moveObject.get("accuracy").asString)
-            val power = Integer.parseInt(moveObject.get("power").asString)
-            val damageClass = moveObject.get("damage_class").asJsonObject.get("name").asString
-            val target = moveObject.get("target").asJsonObject.get("name").asString
-            val type = moveObject.get("type").asJsonObject.get("name").asString
+            val parseMove = parseMoveData(moveObject)
+            val accuracy = Integer.parseInt(parseMove.get("accuracy").asString)
+            val power = Integer.parseInt(parseMove.get("power").asString)
+            val damageClass = parseMove.get("damageClass").asString
+            val target = parseMove.get("target").asString
+            val type = parseMove.get("type").asString
 
-            val effectUrl = moveObject.get("contest_effect").asJsonObject.get("url").asString
-            searchEffect(effectUrl)
-            val effect = effectObject.get("effect_entries").asJsonArray[0].asJsonObject.get("effect").asString
-            val effectChance = Integer.parseInt(moveObject.get("effect_chance").asString)
+            val effect = parseMove.get("ailment").asString
+            val effectChance = Integer.parseInt(parseMove.get("ailmentChance").asString)
 
             val moveDetails = Move(accuracy, power, damageClass, target, effect, effectChance, type)
             list.add(MoveData(name, level, moveDetails))
