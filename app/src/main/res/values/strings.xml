@@ -2,4 +2,13 @@
     <string name="app_name">Pokemon</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="intro_text">Hello there!\nWelcome to the world of Pokemon!\nThis world is inhabited by creatures called Pokemon.\nFor some people, Pokemon are pets. Some study them.\nOthers use them for fights.</string>
+    <string name="username_text">What is your name?</string>
+    <string name="starter_text">Choose your starter Pokemon.</string>
+    <string name="nickname_text">What is your Pokemon\'s nickname?</string>
+    <string name="nickname_input_hint">Leave this blank for default name</string>
+    <string name="ready_text">Your very own Pokemon legend is about to unfold.\nA world of dreams and adventures with Pokemon awaits!\nAre you ready?</string>
+    <string name="ready">Ready</string>
+    <string name="new_game">New Game</string>
+    <string name="members_text">Game created by:\n\nDan Willis\nJohnny Hoang\nRobert Gutkowski\nRay Hernaez</string>
 </resources>
