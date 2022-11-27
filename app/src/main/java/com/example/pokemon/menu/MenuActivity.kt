@@ -17,17 +17,18 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        pokemonTeam = PokemonTeam()
-        pokemonCollection = PokemonCollection()
+//        pokemonTeam = initializeTeam()
+//        pokemonCollection = initializeCollection()
     }
 //    private fun initializeCollection(): PokemonCollection {
 //        val pokemonCollection = PokemonCollection()
-//        val types = arrayOf<String>("fire")
+//        val types = ArrayList<String>()
+//        types.add("fire")
 //        val moves = ArrayList<MoveData>()
 //        addMoves(moves)
 //        val pikachuMoves = ArrayList<MoveData>()
 //        addPikachuMoves(pikachuMoves)
-//        val images = arrayOf<Drawable>()
+//        val images = ArrayList<String>()
 //
 //        pokemonCollection.addPokemonToCollection(
 //            Pokemon("charizard","charizard",36,types,
@@ -71,12 +72,13 @@ class MenuActivity : AppCompatActivity() {
 //
 //    private fun initializeTeam(): PokemonTeam {
 //        val pokemonTeam = PokemonTeam()
-//        val types = arrayOf<String>("fire")
+//        val types = ArrayList<String>()
+//        types.add("fire")
 //        val moves = ArrayList<MoveData>()
 //        addMoves(moves)
 //        val pikachuMoves = ArrayList<MoveData>()
 //        addPikachuMoves(pikachuMoves)
-//        val images = arrayOf<Drawable>()
+//        val images = ArrayList<String>()
 //
 //        pokemonTeam.addPokemonToTeam(
 //            Pokemon("charizard","charizard",36,types,
@@ -106,7 +108,7 @@ class MenuActivity : AppCompatActivity() {
 //        return pokemonTeam
 //    }
 //    private fun addMoves(moves: ArrayList<MoveData>){
-//        val types = arrayOf("fire")
+//        val types = "fire"
 //        val move1 = Move(100,40,"other","special", "", 40, types)
 //        moves.add(MoveData("ember", 5,move1))
 //        moves.add(MoveData("whip", 5,move1))
@@ -114,17 +116,13 @@ class MenuActivity : AppCompatActivity() {
 //        moves.add(MoveData("sleep", 5,move1))
 //    }
 //    private fun addPikachuMoves(moves: ArrayList<MoveData>){
-//        val types= arrayOf("electric")
+//        val types= "electric"
 //        val move = Move(100,40,"other","special", "", 40, types)
 //        moves.add(MoveData("Thunderbolt", 5,move))
 //        moves.add(MoveData("Swift tackle", 5,move))
 //        moves.add(MoveData("Roll", 5,move))
 //        moves.add(MoveData("Static", 5,move))
 //    }
-
-    public fun getBind(): ActivityMenuBinding {
-        return this.binding
-    }
 
     public fun getTeam() : PokemonTeam {
         return this.pokemonTeam

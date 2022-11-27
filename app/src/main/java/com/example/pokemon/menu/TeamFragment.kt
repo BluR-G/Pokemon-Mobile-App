@@ -23,20 +23,14 @@ class TeamFragment : Fragment() {
         val binding = FragmentTeamBinding.inflate(layoutInflater)
         val team = menuActivity.getTeam()
 
-        if(team.getSize() >= 6){
-            binding.addTeam.visibility = View.INVISIBLE
-        } else {
-            binding.addTeam.visibility = View.VISIBLE
-        }
+        binding.addTeam.isEnabled = team.getSize() < 6
+
         binding.addTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_teamAddPokemonFragment)
         }
 
-        if(team.getSize() == 0){
-            binding.removeTeam.visibility = View.INVISIBLE
-        } else {
-            binding.removeTeam.visibility = View.VISIBLE
-        }
+        binding.removeTeam.isEnabled = team.getSize() != 0
+
         binding.removeTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_teamRemovePokemonFragment)
         }
