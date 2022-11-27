@@ -101,6 +101,7 @@ class IntroFragment : Fragment() {
                 pokemon = PokemonCreation().createPokemon(starterPokemon, nickname, 5)
                 lifecycleScope.launch(Dispatchers.Main){
                     val intent = Intent(activity, MenuActivity::class.java)
+                    intent.putExtra("pokemon", pokemon)
                     startActivity(intent)
                 }
             }catch (e: Exception){

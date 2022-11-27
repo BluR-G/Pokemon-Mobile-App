@@ -1,10 +1,11 @@
 package com.example.pokemon.objects
 
 import android.graphics.drawable.Drawable
+import java.io.Serializable
 import kotlin.math.floor
 import kotlin.math.pow
 
-class Pokemon {
+class Pokemon : Serializable {
     private var species: String = ""
     private var name: String = ""
     private var level: Int = 0
