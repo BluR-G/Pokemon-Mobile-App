@@ -2,6 +2,8 @@ package com.example.pokemon
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -85,16 +87,25 @@ class IntroFragment : Fragment() {
 
         binding.IntroGoToMainMenu.setOnClickListener {
             handleThreading()
-            val intent = Intent(activity, MenuActivity::class.java)
-            startActivity(intent)
         }
 
         return binding.root
     }
 
     private fun handleThreading() {
+        val activity: MainActivity =  context as MainActivity
         lifecycleScope.launch(Dispatchers.IO) {
-            pokemon = PokemonCreation().createPokemon(starterPokemon, nickname, 5)
+            try {
+                pokemon = PokemonCreation().createPokemon(starterPokemon, nickname, 5)
+                lifecycleScope.launch(Dispatchers.Main){
+                    val intent = Intent(activity, MenuActivity::class.java)
+                    startActivity(intent)
+                }
+            }catch (e: Exception){
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(activity, "Pokemon Data not found", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

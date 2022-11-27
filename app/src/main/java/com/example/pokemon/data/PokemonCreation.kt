@@ -11,11 +11,11 @@ import javax.net.ssl.HttpsURLConnection
 
 class PokemonCreation {
 
-    private var pokemonObject: JsonObject = JsonObject()
+//    private var pokemonObject: JsonObject = JsonObject()
     private var moveObject: JsonObject = JsonObject()
 
     // search for pokemon on DB and if not there, search on the web
-    private suspend fun searchPokemon(input : String){
+    private suspend fun searchPokemon(input : String): JsonObject {
         val GSON: Gson = GsonBuilder().setPrettyPrinting().create()
         val url = URL("https://pokeapi.co/api/v2/pokemon/${input.lowercase()}")
         val conn: HttpsURLConnection = url.openConnection() as HttpsURLConnection
@@ -26,8 +26,11 @@ class PokemonCreation {
         if (conn.responseCode == HttpsURLConnection.HTTP_OK) {
             val response = conn.inputStream.bufferedReader()
             val json: JsonObject = GSON.fromJson(response, JsonObject::class.java)
-            pokemonObject = parsePokemonData(json);
+            val pokemonObject = parsePokemonData(json);
+            return pokemonObject
         }
+        // return empty JsonObject if something went wrong
+        return JsonObject()
     }
 
     private suspend fun searchMove(url : String){
@@ -51,7 +54,7 @@ class PokemonCreation {
         nickname: String,
         initialLevel: Int
     ): Pokemon {
-        searchPokemon(species)
+        val pokemonObject = searchPokemon(species)
         val images = getImages(pokemonObject)
         val species = getName(pokemonObject)
         val id = getId(pokemonObject)
@@ -62,7 +65,7 @@ class PokemonCreation {
         val spDefense = getSpecialDefense(pokemonObject)
         val speed = getSpeed(pokemonObject)
         val exp = getExperience(pokemonObject)
-        val types = getTypes(pokemonObject)
+        val types = getType(pokemonObject)
         val moves = getMoves(pokemonObject)
         var pokemonNickname = nickname
         if (nickname == "") {
@@ -125,7 +128,7 @@ class PokemonCreation {
         return Integer.parseInt(exp)
     }
 
-    private fun getTypes(pokemon: JsonObject): ArrayList<String> {
+    private fun getType(pokemon: JsonObject): ArrayList<String> {
         val list = ArrayList<String>()
         val types = pokemon.get("types").asJsonArray
         for (i in 0 until types.size()) {
