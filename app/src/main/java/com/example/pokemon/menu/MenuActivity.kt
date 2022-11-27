@@ -19,6 +19,12 @@ class MenuActivity : AppCompatActivity() {
         setContentView(binding.root)
         val pokemon = intent.getSerializableExtra("pokemon") as Pokemon
         pokemonTeam.addPokemonToTeam(pokemon)
+        pokemonTeam.addPokemonToTeam(pokemon)
+        pokemonTeam.addPokemonToTeam(pokemon)
+        pokemonTeam.addPokemonToTeam(pokemon)
+        pokemonTeam.addPokemonToTeam(pokemon)
+        pokemonTeam.addPokemonToTeam(pokemon)
+
 //        pokemonTeam = initializeTeam()
 //        pokemonCollection = initializeCollection()
     }

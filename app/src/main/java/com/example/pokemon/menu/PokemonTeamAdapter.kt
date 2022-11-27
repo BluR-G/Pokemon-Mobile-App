@@ -11,14 +11,19 @@ import com.example.pokemon.R
 import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonTeam
 import android.content.Context
+import android.graphics.Bitmap
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 
-class PokemonTeamAdapter(team: PokemonTeam, private val context: Context) : RecyclerView.Adapter<PokemonTeamAdapter.PokemonViewHolder>(){
-    private var pokemonTeam = team
+class PokemonTeamAdapter(private var pokemonTeam: PokemonTeam, private var pokemonSprites: ArrayList<Bitmap>, private val context: Context) : RecyclerView.Adapter<PokemonTeamAdapter.PokemonViewHolder>(){
     lateinit var menuActivity: MenuActivity
 
     class PokemonViewHolder(view: View) : RecyclerView.ViewHolder(view){
+        val pokemonView : LinearLayout = view.findViewById(R.id.pokemon_view)
         val pokemonName: TextView = view.findViewById(R.id.pokemon_name)
+        val pokemonLevel: TextView = view.findViewById(R.id.pokemon_level)
+        val pokemonSprite : ImageView = view.findViewById(R.id.pokemon_sprite)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
@@ -29,10 +34,14 @@ class PokemonTeamAdapter(team: PokemonTeam, private val context: Context) : Recy
         return PokemonViewHolder(layout)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
+        //TODO: add image into adapter
         val pokemon = pokemonTeam.getPokemon(position)
+        holder.pokemonSprite.setImageBitmap(pokemonSprites[position])
         holder.pokemonName.text = pokemon.getName()
-        holder.pokemonName.setOnClickListener { view: View ->
+        holder.pokemonLevel.text = "Lvl: ${pokemon.getLevel()}"
+        holder.pokemonView.setOnClickListener { view: View ->
             handleEvent(view,pokemon)
         }
     }

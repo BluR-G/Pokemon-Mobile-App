@@ -8,10 +8,10 @@
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,11 +19,12 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginEnd="50dp">
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical">
             <Button
                 android:id="@+id/addTeam"
-                android:layout_width="wrap_content"
+                android:layout_width="195dp"
                 android:layout_height="wrap_content"
                 android:text="@string/add_team"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -32,7 +33,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
             <Button
                 android:id="@+id/removeTeam"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/remove_team"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -42,7 +43,7 @@
 
             <Button
                 android:id="@+id/changeOrder"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/change_order"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +53,7 @@
 
             <Button
                 android:id="@+id/viewCollection"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/view_collection"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -62,7 +63,7 @@
 
             <Button
                 android:id="@+id/TeamGoToMainMenu"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/go_to_main_menu"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -76,13 +77,14 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/pokemon_team_recycler_view"
                 android:layout_width="wrap_content"
-                android:layout_height="241dp"
+                android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:padding="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -94,15 +96,15 @@
     </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:text="pokemon team"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView3"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="68dp"-->
+<!--        android:text="pokemon team"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
 
