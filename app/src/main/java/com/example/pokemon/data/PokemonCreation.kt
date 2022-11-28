@@ -176,13 +176,14 @@ class PokemonCreation {
             val accuracy = Integer.parseInt(parseMove.get("accuracy").asString)
             val power = Integer.parseInt(parseMove.get("power").asString)
             val damageClass = parseMove.get("damageClass").asString
+            val heal = Integer.parseInt(parseMove.get("heal").asString)
             val target = parseMove.get("target").asString
             val type = parseMove.get("type").asString
 
             val effect = parseMove.get("ailment").asString
             val effectChance = Integer.parseInt(parseMove.get("ailmentChance").asString)
 
-            val moveDetails = Move(accuracy, power, damageClass, target, effect, effectChance, type)
+            val moveDetails = Move(accuracy, power, damageClass, heal, target, effect, effectChance, type)
             list.add(MoveData(name, level, moveDetails))
         }
         return list

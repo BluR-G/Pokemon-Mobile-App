@@ -29,8 +29,9 @@ class TeamFragment : Fragment() {
         menuActivity = context as MenuActivity
         val binding = FragmentTeamBinding.inflate(layoutInflater)
         val team = menuActivity.getTeam()
+        val collection = menuActivity.getCollect()
 
-        binding.addTeam.isEnabled = team.getSize() < 6
+        binding.addTeam.isEnabled = team.getSize() < 6 && collection.getSize() != 0
 
         binding.addTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_teamAddPokemonFragment)
@@ -41,6 +42,7 @@ class TeamFragment : Fragment() {
         binding.removeTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_teamRemovePokemonFragment)
         }
+        binding.viewCollection.isEnabled = collection.getSize() > 0
 
         binding.viewCollection.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_viewCollectionFragment)
