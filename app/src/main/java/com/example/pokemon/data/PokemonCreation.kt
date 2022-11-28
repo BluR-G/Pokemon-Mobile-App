@@ -1,11 +1,15 @@
 package com.example.pokemon.data
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import com.example.pokemon.objects.Move
 import com.example.pokemon.objects.MoveData
 import com.example.pokemon.objects.Pokemon
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
+import java.io.ByteArrayOutputStream
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
@@ -77,11 +81,33 @@ class PokemonCreation {
     private fun getImages(pokemon: JsonObject): ArrayList<String> {
         val list = ArrayList<String>()
         val imageObject = pokemon.get("sprites").asJsonObject
+
         val imageFrontUrl = imageObject.get("front").asString
+        val imageFrontStr = urlToBitmapStr(imageFrontUrl)
+
         val imageBackUrl = imageObject.get("back").asString
-        list.add(imageFrontUrl)
-        list.add(imageBackUrl)
+        val imageBackStr = urlToBitmapStr(imageBackUrl)
+//        val imageBackURLObj = URL(imageBackUrl)
+//        val imageBackBitmap = BitmapFactory.decodeStream(imageBackURLObj.openConnection() .getInputStream())
+//        val baosBack = ByteArrayOutputStream()
+//        imageBackBitmap.compress(Bitmap.CompressFormat.PNG, 100, baosBack)
+//        val bB = baosBack.toByteArray()
+//        val imageBackStr = Base64.encodeToString(bB, Base64.DEFAULT)
+
+//        list.add(imageFrontUrl)
+//        list.add(imageBackUrl)
+        list.add(imageFrontStr)
+        list.add(imageBackStr)
         return list
+    }
+
+    private fun urlToBitmapStr(imageUrl: String): String {
+        val imageURLObj = URL(imageUrl)
+        val imageBitmap = BitmapFactory.decodeStream(imageURLObj.openConnection().getInputStream())
+        val baos = ByteArrayOutputStream()
+        imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        val b = baos.toByteArray()
+        return Base64.encodeToString(b, Base64.DEFAULT)
     }
 
     private fun getName(pokemon: JsonObject): String {

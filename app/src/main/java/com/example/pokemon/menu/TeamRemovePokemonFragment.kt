@@ -36,23 +36,28 @@ class TeamRemovePokemonFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val pokemonTeam = menuActivity.getTeam()
-        val pokemonImageBitmaps = ArrayList<Bitmap>(pokemonTeam.getSize())
-        lifecycleScope.launch(Dispatchers.IO){
-            for(i in 0 until pokemonTeam.getSize()){
-                val sprites : ArrayList<String> = pokemonTeam.getPokemon(i).getImages()
-                val frontSprite = sprites[0]
-                val imageURL = URL(frontSprite)
-                val imageBitmap = BitmapFactory.decodeStream(imageURL.openConnection() .getInputStream());
-                pokemonImageBitmaps.add(imageBitmap)
-            }
-            lifecycleScope.launch(Dispatchers.Main){
-                val recyclerView = view.findViewById<RecyclerView>(R.id.remove_pokemon_recycler_view)
-                recyclerView.apply {
-                    layoutManager = GridLayoutManager(activity, 3)
-                    recyclerView.adapter = PokemonTeamAdapter(pokemonTeam, pokemonImageBitmaps, view.context)
-                }
-            }
+        val recyclerView = view.findViewById<RecyclerView>(R.id.remove_pokemon_recycler_view)
+        recyclerView.apply {
+            layoutManager = GridLayoutManager(activity, 3)
+            recyclerView.adapter = PokemonTeamAdapter(pokemonTeam, view.context)
         }
+        //val pokemonImageBitmaps = ArrayList<Bitmap>(pokemonTeam.getSize())
+//        lifecycleScope.launch(Dispatchers.IO){
+//            for(i in 0 until pokemonTeam.getSize()){
+//                val sprites : ArrayList<String> = pokemonTeam.getPokemon(i).getImages()
+//                val frontSprite = sprites[0]
+//                val imageURL = URL(frontSprite)
+//                val imageBitmap = BitmapFactory.decodeStream(imageURL.openConnection() .getInputStream());
+//                pokemonImageBitmaps.add(imageBitmap)
+//            }
+//            lifecycleScope.launch(Dispatchers.Main){
+//                val recyclerView = view.findViewById<RecyclerView>(R.id.remove_pokemon_recycler_view)
+//                recyclerView.apply {
+//                    layoutManager = GridLayoutManager(activity, 3)
+//                    recyclerView.adapter = PokemonTeamAdapter(pokemonTeam, pokemonImageBitmaps, view.context)
+//                }
+//            }
+//        }
 
     }
 }

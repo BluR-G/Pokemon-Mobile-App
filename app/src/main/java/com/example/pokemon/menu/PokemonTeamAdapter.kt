@@ -12,11 +12,13 @@ import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonTeam
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 
-class PokemonTeamAdapter(private var pokemonTeam: PokemonTeam, private var pokemonSprites: ArrayList<Bitmap>, private val context: Context) : RecyclerView.Adapter<PokemonTeamAdapter.PokemonViewHolder>(){
+class PokemonTeamAdapter(private var pokemonTeam: PokemonTeam, private val context: Context) : RecyclerView.Adapter<PokemonTeamAdapter.PokemonViewHolder>(){
     lateinit var menuActivity: MenuActivity
 
     class PokemonViewHolder(view: View) : RecyclerView.ViewHolder(view){
@@ -38,7 +40,11 @@ class PokemonTeamAdapter(private var pokemonTeam: PokemonTeam, private var pokem
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         //TODO: add image into adapter
         val pokemon = pokemonTeam.getPokemon(position)
-        holder.pokemonSprite.setImageBitmap(pokemonSprites[position])
+        val img = pokemon.getImages()
+        val imgFront = img[0]
+        val imageBytes = Base64.decode(imgFront, 0)
+        val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        holder.pokemonSprite.setImageBitmap(image)
         holder.pokemonName.text = pokemon.getName()
         holder.pokemonLevel.text = "Lvl: ${pokemon.getLevel()}"
         holder.pokemonView.setOnClickListener { view: View ->
