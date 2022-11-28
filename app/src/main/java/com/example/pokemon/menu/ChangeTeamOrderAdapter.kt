@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemon.R
 import com.example.pokemon.objects.PokemonTeam
@@ -33,7 +32,6 @@ class ChangeTeamOrderAdapter(team: PokemonTeam) : RecyclerView.Adapter<ChangeTea
         val imgFront = img[0]
         val imageBytes = Base64.decode(imgFront, 0)
         val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-        //holder.pokemonImage.text = pokemonTeam.getPokemon(position).getName()
         holder.pokemonImage.setImageBitmap(image)
         holder.orderNumber.setText(position.toString())
     }

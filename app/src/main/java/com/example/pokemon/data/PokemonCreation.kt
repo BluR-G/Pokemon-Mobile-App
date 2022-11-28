@@ -87,15 +87,6 @@ class PokemonCreation {
 
         val imageBackUrl = imageObject.get("back").asString
         val imageBackStr = urlToBitmapStr(imageBackUrl)
-//        val imageBackURLObj = URL(imageBackUrl)
-//        val imageBackBitmap = BitmapFactory.decodeStream(imageBackURLObj.openConnection() .getInputStream())
-//        val baosBack = ByteArrayOutputStream()
-//        imageBackBitmap.compress(Bitmap.CompressFormat.PNG, 100, baosBack)
-//        val bB = baosBack.toByteArray()
-//        val imageBackStr = Base64.encodeToString(bB, Base64.DEFAULT)
-
-//        list.add(imageFrontUrl)
-//        list.add(imageBackUrl)
         list.add(imageFrontStr)
         list.add(imageBackStr)
         return list

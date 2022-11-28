@@ -37,7 +37,7 @@ class TeamFragment : Fragment() {
             view.findNavController().navigate(R.id.action_teamFragment_to_teamAddPokemonFragment)
         }
 
-        binding.removeTeam.isEnabled = team.getSize() != 0
+        binding.removeTeam.isEnabled = team.getSize() > 1
 
         binding.removeTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_teamFragment_to_teamRemovePokemonFragment)
