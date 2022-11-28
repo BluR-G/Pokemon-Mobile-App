@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.pokemon.data.PokemonCreation
+import com.example.pokemon.databinding.ActivityMenuBinding
 import com.example.pokemon.objects.Pokemon
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,12 +29,13 @@ class IntroFragment : Fragment() {
     private var nickname : String = ""
     private var username : String = "";
     private lateinit var pokemon: Pokemon
+    lateinit var binding: FragmentIntroBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentIntroBinding.inflate(layoutInflater)
+        binding = FragmentIntroBinding.inflate(layoutInflater)
 
         var isUserNameValid : Boolean = false;
         var isStarterPicked : Boolean = false;
@@ -96,6 +98,8 @@ class IntroFragment : Fragment() {
 
     private fun handleThreading() {
         val activity: MainActivity =  context as MainActivity
+        binding.IntroGoToMainMenu.isEnabled = false;
+        Toast.makeText(activity, "Loading...", Toast.LENGTH_SHORT).show()
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 pokemon = PokemonCreation().createPokemon(starterPokemon, nickname, 5)
@@ -108,6 +112,7 @@ class IntroFragment : Fragment() {
                 Handler(Looper.getMainLooper()).post {
                     Toast.makeText(activity, "Pokemon Data not found", Toast.LENGTH_SHORT).show()
                 }
+                binding.IntroGoToMainMenu.isEnabled = true;
             }
         }
     }
