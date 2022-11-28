@@ -2,9 +2,13 @@ package com.example.pokemon.menu
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.findNavController
@@ -13,12 +17,14 @@ import com.example.pokemon.R
 import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonCollection
 
-class CollectionAdaptor(collection : PokemonCollection, private val context: Context) : RecyclerView.Adapter<CollectionAdaptor.PokemonViewHolder>() {
-    private var pokemonCollection = collection
+class CollectionAdaptor(private var pokemonCollection : PokemonCollection, private val context: Context) : RecyclerView.Adapter<CollectionAdaptor.PokemonViewHolder>() {
     lateinit var menuActivity: MenuActivity
 
     class PokemonViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val pokemon: TextView = view.findViewById(R.id.pokemon_name)
+        val pokemonView : LinearLayout = view.findViewById(R.id.pokemon_view)
+        val pokemonName: TextView = view.findViewById(R.id.pokemon_name)
+        val pokemonLevel: TextView = view.findViewById(R.id.pokemon_level)
+        val pokemonSprite : ImageView = view.findViewById(R.id.pokemon_sprite)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
@@ -29,11 +35,18 @@ class CollectionAdaptor(collection : PokemonCollection, private val context: Con
         return PokemonViewHolder(layout)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         val pokemon = pokemonCollection.getPokemon(position)
-        holder.pokemon.text = pokemon.getName()
-        holder.pokemon.setOnClickListener { view : View ->
-            handleEvent(view, pokemon)
+        val img = pokemon.getImages()
+        val imgFront = img[0]
+        val imageBytes = Base64.decode(imgFront, 0)
+        val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        holder.pokemonSprite.setImageBitmap(image)
+        holder.pokemonName.text = pokemon.getName()
+        holder.pokemonLevel.text = "Lvl: ${pokemon.getLevel()}"
+        holder.pokemonView.setOnClickListener { view: View ->
+            handleEvent(view,pokemon)
         }
     }
 

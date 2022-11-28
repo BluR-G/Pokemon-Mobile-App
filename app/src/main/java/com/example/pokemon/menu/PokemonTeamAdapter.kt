@@ -38,7 +38,6 @@ class PokemonTeamAdapter(private var pokemonTeam: PokemonTeam, private val conte
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        //TODO: add image into adapter
         val pokemon = pokemonTeam.getPokemon(position)
         val img = pokemon.getImages()
         val imgFront = img[0]
