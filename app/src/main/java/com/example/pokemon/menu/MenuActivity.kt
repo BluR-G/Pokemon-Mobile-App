@@ -7,8 +7,9 @@ import com.example.pokemon.databinding.ActivityMenuBinding
 import com.example.pokemon.objects.*
 
 class MenuActivity : AppCompatActivity() {
-    var pokemonTeam = PokemonTeam()
-    var pokemonCollection = PokemonCollection()
+    private var pokemonTeam = PokemonTeam()
+    private var pokemonCollection = PokemonCollection()
+    private var pokemon : Pokemon? = null
 
     lateinit var binding: ActivityMenuBinding
 
@@ -31,6 +32,14 @@ class MenuActivity : AppCompatActivity() {
 
     fun getCollect() : PokemonCollection {
         return this.pokemonCollection
+    }
+
+    fun getPokemon() : Pokemon? {
+        return this.pokemon
+    }
+
+    fun setPokemon(pokemon : Pokemon) {
+        this.pokemon = pokemon
     }
 
 

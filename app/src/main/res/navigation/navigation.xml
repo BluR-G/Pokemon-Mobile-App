@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_teamFragment_to_changeTeamOrderFragment"
             app:destination="@id/changeTeamOrderFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_pokedexFragment"
+            app:destination="@id/pokedexFragment" />
     </fragment>
     <fragment
         android:id="@+id/teamAddPokemonFragment"
@@ -73,6 +76,9 @@
         <action
             android:id="@+id/action_viewCollectionFragment_to_teamFragment"
             app:destination="@id/teamFragment" />
+        <action
+            android:id="@+id/action_viewCollectionFragment_to_pokedexFragment"
+            app:destination="@id/pokedexFragment" />
     </fragment>
     <fragment
         android:id="@+id/changeTeamOrderFragment"
@@ -81,6 +87,15 @@
         tools:layout="@layout/fragment_change_team_order" >
         <action
             android:id="@+id/action_changeTeamOrderFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pokedexFragment"
+        android:name="com.example.pokemon.menu.PokedexFragment"
+        android:label="fragment_pokedex"
+        tools:layout="@layout/fragment_pokedex" >
+        <action
+            android:id="@+id/action_pokedexFragment_to_teamFragment"
             app:destination="@id/teamFragment" />
     </fragment>
 </navigation>
