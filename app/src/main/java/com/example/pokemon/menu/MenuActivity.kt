@@ -24,12 +24,6 @@ class MenuActivity : AppCompatActivity() {
         setContentView(binding.root)
         val pokemon = intent.getSerializableExtra("pokemon") as Pokemon
         pokemonTeam.addPokemonToTeam(pokemon)
-        lifecycleScope.launch(Dispatchers.IO){
-            val rand = Random.nextInt(1, 150)
-            val diffPokemon = PokemonCreation().createPokemon(rand.toString(),"", 5)
-            pokemonTeam.addPokemonToTeam(diffPokemon)
-        }
-
     }
 
     override fun onBackPressed() {
