@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/pokeCenterFragment"
-        android:name="com.example.pokemon.PokeCenterFragment"
+        android:name="com.example.pokemon.menu.PokeCenterFragment"
         android:label="fragment_poke_center"
         tools:layout="@layout/fragment_poke_center" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainMenuFragment"
-        android:name="com.example.pokemon.MainMenuFragment"
+        android:name="com.example.pokemon.menu.MainMenuFragment"
         android:label="fragment_main_menu"
         tools:layout="@layout/fragment_main_menu" >
         <action
@@ -28,11 +28,59 @@
     </fragment>
     <fragment
         android:id="@+id/teamFragment"
-        android:name="com.example.pokemon.TeamFragment"
+        android:name="com.example.pokemon.menu.TeamFragment"
         android:label="fragment_team"
         tools:layout="@layout/fragment_team" >
         <action
             android:id="@+id/action_teamFragment_to_mainMenuFragment"
             app:destination="@id/mainMenuFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_teamAddPokemonFragment"
+            app:destination="@id/teamAddPokemonFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_teamRemovePokemonFragment"
+            app:destination="@id/teamRemovePokemonFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_viewCollectionFragment"
+            app:destination="@id/viewCollectionFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_changeTeamOrderFragment"
+            app:destination="@id/changeTeamOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamAddPokemonFragment"
+        android:name="com.example.pokemon.menu.TeamAddPokemonFragment"
+        android:label="fragment_team_add_pokemon"
+        tools:layout="@layout/fragment_team_add_pokemon" >
+        <action
+            android:id="@+id/action_teamAddPokemonFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamRemovePokemonFragment"
+        android:name="com.example.pokemon.menu.TeamRemovePokemonFragment"
+        android:label="fragment_team_remove_pokemon"
+        tools:layout="@layout/fragment_team_remove_pokemon" >
+        <action
+            android:id="@+id/action_teamRemovePokemonFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewCollectionFragment"
+        android:name="com.example.pokemon.menu.ViewCollectionFragment"
+        android:label="fragment_view_collection"
+        tools:layout="@layout/fragment_view_collection" >
+        <action
+            android:id="@+id/action_viewCollectionFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeTeamOrderFragment"
+        android:name="com.example.pokemon.menu.ChangeTeamOrderFragment"
+        android:label="fragment_change_team_order"
+        tools:layout="@layout/fragment_change_team_order" >
+        <action
+            android:id="@+id/action_changeTeamOrderFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
     </fragment>
 </navigation>

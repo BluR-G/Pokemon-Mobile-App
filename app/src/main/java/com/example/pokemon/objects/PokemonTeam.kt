@@ -3,7 +3,11 @@ package com.example.pokemon.objects
 import java.io.Serializable
 
 class PokemonTeam : Serializable {
+<<<<<<< HEAD
     private lateinit var pokemons: ArrayList<Pokemon>
+=======
+    private var pokemons: ArrayList<Pokemon> = ArrayList()
+>>>>>>> cd0a12c3e24620c153146ac8800d7b26dc9e0021
 
     constructor(){
         pokemons = ArrayList<Pokemon>()
@@ -22,10 +26,7 @@ class PokemonTeam : Serializable {
 
     fun switchPokemonToTeam(pokemon: Pokemon, pokemonCollection: PokemonCollection){
         pokemonCollection.removePokemonFromCollection(pokemon)
-        val isSuccess = addPokemonToTeam(pokemon)
-        if (!isSuccess){
-            //Toast.makeText(this@MainMenuActivity, "Pokemon Team is full", Toast.LENGTH_SHORT).show()
-        }
+        addPokemonToTeam(pokemon)
     }
 
     fun healAllPokemons(){
@@ -34,7 +35,30 @@ class PokemonTeam : Serializable {
         }
     }
 
+<<<<<<< HEAD
     fun getPokemonTeam() : ArrayList<Pokemon>{
         return pokemons
+=======
+
+    fun getSize(): Int {
+        return this.pokemons.size
+    }
+
+    fun getPokemon(index: Int): Pokemon {
+        if (index < pokemons.size){
+            return pokemons[index]
+        }
+        // if index incorrect, returns the last pokemon
+        return pokemons[pokemons.size - 1]
+
+    }
+
+    fun setNewTeamOrder(teamOrder : MutableMap<Int, Pokemon>) {
+        val newTeam: ArrayList<Pokemon> = ArrayList()
+        for(i in 0 until pokemons.size){
+            teamOrder[i]?.let { newTeam.add(it) }
+        }
+        pokemons = newTeam
+>>>>>>> cd0a12c3e24620c153146ac8800d7b26dc9e0021
     }
 }

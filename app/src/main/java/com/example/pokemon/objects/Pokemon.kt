@@ -10,7 +10,7 @@ class Pokemon : Serializable {
     private var name: String = ""
     private var level: Int = 0
     private var experience: Int = 0
-    private lateinit var types: Array<String>
+    private lateinit var types: ArrayList<String>
     private var currentHp: Int = 0
 
     private var maxHp: Int = 0
@@ -19,11 +19,12 @@ class Pokemon : Serializable {
     private var specialAttack: Int = 0
     private var specialDefense: Int = 0
     private var speed: Int = 0
+    private var statusAfflicted : String = ""
 
     private lateinit var moves: ArrayList<MoveData>
-    private lateinit var images: Array<Drawable>
+    private lateinit var images: ArrayList<String>
 
-    constructor(species: String, name: String, level: Int, types: Array<String>, maxHp: Int, attack: Int, defense: Int, specialAttack: Int, specialDefense: Int, speed: Int, moves: ArrayList<MoveData>, images: Array<Drawable>){
+    constructor(species: String, name: String, level: Int, types: ArrayList<String>, maxHp: Int, attack: Int, defense: Int, specialAttack: Int, specialDefense: Int, speed: Int, moves: ArrayList<MoveData>, images: ArrayList<String>, statusAfflicted : String = ""){
         this.species = species
         this.name = name
         this.level = level
@@ -36,9 +37,13 @@ class Pokemon : Serializable {
         this.specialAttack = specialAttack * (50 + level) / 50
         this.specialDefense = specialDefense * (50 + level) / 50
         this.speed = speed * (50 + level) / 50
-
+        this.statusAfflicted = statusAfflicted
         this.moves = moves
         this.images = images
+    }
+
+    fun getStatusAfflicted(): String {
+        return this.statusAfflicted
     }
 
     fun getSpecies(): String{
@@ -77,7 +82,7 @@ class Pokemon : Serializable {
         }
     }
 
-    fun getTypes(): Array<String>{
+    fun getTypes(): ArrayList<String>{
         return this.types
     }
 
@@ -155,7 +160,7 @@ class Pokemon : Serializable {
         return false
     }
 
-    fun getImages(): Array<Drawable>{
+    fun getImages(): ArrayList<String>{
         return this.images
     }
 }
