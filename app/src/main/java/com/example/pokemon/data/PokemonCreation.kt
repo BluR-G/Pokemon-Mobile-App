@@ -75,7 +75,7 @@ class PokemonCreation {
         if (nickname == "") {
             pokemonNickname = species
         }
-        return Pokemon(species, pokemonNickname, initialLevel, types, hp, attack, defense, spAttack, spDefense, speed, moves, images)
+        return Pokemon(id, species, pokemonNickname, initialLevel, types, hp, attack, defense, spAttack, spDefense, speed, moves, images)
     }
 
     private fun getImages(pokemon: JsonObject): ArrayList<String> {
