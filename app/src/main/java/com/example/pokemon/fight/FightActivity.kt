@@ -1,6 +1,7 @@
 package com.example.pokemon.fight
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pokemon.databinding.ActivityFightBinding
 import com.example.pokemon.objects.Pokemon
@@ -17,6 +18,7 @@ class FightActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityFightBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        Log.d("damagechart", DamageChart().getDamageMultiplier("normal", "ghost").toString()) // debug
         this.pokemonTeam =intent.getSerializableExtra("pokemonTeam") as PokemonTeam
         this.battleType=intent.getStringExtra("battleType") as String
         if(battleType == "wild"){
