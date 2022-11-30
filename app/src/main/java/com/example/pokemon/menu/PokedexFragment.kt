@@ -20,6 +20,7 @@ class PokedexFragment : Fragment() {
     lateinit var binding : FragmentPokedexBinding
 
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,7 +28,12 @@ class PokedexFragment : Fragment() {
 
         binding = FragmentPokedexBinding.inflate(layoutInflater)
         binding.goBack.setOnClickListener { view : View ->
-            view.findNavController().navigate(R.id.action_pokedexFragment_to_teamFragment)
+            val previousFragmentId = view.findNavController().previousBackStackEntry?.destination?.displayName
+            if(previousFragmentId == context?.getString(R.string.team_fragment)){
+                view.findNavController().navigate(R.id.action_pokedexFragment_to_teamFragment)
+            } else if(previousFragmentId == context?.getString(R.string.view_collection_fragment)){
+                view.findNavController().navigate(R.id.action_pokedexFragment_to_viewCollectionFragment)
+            }
         }
         return binding.root
     }

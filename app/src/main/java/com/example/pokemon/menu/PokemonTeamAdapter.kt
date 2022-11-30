@@ -11,14 +11,11 @@ import com.example.pokemon.R
 import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonTeam
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
-import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.core.os.bundleOf
 
 class PokemonTeamAdapter(private var pokemonTeam: PokemonTeam, private val context: Context) : RecyclerView.Adapter<PokemonTeamAdapter.PokemonViewHolder>(){
     lateinit var menuActivity: MenuActivity
@@ -55,18 +52,13 @@ class PokemonTeamAdapter(private var pokemonTeam: PokemonTeam, private val conte
 
     @SuppressLint("RestrictedApi")
     private fun handleEvent(view: View, pokemon: Pokemon) {
-        val previousFragmentId = view.findNavController().currentBackStackEntry?.destination?.displayName
-        if (previousFragmentId != null) {
-            Log.d("id", previousFragmentId)
-        }
-        if(previousFragmentId == context.getString(R.string.remove_pokemon_fragment)){
+        val currentFragmentId = view.findNavController().currentBackStackEntry?.destination?.displayName
+        if(currentFragmentId == context.getString(R.string.remove_pokemon_fragment)){
             removeFromTeam(view, pokemon)
-        } else if (previousFragmentId == context.getString(R.string.team_fragment)){
-            val bundle = bundleOf("pokemon" to pokemon)
+        } else if (currentFragmentId == context.getString(R.string.team_fragment)){
             menuActivity.setPokemon(pokemon)
-            view.findNavController().navigate(R.id.action_teamFragment_to_pokedexFragment, bundle)
+            view.findNavController().navigate(R.id.action_teamFragment_to_pokedexFragment)
         }
-
     }
 
     private fun removeFromTeam(view: View, pokemon: Pokemon) {

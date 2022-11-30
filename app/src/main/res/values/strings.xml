@@ -7,6 +7,7 @@
     <string name="remove_pokemon_fragment">com.example.pokemon:id/teamRemovePokemonFragment</string>
     <string name="add_pokemon_fragment">com.example.pokemon:id/teamAddPokemonFragment</string>
     <string name="team_fragment">com.example.pokemon:id/teamFragment</string>
+    <string name="view_collection_fragment">com.example.pokemon:id/viewCollectionFragment</string>
     <string name="cancel">Cancel</string>
     <string name="go_to_pokecenter">Go to pokecenter</string>
     <string name="go_to_teams">Go to teams</string>
@@ -30,4 +31,5 @@
     <string name="members_text">Game created by:\n\nDan Willis\nJohnny Hoang\nRobert Gutkowski\nRay Hernaez</string>
     <string name="pokemon_sprite">Pokemon\'s Sprite</string>
     <string name="image_view_desc">Image of Pokemon</string>
+    <string name="view_pokedex_entry">Select pokemon to view their Pokedex entry</string>
 </resources>

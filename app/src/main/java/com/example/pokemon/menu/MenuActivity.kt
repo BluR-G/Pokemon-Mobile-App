@@ -3,8 +3,13 @@ package com.example.pokemon.menu
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import com.example.pokemon.data.PokemonCreation
 import com.example.pokemon.databinding.ActivityMenuBinding
 import com.example.pokemon.objects.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class MenuActivity : AppCompatActivity() {
     private var pokemonTeam = PokemonTeam()
@@ -19,6 +24,12 @@ class MenuActivity : AppCompatActivity() {
         setContentView(binding.root)
         val pokemon = intent.getSerializableExtra("pokemon") as Pokemon
         pokemonTeam.addPokemonToTeam(pokemon)
+        lifecycleScope.launch(Dispatchers.IO){
+            val rand = Random.nextInt(1, 150)
+            val diffPokemon = PokemonCreation().createPokemon(rand.toString(),"", 5)
+            pokemonTeam.addPokemonToTeam(diffPokemon)
+        }
+
     }
 
     override fun onBackPressed() {

@@ -52,9 +52,12 @@ class CollectionAdaptor(private var pokemonCollection : PokemonCollection, priva
 
     @SuppressLint("RestrictedApi")
     private fun handleEvent(view: View, pokemon: Pokemon) {
-        val previousFragmentId = view.findNavController().currentBackStackEntry?.destination?.displayName
-        if(previousFragmentId == context.getString(R.string.add_pokemon_fragment)){
+        val currentFragmentId = view.findNavController().currentBackStackEntry?.destination?.displayName
+        if(currentFragmentId == context.getString(R.string.add_pokemon_fragment)){
             addToTeam(view, pokemon)
+        } else if(currentFragmentId == context.getString(R.string.view_collection_fragment)){
+            menuActivity.setPokemon(pokemon)
+            view.findNavController().navigate(R.id.action_viewCollectionFragment_to_pokedexFragment)
         }
     }
 
