@@ -8,14 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.findNavController
-import com.example.pokemon.FightActivity
+import com.example.pokemon.fight.FightActivity
 import com.example.pokemon.R
 import com.example.pokemon.databinding.FragmentMainMenuBinding
-import com.example.pokemon.fight.FightActivity
+
 
 
 class MainMenuFragment : Fragment() {
-
+    private lateinit var menuActivity : MenuActivity
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

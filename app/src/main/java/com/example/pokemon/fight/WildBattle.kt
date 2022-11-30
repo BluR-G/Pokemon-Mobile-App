@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.pokemon.R
+import com.example.pokemon.data.PokemonCreation
 import com.example.pokemon.objects.Move
 import com.example.pokemon.objects.MoveData
 import com.example.pokemon.objects.Pokemon
@@ -16,7 +17,7 @@ import kotlinx.coroutines.withContext
 
 class WildBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(pokemonTeam, activity){
     init {
-        setCurrentEnemyPokemon(generatePokemon())
+        generatePokemon()
         initializeMessage()
        }
     private fun initializeMessage(){
@@ -70,23 +71,22 @@ class WildBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(pok
         // TODO: Pokemon catching mechanics
     }
     // Generate Random Wild Pokemon
-    fun generatePokemon():Pokemon{
-        val types = arrayOf<String>("grass")
-        val moves = ArrayList<MoveData>()
-        addMoves(moves)
-        val images = arrayOf<Drawable>()
-        return Pokemon("bulbausar","bulbausar",36,types,
-            60,30,40,100,200,100, moves, images)
+    fun generatePokemon(){
+        val creator = PokemonCreation()
+        activity.lifecycleScope.launch(Dispatchers.IO) {
+            var pokemon = creator.createPokemon("bulbasaur", "bulb", 10)
+            setCurrentEnemyPokemon(pokemon)
+        }
     }
     private fun addMoves(moves: ArrayList<MoveData>){
-        val types = arrayOf("fire")
-        val move1 = Move(100,40,"other","special", "", 40, types)
-        val move2 = Move(100,70,"other","special", "", 40, types)
-        val move3 = Move(100,10,"other","special", "", 40, types)
-        val move4 = Move(100,35,"other","special", "", 40, types)
-        moves.add(MoveData("ember", 5,move1))
-        moves.add(MoveData("whip", 5,move2))
-        moves.add(MoveData("tackle", 5,move3))
-        moves.add(MoveData("sleep", 5,move4))
+//        val types = arrayOf("fire")
+//        val move1 = Move(100,40,"other","special", "", 40, types)
+//        val move2 = Move(100,70,"other","special", "", 40, types)
+//        val move3 = Move(100,10,"other","special", "", 40, types)
+//        val move4 = Move(100,35,"other","special", "", 40, types)
+//        moves.add(MoveData("ember", 5,move1))
+//        moves.add(MoveData("whip", 5,move2))
+//        moves.add(MoveData("tackle", 5,move3))
+//        moves.add(MoveData("sleep", 5,move4))
     }
 }

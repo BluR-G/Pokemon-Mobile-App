@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemon.R
 import com.example.pokemon.databinding.FragmentTeamBinding
+import com.example.pokemon.objects.PokemonTeam
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.net.URL
@@ -28,7 +29,7 @@ class TeamFragment : Fragment() {
     ): View {
         menuActivity = context as MenuActivity
         val binding = FragmentTeamBinding.inflate(layoutInflater)
-        val team = menuActivity.getTeam()
+        val team : PokemonTeam = menuActivity.getTeam()
         val collection = menuActivity.getCollect()
 
         binding.addTeam.isEnabled = team.getSize() < 6 && collection.getSize() != 0

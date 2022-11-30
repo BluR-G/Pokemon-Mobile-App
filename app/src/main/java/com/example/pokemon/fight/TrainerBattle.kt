@@ -92,11 +92,11 @@ class TrainerBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(
 
     // Sample data methods
     private fun addMoves(moves: ArrayList<MoveData>){
-        val types = arrayOf("fire")
-        val move1 = Move(100,40,"other","special", "", 40, types)
-        val move2 = Move(100,70,"other","special", "", 40, types)
-        val move3 = Move(100,10,"other","special", "", 40, types)
-        val move4 = Move(100,35,"other","special", "", 40, types)
+        val types = ArrayList<String>()
+        val move1 = Move(100,40,"other",0, "", "sleep",0,"grass")
+        val move2 = Move(100,70,"other",0, "", "sleep",0,"grass")
+        val move3 = Move(100,10,"other",0, "", "sleep",0,"grass")
+        val move4 = Move(100,35,"other",0, "", "sleep",0,"grass")
         moves.add(MoveData("ember", 5,move1))
         moves.add(MoveData("whip", 5,move2))
         moves.add(MoveData("tackle", 5,move3))
@@ -105,10 +105,11 @@ class TrainerBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(
     private fun generateEnemyTeam() : PokemonTeam {
         // generate enemy team according to average lvl
         var enemyTeam = PokemonTeam()
-        var types = arrayOf<String>("water")
+        var types = ArrayList<String>()
+        types.add("water")
         val moves = ArrayList<MoveData>()
         addMoves(moves)
-        var images = arrayOf<Drawable>()
+        var images = ArrayList<String>()
         enemyTeam.addPokemonToTeam(
             Pokemon("blastoise","blastoise",36,types,
                 20,30,40,100,200,100, moves, images)

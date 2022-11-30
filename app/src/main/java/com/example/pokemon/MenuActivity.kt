@@ -34,12 +34,13 @@ class MenuActivity : AppCompatActivity() {
     }
     fun initializeTeam() : PokemonTeam {
         val pokemonTeam = PokemonTeam()
-        val types = arrayOf<String>("fire")
+        val types = ArrayList<String>()
+        types.add("fire")
         val moves = ArrayList<MoveData>()
         addMoves(moves)
         val pikachuMoves = ArrayList<MoveData>()
         addPikachuMoves(pikachuMoves)
-        val images = arrayOf<Drawable>()
+        val images = ArrayList<String>()
 
         pokemonTeam.addPokemonToTeam(
             Pokemon("charizard","charizard",36,types,
@@ -72,11 +73,10 @@ class MenuActivity : AppCompatActivity() {
         return this.pokemonTeam
     }
     private fun addMoves(moves: ArrayList<MoveData>){
-        val types = arrayOf("fire")
-        val move1 = Move(100,40,"other","special", "", 40, types)
-        val move2 = Move(100,70,"other","special", "", 40, types)
-        val move3 = Move(100,10,"other","special", "", 40, types)
-        val move4 = Move(100,35,"other","special", "", 40, types)
+        val move1 = Move(100,40,"other",0, "", "poison", 0, "fire")
+        val move2 = Move(100,70,"other",0, "", "sleep", 0, "fire")
+        val move3 = Move(100,10,"other",0, "", "", 0, "fire")
+        val move4 = Move(100,35,"other",0, "", "", 0, "fire")
         moves.add(MoveData("ember", 5,move1))
         moves.add(MoveData("whip", 5,move2))
         moves.add(MoveData("tackle", 5,move3))
@@ -84,7 +84,7 @@ class MenuActivity : AppCompatActivity() {
     }
     private fun addPikachuMoves(moves: ArrayList<MoveData>){
         val types= arrayOf("electric")
-        val move = Move(100,40,"other","special", "", 40, types)
+        val move = Move(100,40,"other",0, "", "", 0, "electric")
         moves.add(MoveData("Thunderbolt", 5,move))
         moves.add(MoveData("Swift tackle", 5,move))
         moves.add(MoveData("Roll", 5,move))

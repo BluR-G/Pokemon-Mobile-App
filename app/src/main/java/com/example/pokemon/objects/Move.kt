@@ -2,11 +2,8 @@ package com.example.pokemon.objects
 
 import java.io.Serializable
 
-<<<<<<< HEAD
 class Move : Serializable{
-=======
-class Move : Serializable {
->>>>>>> cd0a12c3e24620c153146ac8800d7b26dc9e0021
+
     private var accuracy: Int = 0
     private var power: Int = 0
     private var damageClass: String = ""

@@ -3,11 +3,7 @@ package com.example.pokemon.objects
 import java.io.Serializable
 
 class PokemonTeam : Serializable {
-<<<<<<< HEAD
-    private lateinit var pokemons: ArrayList<Pokemon>
-=======
     private var pokemons: ArrayList<Pokemon> = ArrayList()
->>>>>>> cd0a12c3e24620c153146ac8800d7b26dc9e0021
 
     constructor(){
         pokemons = ArrayList<Pokemon>()
@@ -35,10 +31,8 @@ class PokemonTeam : Serializable {
         }
     }
 
-<<<<<<< HEAD
     fun getPokemonTeam() : ArrayList<Pokemon>{
         return pokemons
-=======
 
     fun getSize(): Int {
         return this.pokemons.size
@@ -59,6 +53,6 @@ class PokemonTeam : Serializable {
             teamOrder[i]?.let { newTeam.add(it) }
         }
         pokemons = newTeam
->>>>>>> cd0a12c3e24620c153146ac8800d7b26dc9e0021
     }
+}
 }

@@ -1,17 +1,9 @@
 package com.example.pokemon.objects
 
-<<<<<<< HEAD
-import android.widget.Toast
-import java.io.Serializable
-
-class PokemonCollection : Serializable{
-    private lateinit var pokemons: ArrayList<Pokemon>
-=======
 import java.io.Serializable
 
 class PokemonCollection : Serializable {
     private var pokemons: ArrayList<Pokemon> = ArrayList()
->>>>>>> cd0a12c3e24620c153146ac8800d7b26dc9e0021
 
     fun addPokemonToCollection(pokemon: Pokemon){
             this.pokemons.add(pokemon)

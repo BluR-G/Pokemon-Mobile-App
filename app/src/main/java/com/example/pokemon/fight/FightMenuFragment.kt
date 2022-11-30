@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.example.pokemon.MenuActivity
 import com.example.pokemon.R
 import com.example.pokemon.databinding.FragmentFightMenuBinding
 import com.example.pokemon.menu.MenuActivity
