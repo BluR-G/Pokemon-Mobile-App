@@ -54,8 +54,7 @@ class PokedexFragment : Fragment() {
         val imageBack = BitmapFactory.decodeByteArray(imageBackBytes, 0, imageBackBytes.size)
 
         binding.pokemonBackImage.setImageBitmap(imageBack)
-        binding.pokemonName.text = "Name: ${pokemon.getSpecies()}"
-        binding.pokemonId.text = "ID: ${pokemon.getId()}"
+        binding.pokemonName.text = "${pokemon.getSpecies()} #${pokemon.getId()}"
         val types = pokemon.getTypes()
         var pokemonType = ""
         for (type in types) {
