@@ -10,15 +10,13 @@ import com.example.pokemon.objects.Move
 import com.example.pokemon.objects.MoveData
 import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonTeam
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class WildBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(pokemonTeam, activity){
     init {
         generatePokemon()
         initializeMessage()
+
        }
     private fun initializeMessage(){
         activity.getBinding().enemyPokemonText.text=getCurrentEnemyPokemon().getSpecies()

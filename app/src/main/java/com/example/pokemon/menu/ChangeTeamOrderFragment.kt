@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemon.R
 import com.example.pokemon.databinding.FragmentChangeTeamOrderBinding
 import com.example.pokemon.objects.Pokemon
+import com.example.pokemon.objects.PokemonTeam
 
 class ChangeTeamOrderFragment : Fragment() {
     lateinit var menuActivity: MenuActivity

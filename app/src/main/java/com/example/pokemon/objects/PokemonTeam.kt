@@ -31,9 +31,9 @@ class PokemonTeam : Serializable {
         }
     }
 
-    fun getPokemonTeam() : ArrayList<Pokemon>{
+    fun getPokemonTeam() : ArrayList<Pokemon> {
         return pokemons
-
+    }
     fun getSize(): Int {
         return this.pokemons.size
     }
@@ -54,5 +54,4 @@ class PokemonTeam : Serializable {
         }
         pokemons = newTeam
     }
-}
 }

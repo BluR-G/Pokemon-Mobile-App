@@ -19,11 +19,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
+import kotlin.collections.ArrayList
 
 abstract class Battle {
     public lateinit var allyPokemonTeam: PokemonTeam
     public lateinit var currentAllyPokemon : Pokemon
-    private lateinit var currentEnemyPokemon: Pokemon
+    private var currentEnemyPokemon: Pokemon = Pokemon("","",0,ArrayList<String>(),0,0,0,0,0,0,ArrayList<MoveData>(),ArrayList<String>(), "")
     public lateinit var activity: FightActivity
 
     constructor(pokemonTeam: PokemonTeam, activity: FightActivity) {

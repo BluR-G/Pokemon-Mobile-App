@@ -27,7 +27,7 @@ class ChangeTeamOrderAdapter(team: PokemonTeam) : RecyclerView.Adapter<ChangeTea
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        val pokemon = pokemonTeam.getPokemon(position)
+        val pokemon = pokemonTeam.getPokemonTeam()[position]
         val img = pokemon.getImages()
         val imgFront = img[0]
         val imageBytes = Base64.decode(imgFront, 0)
@@ -36,5 +36,5 @@ class ChangeTeamOrderAdapter(team: PokemonTeam) : RecyclerView.Adapter<ChangeTea
         holder.orderNumber.setText(position.toString())
     }
 
-    override fun getItemCount(): Int = pokemonTeam.getSize()
+    override fun getItemCount(): Int = pokemonTeam.getPokemonTeam().size
 }

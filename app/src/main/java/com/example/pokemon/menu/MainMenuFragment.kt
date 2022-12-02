@@ -34,7 +34,7 @@ class MainMenuFragment : Fragment() {
     }
     private fun switchBattle(type:String){
         val intent = Intent(menuActivity, FightActivity::class.java)
-        intent.putExtra("pokemonTeam", menuActivity.getPokemonTeam())
+        intent.putExtra("pokemonTeam", menuActivity.getTeam())
         intent.putExtra("battleType", type)
         menuActivity.getResult.launch(intent)
     }
