@@ -21,7 +21,7 @@ class DamageChart {
     )
 
     constructor(){
-        // initialize the value of the 2D array
+        // initialize the values of the 2D array
         arr[getIndexOfType("normal")][getIndexOfType("normal")] = 1.0
         arr[getIndexOfType("normal")][getIndexOfType("fire")] = 1.0
         arr[getIndexOfType("normal")][getIndexOfType("water")] = 1.0
@@ -101,6 +101,166 @@ class DamageChart {
         arr[getIndexOfType("grass")][getIndexOfType("rock")] = 2.0
         arr[getIndexOfType("grass")][getIndexOfType("ghost")] = 1.0
         arr[getIndexOfType("grass")][getIndexOfType("dragon")] = 0.5
+
+        arr[getIndexOfType("ice")][getIndexOfType("normal")] = 1.0
+        arr[getIndexOfType("ice")][getIndexOfType("fire")] = 0.5
+        arr[getIndexOfType("ice")][getIndexOfType("water")] = 0.5
+        arr[getIndexOfType("ice")][getIndexOfType("electric")] = 1.0
+        arr[getIndexOfType("ice")][getIndexOfType("grass")] = 2.0
+        arr[getIndexOfType("ice")][getIndexOfType("ice")] = 0.5
+        arr[getIndexOfType("ice")][getIndexOfType("fighting")] = 1.0
+        arr[getIndexOfType("ice")][getIndexOfType("poison")] = 1.0
+        arr[getIndexOfType("ice")][getIndexOfType("ground")] = 2.0
+        arr[getIndexOfType("ice")][getIndexOfType("flying")] = 2.0
+        arr[getIndexOfType("ice")][getIndexOfType("psychic")] = 1.0
+        arr[getIndexOfType("ice")][getIndexOfType("bug")] = 1.0
+        arr[getIndexOfType("ice")][getIndexOfType("rock")] = 1.0
+        arr[getIndexOfType("ice")][getIndexOfType("ghost")] = 1.0
+        arr[getIndexOfType("ice")][getIndexOfType("dragon")] = 2.0
+
+        arr[getIndexOfType("fighting")][getIndexOfType("normal")] = 2.0
+        arr[getIndexOfType("fighting")][getIndexOfType("fire")] = 1.0
+        arr[getIndexOfType("fighting")][getIndexOfType("water")] = 1.0
+        arr[getIndexOfType("fighting")][getIndexOfType("electric")] = 1.0
+        arr[getIndexOfType("fighting")][getIndexOfType("grass")] = 1.0
+        arr[getIndexOfType("fighting")][getIndexOfType("ice")] = 2.0
+        arr[getIndexOfType("fighting")][getIndexOfType("fighting")] = 1.0
+        arr[getIndexOfType("fighting")][getIndexOfType("poison")] = 0.5
+        arr[getIndexOfType("fighting")][getIndexOfType("ground")] = 1.0
+        arr[getIndexOfType("fighting")][getIndexOfType("flying")] = 0.5
+        arr[getIndexOfType("fighting")][getIndexOfType("psychic")] = 0.5
+        arr[getIndexOfType("fighting")][getIndexOfType("bug")] = 0.5
+        arr[getIndexOfType("fighting")][getIndexOfType("rock")] = 2.0
+        arr[getIndexOfType("fighting")][getIndexOfType("ghost")] = 0.0
+        arr[getIndexOfType("fighting")][getIndexOfType("dragon")] = 1.0
+
+        arr[getIndexOfType("poison")][getIndexOfType("normal")] = 1.0
+        arr[getIndexOfType("poison")][getIndexOfType("fire")] = 1.0
+        arr[getIndexOfType("poison")][getIndexOfType("water")] = 1.0
+        arr[getIndexOfType("poison")][getIndexOfType("electric")] = 1.0
+        arr[getIndexOfType("poison")][getIndexOfType("grass")] = 2.0
+        arr[getIndexOfType("poison")][getIndexOfType("ice")] = 1.0
+        arr[getIndexOfType("poison")][getIndexOfType("fighting")] = 1.0
+        arr[getIndexOfType("poison")][getIndexOfType("poison")] = 0.5
+        arr[getIndexOfType("poison")][getIndexOfType("ground")] = 0.5
+        arr[getIndexOfType("poison")][getIndexOfType("flying")] = 1.0
+        arr[getIndexOfType("poison")][getIndexOfType("psychic")] = 1.0
+        arr[getIndexOfType("poison")][getIndexOfType("bug")] = 1.0
+        arr[getIndexOfType("poison")][getIndexOfType("rock")] = 0.5
+        arr[getIndexOfType("poison")][getIndexOfType("ghost")] = 0.5
+        arr[getIndexOfType("poison")][getIndexOfType("dragon")] = 1.0
+
+        arr[getIndexOfType("ground")][getIndexOfType("normal")] = 1.0
+        arr[getIndexOfType("ground")][getIndexOfType("fire")] = 2.0
+        arr[getIndexOfType("ground")][getIndexOfType("water")] = 1.0
+        arr[getIndexOfType("ground")][getIndexOfType("electric")] = 2.0
+        arr[getIndexOfType("ground")][getIndexOfType("grass")] = 0.5
+        arr[getIndexOfType("ground")][getIndexOfType("ice")] = 1.0
+        arr[getIndexOfType("ground")][getIndexOfType("fighting")] = 1.0
+        arr[getIndexOfType("ground")][getIndexOfType("poison")] = 2.0
+        arr[getIndexOfType("ground")][getIndexOfType("ground")] = 1.0
+        arr[getIndexOfType("ground")][getIndexOfType("flying")] = 0.0
+        arr[getIndexOfType("ground")][getIndexOfType("psychic")] = 1.0
+        arr[getIndexOfType("ground")][getIndexOfType("bug")] = 0.5
+        arr[getIndexOfType("ground")][getIndexOfType("rock")] = 2.0
+        arr[getIndexOfType("ground")][getIndexOfType("ghost")] = 1.0
+        arr[getIndexOfType("ground")][getIndexOfType("dragon")] = 1.0
+
+        arr[getIndexOfType("flying")][getIndexOfType("normal")] = 1.0
+        arr[getIndexOfType("flying")][getIndexOfType("fire")] = 1.0
+        arr[getIndexOfType("flying")][getIndexOfType("water")] = 1.0
+        arr[getIndexOfType("flying")][getIndexOfType("electric")] = 0.5
+        arr[getIndexOfType("flying")][getIndexOfType("grass")] = 2.0
+        arr[getIndexOfType("flying")][getIndexOfType("ice")] = 1.0
+        arr[getIndexOfType("flying")][getIndexOfType("fighting")] = 2.0
+        arr[getIndexOfType("flying")][getIndexOfType("poison")] = 1.0
+        arr[getIndexOfType("flying")][getIndexOfType("ground")] = 1.0
+        arr[getIndexOfType("flying")][getIndexOfType("flying")] = 1.0
+        arr[getIndexOfType("flying")][getIndexOfType("psychic")] = 1.0
+        arr[getIndexOfType("flying")][getIndexOfType("bug")] = 2.0
+        arr[getIndexOfType("flying")][getIndexOfType("rock")] = 0.5
+        arr[getIndexOfType("flying")][getIndexOfType("ghost")] = 1.0
+        arr[getIndexOfType("flying")][getIndexOfType("dragon")] = 1.0
+
+        arr[getIndexOfType("psychic")][getIndexOfType("normal")] = 1.0
+        arr[getIndexOfType("psychic")][getIndexOfType("fire")] = 1.0
+        arr[getIndexOfType("psychic")][getIndexOfType("water")] = 1.0
+        arr[getIndexOfType("psychic")][getIndexOfType("electric")] = 1.0
+        arr[getIndexOfType("psychic")][getIndexOfType("grass")] = 1.0
+        arr[getIndexOfType("psychic")][getIndexOfType("ice")] = 1.0
+        arr[getIndexOfType("psychic")][getIndexOfType("fighting")] = 2.0
+        arr[getIndexOfType("psychic")][getIndexOfType("poison")] = 2.0
+        arr[getIndexOfType("psychic")][getIndexOfType("ground")] = 1.0
+        arr[getIndexOfType("psychic")][getIndexOfType("flying")] = 1.0
+        arr[getIndexOfType("psychic")][getIndexOfType("psychic")] = 0.5
+        arr[getIndexOfType("psychic")][getIndexOfType("bug")] = 1.0
+        arr[getIndexOfType("psychic")][getIndexOfType("rock")] = 1.0
+        arr[getIndexOfType("psychic")][getIndexOfType("ghost")] = 1.0
+        arr[getIndexOfType("psychic")][getIndexOfType("dragon")] = 1.0
+
+        arr[getIndexOfType("bug")][getIndexOfType("normal")] = 1.0
+        arr[getIndexOfType("bug")][getIndexOfType("fire")] = 0.5
+        arr[getIndexOfType("bug")][getIndexOfType("water")] = 1.0
+        arr[getIndexOfType("bug")][getIndexOfType("electric")] = 1.0
+        arr[getIndexOfType("bug")][getIndexOfType("grass")] = 2.0
+        arr[getIndexOfType("bug")][getIndexOfType("ice")] = 1.0
+        arr[getIndexOfType("bug")][getIndexOfType("fighting")] = 0.5
+        arr[getIndexOfType("bug")][getIndexOfType("poison")] = 0.5
+        arr[getIndexOfType("bug")][getIndexOfType("ground")] = 1.0
+        arr[getIndexOfType("bug")][getIndexOfType("flying")] = 0.5
+        arr[getIndexOfType("bug")][getIndexOfType("psychic")] = 2.0
+        arr[getIndexOfType("bug")][getIndexOfType("bug")] = 1.0
+        arr[getIndexOfType("bug")][getIndexOfType("rock")] = 1.0
+        arr[getIndexOfType("bug")][getIndexOfType("ghost")] = 0.5
+        arr[getIndexOfType("bug")][getIndexOfType("dragon")] = 1.0
+
+        arr[getIndexOfType("rock")][getIndexOfType("normal")] = 1.0
+        arr[getIndexOfType("rock")][getIndexOfType("fire")] = 2.0
+        arr[getIndexOfType("rock")][getIndexOfType("water")] = 1.0
+        arr[getIndexOfType("rock")][getIndexOfType("electric")] = 1.0
+        arr[getIndexOfType("rock")][getIndexOfType("grass")] = 1.0
+        arr[getIndexOfType("rock")][getIndexOfType("ice")] = 2.0
+        arr[getIndexOfType("rock")][getIndexOfType("fighting")] = 0.5
+        arr[getIndexOfType("rock")][getIndexOfType("poison")] = 1.0
+        arr[getIndexOfType("rock")][getIndexOfType("ground")] = 0.5
+        arr[getIndexOfType("rock")][getIndexOfType("flying")] = 2.0
+        arr[getIndexOfType("rock")][getIndexOfType("psychic")] = 1.0
+        arr[getIndexOfType("rock")][getIndexOfType("bug")] = 2.0
+        arr[getIndexOfType("rock")][getIndexOfType("rock")] = 1.0
+        arr[getIndexOfType("rock")][getIndexOfType("ghost")] = 1.0
+        arr[getIndexOfType("rock")][getIndexOfType("dragon")] = 1.0
+
+        arr[getIndexOfType("ghost")][getIndexOfType("normal")] = 0.0
+        arr[getIndexOfType("ghost")][getIndexOfType("fire")] = 1.0
+        arr[getIndexOfType("ghost")][getIndexOfType("water")] = 1.0
+        arr[getIndexOfType("ghost")][getIndexOfType("electric")] = 1.0
+        arr[getIndexOfType("ghost")][getIndexOfType("grass")] = 1.0
+        arr[getIndexOfType("ghost")][getIndexOfType("ice")] = 1.0
+        arr[getIndexOfType("ghost")][getIndexOfType("fighting")] = 1.0
+        arr[getIndexOfType("ghost")][getIndexOfType("poison")] = 1.0
+        arr[getIndexOfType("ghost")][getIndexOfType("ground")] = 1.0
+        arr[getIndexOfType("ghost")][getIndexOfType("flying")] = 1.0
+        arr[getIndexOfType("ghost")][getIndexOfType("psychic")] = 2.0
+        arr[getIndexOfType("ghost")][getIndexOfType("bug")] = 1.0
+        arr[getIndexOfType("ghost")][getIndexOfType("rock")] = 1.0
+        arr[getIndexOfType("ghost")][getIndexOfType("ghost")] = 2.0
+        arr[getIndexOfType("ghost")][getIndexOfType("dragon")] = 1.0
+
+        arr[getIndexOfType("dragon")][getIndexOfType("normal")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("fire")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("water")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("electric")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("grass")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("ice")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("fighting")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("poison")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("ground")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("flying")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("psychic")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("bug")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("rock")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("ghost")] = 1.0
+        arr[getIndexOfType("dragon")][getIndexOfType("dragon")] = 2.0
     }
 
     private fun getIndexOfType(type: String): Int {
