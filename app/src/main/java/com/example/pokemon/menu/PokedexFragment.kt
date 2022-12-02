@@ -45,11 +45,11 @@ class PokedexFragment : Fragment() {
             throw NullPointerException()
         }
         pokemon = menuActivity.getPokemon()!!
-        printPokemon()
+        displayPokemon()
     }
 
     @SuppressLint("SetTextI18n")
-    private fun printPokemon() {
+    private fun displayPokemon() {
         val img = pokemon.getImages()
         val imgFront = img[0]
         val imageFrontBytes = Base64.decode(imgFront, 0)
