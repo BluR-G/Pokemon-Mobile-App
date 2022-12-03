@@ -12,12 +12,12 @@ import com.example.pokemon.objects.PokemonTeam
 import kotlinx.coroutines.*
 import kotlin.collections.ArrayList
 
-class TrainerBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(pokemonTeam, activity) {
+class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: FightActivity) : Battle(pokemonTeam, enemyTeam.getPokemon(0),activity) {
     private lateinit var enemyTeam: PokemonTeam
     private var count = 0
 
     init {
-        this.enemyTeam = generateEnemyTeam()
+        this.enemyTeam = enemyTeam
         setCurrentEnemyPokemon(enemyTeam.getPokemonTeam()[0])
         initializeMessage()
     }

@@ -57,21 +57,21 @@ class IntroFragment : Fragment() {
         // Enable button if a radiobutton is checked and username is provided
         binding.bulbasaurRBtn.setOnClickListener {
             isStarterPicked = true;
-            starterPokemon = "Bulbasaur";
+            starterPokemon = "1";
             if (isUserNameValid) {
                 binding.IntroGoToMainMenu.isEnabled = true;
             }
         }
         binding.charmanderRBtn.setOnClickListener {
             isStarterPicked = true;
-            starterPokemon = "Charmander";
+            starterPokemon = "2";
             if (isUserNameValid) {
                 binding.IntroGoToMainMenu.isEnabled = true;
             }
         }
         binding.squirtleRBtn.setOnClickListener {
             isStarterPicked = true;
-            starterPokemon = "Squirtle";
+            starterPokemon = "3";
             if (isUserNameValid) {
                 binding.IntroGoToMainMenu.isEnabled = true;
             }

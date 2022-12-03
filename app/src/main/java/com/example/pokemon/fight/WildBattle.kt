@@ -12,9 +12,10 @@ import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonTeam
 import kotlinx.coroutines.*
 
-class WildBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(pokemonTeam, activity){
+class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: FightActivity) : Battle(pokemonTeam, enemyPokemon,activity){
+    private lateinit var enemyPokemon: Pokemon
     init {
-        generatePokemon()
+        this.enemyPokemon = enemyPokemon
         initializeMessage()
 
        }
@@ -68,14 +69,7 @@ class WildBattle(pokemonTeam: PokemonTeam, activity: FightActivity) : Battle(pok
         view.findNavController().navigate(R.id.action_bagFragment_to_fightMenuFragment)
         // TODO: Pokemon catching mechanics
     }
-    // Generate Random Wild Pokemon
-    fun generatePokemon(){
-        val creator = PokemonCreation()
-        activity.lifecycleScope.launch(Dispatchers.IO) {
-            var pokemon = creator.createPokemon("bulbasaur", "bulb", 10)
-            setCurrentEnemyPokemon(pokemon)
-        }
-    }
+
     private fun addMoves(moves: ArrayList<MoveData>){
 //        val types = arrayOf("fire")
 //        val move1 = Move(100,40,"other","special", "", 40, types)

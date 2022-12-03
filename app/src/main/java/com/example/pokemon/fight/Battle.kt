@@ -24,13 +24,14 @@ import kotlin.collections.ArrayList
 abstract class Battle {
     public lateinit var allyPokemonTeam: PokemonTeam
     public lateinit var currentAllyPokemon : Pokemon
-    private var currentEnemyPokemon: Pokemon = Pokemon("","",0,ArrayList<String>(),0,0,0,0,0,0,ArrayList<MoveData>(),ArrayList<String>(), "")
+    private lateinit var currentEnemyPokemon: Pokemon
     public lateinit var activity: FightActivity
 
-    constructor(pokemonTeam: PokemonTeam, activity: FightActivity) {
+    constructor(pokemonTeam: PokemonTeam, curentEnemyPokemon: Pokemon,activity: FightActivity) {
         this.activity = activity
         this.allyPokemonTeam = pokemonTeam
         this.currentAllyPokemon = pokemonTeam.getPokemonTeam()[0]
+        this.currentEnemyPokemon = curentEnemyPokemon
     }
     public fun setCurrentEnemyPokemon(pokemon: Pokemon){
         this.currentEnemyPokemon = pokemon
