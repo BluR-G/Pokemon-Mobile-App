@@ -40,7 +40,7 @@ class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Co
     }
 
     override fun getItemCount(): Int {
-        return pokemon.getMoves().size
+        return 4
     }
 
 }

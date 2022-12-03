@@ -46,6 +46,8 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
         checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
         checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
         if(!isAlive(getCurrentEnemyPokemon())){
+            addExperience()
+            addExperience()
             swapEnemy()
         }
         if(isEnemyTeamDead()){
@@ -66,7 +68,7 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
         }
 
     }
-    private fun swapEnemy(): Boolean{
+    private fun swapEnemy(){
         val enemyTeam = enemyTeam.getPokemonTeam()
         if(count<enemyTeam.size-1){
             count++
@@ -80,60 +82,11 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
                     activity.getBinding().gameMessage.text=""
                 }
             }
-            return true
         }
-        return false
     }
 
     // Checks if enemy full team is dead
     private fun isEnemyTeamDead():Boolean{
         return isTeamDead(enemyTeam)
-    }
-
-    // Sample data methods
-    private fun addMoves(moves: ArrayList<MoveData>){
-        val types = ArrayList<String>()
-        val move1 = Move(100,40,"other",0, "", "sleep",0,"grass")
-        val move2 = Move(100,70,"other",0, "", "sleep",0,"grass")
-        val move3 = Move(100,10,"other",0, "", "sleep",0,"grass")
-        val move4 = Move(100,35,"other",0, "", "sleep",0,"grass")
-        moves.add(MoveData("ember", 5,move1))
-        moves.add(MoveData("whip", 5,move2))
-        moves.add(MoveData("tackle", 5,move3))
-        moves.add(MoveData("sleep", 5,move4))
-    }
-    private fun generateEnemyTeam() : PokemonTeam {
-        // generate enemy team according to average lvl
-        var enemyTeam = PokemonTeam()
-        var types = ArrayList<String>()
-        types.add("water")
-        val moves = ArrayList<MoveData>()
-        addMoves(moves)
-        var images = ArrayList<String>()
-        enemyTeam.addPokemonToTeam(
-            Pokemon("blastoise","blastoise",36,types,
-                20,30,40,100,200,100, moves, images)
-        )
-        enemyTeam.addPokemonToTeam(
-            Pokemon("bulbausar","bulbausar",17,types,
-                60,30,40,100,200,100, moves, images)
-        )
-//        enemyTeam.addPokemonToTeam(
-//            Pokemon("pidgeotto","pidgeotto",36,types,
-//                60,30,40,100,200,100, moves, images)
-//        )
-//        enemyTeam.addPokemonToTeam(
-//            Pokemon("dragonite","dragonite",36,types,
-//                60,30,40,100,200,100, moves, images)
-//        )
-//        enemyTeam.addPokemonToTeam(
-//            Pokemon("machamp","machamp",36,types,
-//                60,30,40,100,200,100, moves, images)
-//        )
-//        enemyTeam.addPokemonToTeam(
-//            Pokemon("pidgeon","pidgeon",36,types,
-//                60,30,40,100,200,100, moves, images)
-//        )
-        return enemyTeam
     }
 }

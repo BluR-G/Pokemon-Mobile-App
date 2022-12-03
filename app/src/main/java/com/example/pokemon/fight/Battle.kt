@@ -170,6 +170,7 @@ abstract class Battle {
         val targetHp = target.getCurrentHp() - move.getPower()
         if (targetHp < 0){
             target.setCurrentHp(0)
+
             if(target == currentAllyPokemon){
                 val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
                 val navController = navHostFragment.navController
@@ -222,4 +223,11 @@ abstract class Battle {
             }
         }
     }
+    public fun addExperience(){
+        val expGain = 0.3 * getCurrentEnemyPokemon().getExperience() * getCurrentEnemyPokemon().getLevel().toDouble()
+        getCurrentEnemyPokemon().addExperience(expGain)
+        Log.d("exp", expGain.toString())
+        Log.d("exp", currentAllyPokemon.getExperience().toString())
+    }
 }
+

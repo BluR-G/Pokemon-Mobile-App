@@ -9,7 +9,7 @@ class Pokemon : Serializable {
     private var species: String = ""
     private var name: String = ""
     private var level: Int = 0
-    private var experience: Int = 0
+    private var experience: Double = 0.0
     private lateinit var types: ArrayList<String>
     private var currentHp: Int = 0
 
@@ -28,7 +28,7 @@ class Pokemon : Serializable {
         this.species = species
         this.name = name
         this.level = level
-        this.experience = level.toDouble().pow(3.0).toInt()
+        this.experience = level.toDouble().pow(3.0)
         this.types = types
         this.maxHp = maxHp * (50 + level) / 50
         this.currentHp = this.maxHp
@@ -61,13 +61,13 @@ class Pokemon : Serializable {
         this.level = level
     }
 
-    fun getExperience(): Int{
+    fun getExperience(): Double{
         return this.experience
     }
     private fun setExperience(){
-        this.experience = this.level.toDouble().pow(3.0).toInt()
+        this.experience = this.level.toDouble().pow(3.0)
     }
-    fun addExperience(exp: Int){
+    fun addExperience(exp: Double){
         this.experience += exp
         val newLevel = floor(Math.cbrt(this.experience.toDouble())).toInt()
         if(newLevel > this.level){

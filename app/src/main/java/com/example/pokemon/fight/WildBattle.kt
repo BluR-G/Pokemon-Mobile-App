@@ -43,8 +43,8 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
     ) {
         if(!isAlive(pokemonTarget)){
             if(pokemonTarget == getCurrentEnemyPokemon()){
+                addExperience()
                 displayFinalMessage("You won")
-                // TODO: Apply XP to Pokemon
             }
         } else {
             if(isAlive(pokemonAttacker)){
@@ -61,6 +61,7 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
         checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
         checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
         if(!isAlive(getCurrentEnemyPokemon())){
+            addExperience()
             displayFinalMessage("You won")
         } else if(isAllyTeamDead()){
             displayFinalMessage("You lost!")
@@ -81,7 +82,11 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                     activity.getBinding().gameMessage.text = "You captured ${getCurrentEnemyPokemon().getSpecies()}!"
                     delay(500)
                     activity.getBinding().gameMessage.text = ""
-                    allyPokemonCollection.addPokemonToCollection(getCurrentEnemyPokemon())
+                    if(allyPokemonTeam.getSize()==6){
+                        allyPokemonCollection.addPokemonToCollection(getCurrentEnemyPokemon())
+                    } else {
+                        allyPokemonTeam.addPokemonToTeam(getCurrentEnemyPokemon())
+                    }
                     run()
                 } else {
                     activity.getBinding().gameMessage.text="${getCurrentEnemyPokemon().getSpecies()} broke free!"
