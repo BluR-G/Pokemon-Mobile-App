@@ -19,14 +19,14 @@
             android:orientation="horizontal"
 
             android:layout_gravity="center">
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/apply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/apply"
                 />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/cancel_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:orientation="vertical"
+        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -38,11 +40,15 @@
                     android:id="@+id/pokemon_front_image"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
+                    android:background="@drawable/button_border"
+                    android:layout_marginEnd="5dp"
                     android:contentDescription="@string/image_view_desc" />
                 <ImageView
                     android:id="@+id/pokemon_back_image"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/button_border"
                     android:contentDescription="@string/image_view_desc" />
             </LinearLayout>
 
@@ -102,34 +108,49 @@
 
         </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/move_section"
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pokemon_result">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/move_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/go_back"
+        <LinearLayout
+            android:id="@+id/move_section"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/go_back"
-            android:layout_gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/move_section" />
-    </LinearLayout>
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/moves"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/move_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+
+                android:background="@drawable/button_border"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/go_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/go_back"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/move_section" />
+        </LinearLayout>
+    </ScrollView>
+
 
 
 
