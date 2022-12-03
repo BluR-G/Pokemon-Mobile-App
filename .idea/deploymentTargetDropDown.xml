@@ -1,36 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="deploymentTargetDropDown">
-    <runningDeviceTargetSelectedWithDropDown>
-      <Target>
-        <type value="RUNNING_DEVICE_TARGET" />
-        <deviceKey>
-          <Key>
-            <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\offic\.android\avd\Nexus_6_API_31.avd" />
-          </Key>
-        </deviceKey>
-      </Target>
-    </runningDeviceTargetSelectedWithDropDown>
     <targetSelectedWithDropDown>
       <Target>
         <type value="QUICK_BOOT_TARGET" />
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-<<<<<<< HEAD
+
             <value value="C:\Users\offic\.android\avd\Nexus_6_API_31.avd" />
-=======
-            <value value="C:\Users\Robert\.android\avd\Nexus_6_API_31_2.avd" />
->>>>>>> cd0a12c3e24620c153146ac8800d7b26dc9e0021
           </Key>
         </deviceKey>
-      </Target>
-    </targetSelectedWithDropDown>
-<<<<<<< HEAD
-    <timeTargetWasSelectedWithDropDown value="2022-11-23T06:10:50.198398100Z" />
-=======
-    <timeTargetWasSelectedWithDropDown value="2022-11-29T00:59:59.216922800Z" />
->>>>>>> cd0a12c3e24620c153146ac8800d7b26dc9e0021
+        </Target>
+        </targetSelectedWithDropDown>
   </component>
 </project>
