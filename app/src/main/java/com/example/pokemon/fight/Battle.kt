@@ -2,18 +2,19 @@ package com.example.pokemon.fight
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.pokemon.MenuActivity
 import com.example.pokemon.R
-import com.example.pokemon.objects.Move
-import com.example.pokemon.objects.MoveData
-import com.example.pokemon.objects.Pokemon
-import com.example.pokemon.objects.PokemonTeam
+import com.example.pokemon.objects.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,13 +24,16 @@ import kotlin.collections.ArrayList
 
 abstract class Battle {
     public lateinit var allyPokemonTeam: PokemonTeam
+    public lateinit var allyPokemonCollection: PokemonCollection
     public lateinit var currentAllyPokemon : Pokemon
     private lateinit var currentEnemyPokemon: Pokemon
+
     public lateinit var activity: FightActivity
 
     constructor(pokemonTeam: PokemonTeam, curentEnemyPokemon: Pokemon,activity: FightActivity) {
         this.activity = activity
         this.allyPokemonTeam = pokemonTeam
+        this.allyPokemonCollection = activity.getPokemonCollection()
         this.currentAllyPokemon = pokemonTeam.getPokemonTeam()[0]
         this.currentEnemyPokemon = curentEnemyPokemon
     }
@@ -104,6 +108,7 @@ abstract class Battle {
                 activity.getBinding().gameMessage.text="Swapping to ${pokemon.getName()} !"
                 view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
                 delay(1000)
+               //activity.getBinding().allyPokemonSprite.setImageBitmap(activity.getImage(currentAllyPokemon,1))
                 activity.getBinding().allyPokemon.text=pokemon.getName()
                 activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
                 activity.getBinding().allyLevel.text = "lv.${currentAllyPokemon.getLevel()}"
@@ -113,7 +118,7 @@ abstract class Battle {
                 activity.getBinding().gameMessage.text=""
                 activity.getBinding().gameMessage.text="${enemyPokemon.getName()} used ${enemyMove.moveName}!"
                 delay(1500)
-                attackPokemonTarget(currentAllyPokemon,enemyMove.move,view)
+                attackPokemonTarget(currentAllyPokemon,enemyMove.move)
                 activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
                 activity.getBinding().gameMessage.text=""
             }
@@ -130,18 +135,7 @@ abstract class Battle {
                 delay(1000)
                 activity.getBinding().gameMessage.text=""
             }
-            delay(1000)
-            withContext(Dispatchers.Main){
-                var enemyMove = pickEnemyRandomMove()
-                // Attacks swapped Pokemon
-                attackPokemonTarget(currentAllyPokemon,enemyMove.move,view)
-                activity.getBinding().gameMessage.text="${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!"
-                delay(1000)
-                activity.getBinding().gameMessage.text=""
-                delay(1500)
-                // Updates pokemon text
-                activity.getBinding().allyPokemonHp.text="${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
-            }
+            enemyAttack()
         }
     }
     // Heal Pokemon
@@ -160,6 +154,7 @@ abstract class Battle {
     public fun run(){
         val intent = Intent(activity, MenuActivity::class.java)
         intent.putExtra("pokemonTeam", activity.getPokemonTeam())
+        intent.putExtra("pokemonCollection", activity.getPokemonCollection())
         activity.setResult(Activity.RESULT_OK, intent)
         activity.finish()
     }
@@ -171,7 +166,7 @@ abstract class Battle {
         return enemyMove
     }
     // Attack pokemon target with move
-    public fun attackPokemonTarget(target: Pokemon, move: Move, view: View){
+    public fun attackPokemonTarget(target: Pokemon, move: Move){
         val targetHp = target.getCurrentHp() - move.getPower()
         if (targetHp < 0){
             target.setCurrentHp(0)
@@ -208,5 +203,23 @@ abstract class Battle {
             return false
         }
         return true
+    }
+    public fun enemyAttack(){
+        activity.lifecycleScope.launch(Dispatchers.Default) {
+            delay(1000)
+            withContext(Dispatchers.Main) {
+                var enemyMove = pickEnemyRandomMove()
+                // Attacks swapped Pokemon
+                attackPokemonTarget(currentAllyPokemon, enemyMove.move)
+                activity.getBinding().gameMessage.text =
+                    "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!"
+                delay(1000)
+                activity.getBinding().gameMessage.text = ""
+                delay(1500)
+                // Updates pokemon text
+                activity.getBinding().allyPokemonHp.text =
+                    "${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
+            }
+        }
     }
 }

@@ -33,7 +33,7 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
             }
         } else {
             if(isAlive(pokemonAttacker)){
-                attackPokemonTarget(pokemonTarget, attackerMove.move, view)
+                attackPokemonTarget(pokemonTarget, attackerMove.move)
                 updateFightMessage(pokemonTarget,pokemonAttacker,attackerMove)
             }
         }

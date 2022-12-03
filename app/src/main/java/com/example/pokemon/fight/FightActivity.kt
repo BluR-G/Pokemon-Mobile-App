@@ -1,12 +1,16 @@
 package com.example.pokemon.fight
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.pokemon.data.PokemonCreation
 import com.example.pokemon.databinding.ActivityFightBinding
 import com.example.pokemon.objects.Pokemon
+import com.example.pokemon.objects.PokemonCollection
 import com.example.pokemon.objects.PokemonTeam
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +21,7 @@ class FightActivity : AppCompatActivity(){
     private lateinit var currentPokemon : Pokemon
     private lateinit var enemy : Pokemon
     private lateinit var pokemonTeam: PokemonTeam
+    private lateinit var pokemonCollection: PokemonCollection
     private lateinit var battle: Battle
     private lateinit var battleType: String
     private lateinit var activity: FightActivity
@@ -26,7 +31,9 @@ class FightActivity : AppCompatActivity(){
         binding = ActivityFightBinding.inflate(layoutInflater)
         setContentView(binding.root)
         activity = this
-        this.pokemonTeam =intent.getSerializableExtra("pokemonTeam") as PokemonTeam
+        this.pokemonTeam = intent.getSerializableExtra("pokemonTeam") as PokemonTeam
+        this.pokemonCollection = intent.getSerializableExtra("pokemonCollection") as PokemonCollection
+//        this.pokemonCollection = intent.getSerializableExtra("pokemonCollection") as PokemonCollection
         this.battleType=intent.getStringExtra("battleType") as String
         if(battleType == "wild"){
             lifecycleScope.launch(Dispatchers.IO) {
@@ -48,6 +55,7 @@ class FightActivity : AppCompatActivity(){
             }
         }
         currentPokemon = this.pokemonTeam.getPokemonTeam()[0]
+       // binding.allyPokemonSprite.setImageBitmap(getImage(currentPokemon,1))
         binding.allyPokemon.text=currentPokemon.getName()
         binding.allyPokemonHp.text="HP: ${currentPokemon.getCurrentHp()}/${currentPokemon.getMaxHp()}"
         binding.allyLevel.text = "lv.${currentPokemon.getLevel()}"
@@ -66,8 +74,17 @@ class FightActivity : AppCompatActivity(){
     public fun getPokemonTeam() : PokemonTeam {
         return this.pokemonTeam
     }
+    public fun getPokemonCollection(): PokemonCollection{
+        return this.pokemonCollection
+    }
     public fun getBattle():Battle{
         return this.battle
+    }
+    public fun getImage(pokemon: Pokemon, id: Int): Bitmap {
+        val img = pokemon.getImages()
+        val imgFront = img[id]
+        val imageBytes = Base64.decode(imgFront, 0)
+        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
     }
     // Generate Random Wild Pokemon
     private suspend fun generatePokemon() : Pokemon {

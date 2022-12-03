@@ -10,8 +10,8 @@ import androidx.activity.result.ActivityResult
 import android.app.Activity
 
 class MenuActivity : AppCompatActivity() {
-    var pokemonTeam = PokemonTeam()
-    var pokemonCollection = PokemonCollection()
+    private var pokemonTeam = PokemonTeam()
+    private var pokemonCollection = PokemonCollection()
 
     lateinit var binding: ActivityMenuBinding
     public var getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -19,6 +19,7 @@ class MenuActivity : AppCompatActivity() {
         if(result.resultCode == Activity.RESULT_OK){
             val intent = result.data
             pokemonTeam = intent?.getSerializableExtra("pokemonTeam") as PokemonTeam
+            pokemonCollection = intent?.getSerializableExtra("pokemonCollection") as PokemonCollection
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
