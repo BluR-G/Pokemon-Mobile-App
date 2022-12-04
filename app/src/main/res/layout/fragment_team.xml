@@ -19,52 +19,56 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="50dp"
             android:orientation="vertical">
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/addTeam"
                 android:layout_width="195dp"
                 android:layout_height="wrap_content"
                 android:text="@string/add_team"
+                android:layout_margin="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/pokemon_team_recycler_view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/removeTeam"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/remove_team"
+                android:layout_margin="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addTeam"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/changeOrder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/change_order"
+                android:layout_margin="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/removeTeam"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/viewCollection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/view_collection"
+                android:layout_margin="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/changeOrder"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/TeamGoToMainMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/go_to_main_menu"
+                android:layout_margin="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +83,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="@string/view_pokedex_entry"
                 android:layout_gravity="center"/>
 
@@ -88,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:padding="16dp"/>
+                android:padding="10dp"/>
         </LinearLayout>
 
     </LinearLayout>

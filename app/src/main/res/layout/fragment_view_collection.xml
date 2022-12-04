@@ -20,9 +20,10 @@
             android:layout_width="wrap_content"
             android:layout_height="300dp"
             android:clipToPadding="false"
+            android:background="@drawable/button_border"
             android:layout_gravity="center" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/viewCollectionBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

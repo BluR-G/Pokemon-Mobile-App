@@ -26,8 +26,8 @@ class PokedexMoveAdapter(private val moveList: ArrayList<MoveData>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val move = moveList[position]
-        holder.move.text = "Move: ${move.moveName}"
-        holder.level.text = "Learned at: lvl ${move.level_learned_at}"
+        holder.move.text = move.moveName
+        holder.level.text = "lvl ${move.level_learned_at}"
     }
 
     override fun getItemCount(): Int = moveList.size

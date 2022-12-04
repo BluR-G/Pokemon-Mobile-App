@@ -28,8 +28,12 @@
     <string name="ready_text">Your very own Pokemon legend is about to unfold.\nA world of dreams and adventures with Pokemon awaits!\nAre you ready?</string>
     <string name="ready">Ready</string>
     <string name="new_game">New Game</string>
-    <string name="members_text">Game created by:\n\nDan Willis\nJohnny Hoang\nRobert Gutkowski\nRay Hernaez</string>
+    <string name="members_text">Game created by:\n\nDan Willis\nJohnny Hoang\nRobert Gutkowski</string>
     <string name="pokemon_sprite">Pokemon\'s Sprite</string>
     <string name="image_view_desc">Image of Pokemon</string>
     <string name="view_pokedex_entry">Select pokemon to view their Pokedex entry</string>
+    <string name="heal">Heal</string>
+    <string name="pokecenter_building">Pokecenter building</string>
+    <string name="pokecenter">POKECENTER</string>
+    <string name="moves">Moves</string>
 </resources>

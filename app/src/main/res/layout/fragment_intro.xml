@@ -152,13 +152,16 @@
             android:layout_marginBottom="20dp"
             />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/IntroGoToMainMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ready"
             android:layout_marginBottom="50dp"
+            android:fontFamily="@font/pokemongb"
             android:enabled="false"
+            android:textSize="10sp"
+            android:background="@drawable/button_border"
             />
 
     </LinearLayout>
