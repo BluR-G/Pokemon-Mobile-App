@@ -15,12 +15,7 @@ import org.junit.Test
 class PokemonCreationTests {
 
     @Test
-    fun simpleTest(){
-        assertEquals(4, 2+2)
-    }
-
-    @Test
-    fun pokemonCreation() = runBlocking<Unit> {
+    fun testPokemonCreation() = runBlocking<Unit> {
 
         val actual = PokemonCreation().createPokemon("Charmander", "flame", 0)
         val types = ArrayList<String>()

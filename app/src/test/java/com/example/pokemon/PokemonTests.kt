@@ -9,7 +9,7 @@ import org.junit.Test
 class PokemonTests {
 
     @Test
-    fun createPokemon() {
+    fun testCreatePokemon() {
         val types = ArrayList<String>()
         types.add("fire")
 

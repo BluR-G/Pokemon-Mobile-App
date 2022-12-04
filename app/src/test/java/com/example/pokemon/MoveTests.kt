@@ -7,7 +7,7 @@ import org.junit.Test
 class MoveTests {
 
     @Test
-    fun createMove() {
+    fun testCreateMove() {
         val move = Move(100, 40, "PHYSICAL", 0, "OPPONENT", "NONE", 0, "normal")
         Assert.assertEquals(100, move.getAccuracy())
         Assert.assertEquals(40, move.getPower())
