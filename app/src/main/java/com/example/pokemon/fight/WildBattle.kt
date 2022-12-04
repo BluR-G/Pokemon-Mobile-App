@@ -58,8 +58,7 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
         view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
         val enemyMove = pickEnemyRandomMove()
         val move = allyMoveData
-        checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
-        checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
+        playPokemonsTurns(move,enemyMove,view)
         if(!isAlive(getCurrentEnemyPokemon())){
             addExperience()
             displayFinalMessage("You won")

@@ -43,6 +43,15 @@ abstract class Battle {
     abstract fun fight(view: View, allyMoveData : MoveData)
     abstract fun throwPokeball(view: View)
 
+    public fun playPokemonsTurns(move:MoveData, enemyMove: MoveData, view: View){
+        if(currentAllyPokemon.getSpeed() > getCurrentEnemyPokemon().getSpeed()){
+            checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
+            checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
+        } else {
+            checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
+            checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
+        }
+    }
     // Swap pokemon
     public fun swapPokemon(view: View, pokemon: Pokemon){
         lateinit var enemyMove : MoveData

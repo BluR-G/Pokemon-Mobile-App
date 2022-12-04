@@ -39,12 +39,10 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
         }
     }
     // Fight between the current pokemon
-    public override fun fight(view: View, allyMoveData : MoveData){
+    public override fun fight(view: View, move : MoveData){
         view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
         val enemyMove = pickEnemyRandomMove()
-        val move = allyMoveData
-        checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
-        checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
+        playPokemonsTurns(move,enemyMove,view)
         if(!isAlive(getCurrentEnemyPokemon())){
             // Trainer battle experience gained is double
             addExperience()
