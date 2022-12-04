@@ -46,6 +46,7 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
         checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
         checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
         if(!isAlive(getCurrentEnemyPokemon())){
+            // Trainer battle experience gained is double
             addExperience()
             addExperience()
             swapEnemy()

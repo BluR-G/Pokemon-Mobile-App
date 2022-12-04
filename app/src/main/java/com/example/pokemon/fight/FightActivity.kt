@@ -99,7 +99,8 @@ class FightActivity : AppCompatActivity(){
     }
     private suspend fun generatePokemonTeam(): PokemonTeam{
         val pokemonTeam = PokemonTeam()
-        for(i in 0 .. 5){
+        val pokemonCount = (0..5).random()
+        for(i in 0 .. pokemonCount){
             pokemonTeam.addPokemonToTeam(generatePokemon())
         }
         return pokemonTeam
