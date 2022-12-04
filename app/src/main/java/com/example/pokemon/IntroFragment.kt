@@ -64,14 +64,14 @@ class IntroFragment : Fragment() {
         }
         binding.charmanderRBtn.setOnClickListener {
             isStarterPicked = true;
-            starterPokemon = "2";
+            starterPokemon = "4";
             if (isUserNameValid) {
                 binding.IntroGoToMainMenu.isEnabled = true;
             }
         }
         binding.squirtleRBtn.setOnClickListener {
             isStarterPicked = true;
-            starterPokemon = "3";
+            starterPokemon = "7";
             if (isUserNameValid) {
                 binding.IntroGoToMainMenu.isEnabled = true;
             }

@@ -90,7 +90,6 @@ abstract class Battle {
         activity.lifecycleScope.launch(Dispatchers.Default){
             withContext(Dispatchers.Main){
                 activity.getBinding().gameMessage.text="${secondAttacked.getName()} used ${firstMove.moveName}!"
-                Log.d("fight", "${secondAttacked.getName()} used ${firstMove.moveName}!")
                 delay(1500)
                 if(firstAttacked == currentAllyPokemon){
                     activity.getBinding().allyPokemonHp.text="HP:${firstAttacked.getCurrentHp()}/${firstAttacked.getMaxHp()}"
@@ -118,7 +117,7 @@ abstract class Battle {
                 activity.getBinding().gameMessage.text=""
                 activity.getBinding().gameMessage.text="${enemyPokemon.getName()} used ${enemyMove.moveName}!"
                 delay(1500)
-                attackPokemonTarget(currentAllyPokemon,enemyMove.move)
+                attackPokemonTarget(currentAllyPokemon, currentEnemyPokemon, enemyMove.move)
                 activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
                 activity.getBinding().gameMessage.text=""
             }
@@ -166,8 +165,15 @@ abstract class Battle {
         return enemyMove
     }
     // Attack pokemon target with move
-    public fun attackPokemonTarget(target: Pokemon, move: Move){
-        val targetHp = target.getCurrentHp() - move.getPower()
+    public fun attackPokemonTarget(attacker: Pokemon, target: Pokemon, move: Move){
+        Log.d("moveType", move.getDamageClass())
+        var moveDamage = 0
+        if(move.getDamageClass() == "PHYSICAL"){
+            moveDamage = calculateDamage(attacker.getLevel(),move.getPower(),attacker.getAttack(), target.getDefense())
+        } else if(move.getDamageClass() == "SPECIAL") {
+            moveDamage = calculateDamage(attacker.getLevel(),move.getPower(),attacker.getSpecialAttack(), target.getSpecialDefense())
+        }
+        val targetHp = target.getCurrentHp() - moveDamage
         if (targetHp < 0){
             target.setCurrentHp(0)
 
@@ -179,6 +185,11 @@ abstract class Battle {
         } else {
             target.setCurrentHp(targetHp)
         }
+
+    }
+    private fun calculateDamage(level : Int, movePower: Int, attack :Int, defense: Int) : Int {
+        return ((1.0/50.0)* (((2.0*level.toDouble())/5.0)+2.0)*
+                movePower.toDouble()*((attack.toDouble()/defense.toDouble())+2.0)).toInt()
 
     }
     // Checks if ally full team is dead
@@ -211,7 +222,7 @@ abstract class Battle {
             withContext(Dispatchers.Main) {
                 var enemyMove = pickEnemyRandomMove()
                 // Attacks swapped Pokemon
-                attackPokemonTarget(currentAllyPokemon, enemyMove.move)
+                attackPokemonTarget(currentAllyPokemon,currentEnemyPokemon, enemyMove.move)
                 activity.getBinding().gameMessage.text =
                     "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!"
                 delay(1000)
@@ -224,8 +235,9 @@ abstract class Battle {
         }
     }
     public fun addExperience(){
+        Log.d("exp", currentAllyPokemon.getExperience().toString())
         val expGain = 0.3 * getCurrentEnemyPokemon().getExperience() * getCurrentEnemyPokemon().getLevel().toDouble()
-        getCurrentEnemyPokemon().addExperience(expGain)
+        currentAllyPokemon.addExperience(expGain)
         Log.d("exp", expGain.toString())
         Log.d("exp", currentAllyPokemon.getExperience().toString())
     }

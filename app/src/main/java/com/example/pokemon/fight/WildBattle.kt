@@ -48,7 +48,7 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
             }
         } else {
             if(isAlive(pokemonAttacker)){
-                attackPokemonTarget(pokemonTarget, attackerMove.move)
+                attackPokemonTarget(pokemonTarget, pokemonAttacker, attackerMove.move)
                 updateFightMessage(pokemonTarget,pokemonAttacker,attackerMove)
             }
         }
@@ -70,7 +70,6 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
     // Catch Pokemon
     override fun throwPokeball(view: View) {
         view.findNavController().navigate(R.id.action_bagFragment_to_fightMenuFragment)
-        val random = Random()
         val catchRate = 100.0*(1.0-(enemyPokemon.getCurrentHp()/enemyPokemon.getMaxHp()))
         val catchResult = (0..100).random()
 

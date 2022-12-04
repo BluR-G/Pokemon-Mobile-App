@@ -33,7 +33,6 @@ class FightActivity : AppCompatActivity(){
         activity = this
         this.pokemonTeam = intent.getSerializableExtra("pokemonTeam") as PokemonTeam
         this.pokemonCollection = intent.getSerializableExtra("pokemonCollection") as PokemonCollection
-//        this.pokemonCollection = intent.getSerializableExtra("pokemonCollection") as PokemonCollection
         this.battleType=intent.getStringExtra("battleType") as String
         if(battleType == "wild"){
             lifecycleScope.launch(Dispatchers.IO) {
