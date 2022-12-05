@@ -44,12 +44,18 @@ abstract class Battle {
     abstract fun throwPokeball(view: View)
 
     public fun playPokemonsTurns(move:MoveData, enemyMove: MoveData, view: View){
-        if(currentAllyPokemon.getSpeed() > getCurrentEnemyPokemon().getSpeed()){
-            checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
-            checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
-        } else {
-            checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
-            checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
+        activity.lifecycleScope.launch(Dispatchers.Main){
+            //withContext(Dispatchers.Main){
+                if(currentAllyPokemon.getSpeed() > getCurrentEnemyPokemon().getSpeed()){
+                    checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
+                    delay(1500)
+                    checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
+                } else {
+                    checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
+                    delay(1500)
+                    checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
+                }
+            //}
         }
     }
     // Swap pokemon
@@ -91,8 +97,8 @@ abstract class Battle {
     }
     // Update the messages after fight sequence
     public fun updateFightMessage(firstAttacked: Pokemon, secondAttacked: Pokemon, firstMove: MoveData){
-        activity.lifecycleScope.launch(Dispatchers.Default){
-            withContext(Dispatchers.Main){
+        activity.lifecycleScope.launch(Dispatchers.Main){
+            //withContext(Dispatchers.Main){
                 activity.getBinding().gameMessage.text="${secondAttacked.getName()} used ${firstMove.moveName}!"
                 delay(1500)
                 if(firstAttacked == currentAllyPokemon){
@@ -101,7 +107,7 @@ abstract class Battle {
                     activity.getBinding().enemyPokemonHp.text="HP:${firstAttacked.getCurrentHp()}/${firstAttacked.getMaxHp()}"
                 }
                 activity.getBinding().gameMessage.text=""
-            }
+            //}
         }
     }
     // Updates game message when current pokemon is swapped
@@ -172,6 +178,7 @@ abstract class Battle {
     public fun attackPokemonTarget(attacker: Pokemon, target: Pokemon, move: Move){
         val moveChance = (1..100).random()
         var moveDamage = 0
+        Log.d("fight", "damage class: ${move.getDamageClass()}")
         if(move.getDamageClass() == "PHYSICAL"){
             moveDamage = calculateDamage(attacker, target, move,
                                          attacker.getAttack(), target.getDefense())
@@ -179,8 +186,11 @@ abstract class Battle {
             moveDamage = calculateDamage(attacker, target, move,
                                          attacker.getSpecialAttack(), target.getSpecialDefense())
         }
+        Log.d("fight", "move damage: ${moveDamage}")
 
         if(move.getAccuracy()>=moveChance){
+            Log.d("fight", attacker.getName())
+            Log.d("fight", "move chance: ${moveChance}, move accuracy: ${move.getAccuracy()}" )
             val targetHp = target.getCurrentHp() - moveDamage
             val selfHealHp = attacker.getCurrentHp() + move.getHeal()
             if (selfHealHp > attacker.getCurrentHp()){
@@ -196,6 +206,7 @@ abstract class Battle {
                 }
             } else {
                 target.setCurrentHp(targetHp)
+                Log.d("fight", "target: ${target.getName()} hp: ${target.getCurrentHp()}")
             }
         } else {
             activity.lifecycleScope.launch(Dispatchers.Default){
@@ -218,6 +229,7 @@ abstract class Battle {
         val baseDamage = (((1.0/50.0)* (((2.0*attacker.getLevel().toDouble())/5.0)+2.0) *
                             move.getPower().toDouble()*((attack.toDouble()/defense.toDouble())+2.0)))
         var effectiveMultiplier = damageChart.getDamageMultiplier(move.getTypes(), target.getTypes()[0])
+        Log.d("multiplier", "target type: ${target.getTypes()[0]}")
         Log.d("multiplier", attacker.getName())
         Log.d("multiplier", effectiveMultiplier.toString())
 
@@ -267,5 +279,6 @@ abstract class Battle {
         Log.d("exp", expGain.toString())
         Log.d("exp", currentAllyPokemon.getExperience().toString())
     }
+
 }
 
