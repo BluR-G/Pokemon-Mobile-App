@@ -180,7 +180,7 @@ abstract class Battle {
                                          attacker.getSpecialAttack(), target.getSpecialDefense())
         }
 
-        if(move.getAccuracy()>moveChance){
+        if(move.getAccuracy()>=moveChance){
             val targetHp = target.getCurrentHp() - moveDamage
             val selfHealHp = attacker.getCurrentHp() + move.getHeal()
             if (selfHealHp > attacker.getCurrentHp()){
@@ -218,6 +218,9 @@ abstract class Battle {
         val baseDamage = (((1.0/50.0)* (((2.0*attacker.getLevel().toDouble())/5.0)+2.0) *
                             move.getPower().toDouble()*((attack.toDouble()/defense.toDouble())+2.0)))
         var effectiveMultiplier = damageChart.getDamageMultiplier(move.getTypes(), target.getTypes()[0])
+        Log.d("multiplier", attacker.getName())
+        Log.d("multiplier", effectiveMultiplier.toString())
+
         // Check if target has many types
         if (target.getTypes().size == 2){
             effectiveMultiplier *= damageChart.getDamageMultiplier(move.getTypes(), target.getTypes()[1])

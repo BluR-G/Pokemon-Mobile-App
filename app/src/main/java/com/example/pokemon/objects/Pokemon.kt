@@ -71,7 +71,6 @@ class Pokemon : Serializable {
         this.experience += exp
         val newLevel = floor(Math.cbrt(this.experience.toDouble())).toInt()
         if(newLevel > this.level){
-            setExperience()
             setMaxHp()
             setAttack()
             setDefense()
