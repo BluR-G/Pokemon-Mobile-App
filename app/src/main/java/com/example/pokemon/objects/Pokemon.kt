@@ -64,21 +64,21 @@ class Pokemon : Serializable {
     fun getExperience(): Double{
         return this.experience
     }
-    private fun setExperience(){
-        this.experience = this.level.toDouble().pow(3.0)
-    }
+
     fun addExperience(exp: Double){
         this.experience += exp
         val newLevel = floor(Math.cbrt(this.experience.toDouble())).toInt()
         if(newLevel > this.level){
-            setExperience()
-            setMaxHp()
-            setAttack()
-            setDefense()
-            setSpecialAttack()
-            setSpecialDefense()
-            setSpeed()
-            setLevel(newLevel)
+            val numberOfLevels = newLevel - this.level
+            for (i in 0 until numberOfLevels){
+                setMaxHp()
+                setAttack()
+                setDefense()
+                setSpecialAttack()
+                setSpecialDefense()
+                setSpeed()
+                setLevel(this.level + 1)
+            }
         }
     }
 
