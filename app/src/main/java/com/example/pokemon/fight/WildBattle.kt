@@ -41,13 +41,13 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
         attackerMove: MoveData,
         view: View
     ) {
-        if(!isAlive(pokemonTarget)){
+        if(!pokemonTarget.isAlive()){
             if(pokemonTarget == getCurrentEnemyPokemon()){
                 addExperience()
                 displayFinalMessage("You won")
             }
         } else {
-            if(isAlive(pokemonAttacker)){
+            if(pokemonAttacker.isAlive()){
                 attackPokemonTarget(pokemonTarget, pokemonAttacker, attackerMove.move)
                 updateFightMessage(pokemonTarget,pokemonAttacker,attackerMove)
             }
@@ -59,10 +59,10 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
         val enemyMove = pickEnemyRandomMove()
         val move = allyMoveData
         playPokemonsTurns(move,enemyMove,view)
-        if(!isAlive(getCurrentEnemyPokemon())){
+        if(!getCurrentEnemyPokemon().isAlive()){
             addExperience()
             displayFinalMessage("You won")
-        } else if(isAllyTeamDead()){
+        } else if(this.allyPokemonTeam.isTeamDead()){
             displayFinalMessage("You lost!")
         }
     }

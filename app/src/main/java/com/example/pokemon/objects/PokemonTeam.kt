@@ -54,4 +54,16 @@ class PokemonTeam : Serializable {
         }
         pokemons = newTeam
     }
-}
+    fun isTeamDead():Boolean {
+        var check = false
+        for (pokemon in this.getPokemonTeam()) {
+            if (pokemon.getCurrentHp() == 0) {
+                check = true
+            } else {
+                return false
+            }
+        }
+        return true
+    }
+
+    }

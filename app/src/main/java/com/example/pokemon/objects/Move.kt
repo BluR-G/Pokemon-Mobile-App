@@ -51,4 +51,8 @@ class Move : Serializable{
     fun getTypes(): String{
         return this.type
     }
+
+    fun getHeal(): Int {
+        return this.heal
+    }
 }

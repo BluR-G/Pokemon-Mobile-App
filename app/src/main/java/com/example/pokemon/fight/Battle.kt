@@ -55,7 +55,7 @@ abstract class Battle {
     // Swap pokemon
     public fun swapPokemon(view: View, pokemon: Pokemon){
         lateinit var enemyMove : MoveData
-        if(isAlive(pokemon)){
+        if(pokemon.isAlive()){
             if(activity.getCurrentPokemon() != pokemon){
                 currentAllyPokemon = pokemon
                 activity.setCurrentPokemon(pokemon)
@@ -144,7 +144,7 @@ abstract class Battle {
     // Heal Pokemon
     public fun heal(pokemon: Pokemon){
         val potionHeal = 20
-        if(isAlive(pokemon)){
+        if(pokemon.isAlive()){
             var healHp = pokemon.getCurrentHp()+ potionHeal
             if(healHp<pokemon.getMaxHp()){
                 pokemon.setCurrentHp(healHp)
@@ -182,6 +182,10 @@ abstract class Battle {
 
         if(move.getAccuracy()>moveChance){
             val targetHp = target.getCurrentHp() - moveDamage
+            val selfHealHp = attacker.getCurrentHp() + move.getHeal()
+            if (selfHealHp > attacker.getCurrentHp()){
+                attacker.setCurrentHp(attacker.getMaxHp())
+            }
             if (targetHp < 0){
                 target.setCurrentHp(0)
 
@@ -233,30 +237,7 @@ abstract class Battle {
         }
         return false
     }
-    // Checks if ally full team is dead
-    public fun isAllyTeamDead():Boolean{
-        return isTeamDead(allyPokemonTeam)
-    }
-    // Check if pokemon team dead
-    public fun isTeamDead(pokemonTeam: PokemonTeam):Boolean{
-        var check = false
-        for(pokemon in pokemonTeam.getPokemonTeam()){
-            if (pokemon.getCurrentHp() == 0) {
-                check = true
-            }
-            else {
-                return false
-            }
-        }
-        return check
-    }
-    // Check if pokemon is alive
-    public fun isAlive(pokemon: Pokemon):Boolean{
-        if(pokemon.getCurrentHp()==0){
-            return false
-        }
-        return true
-    }
+
     public fun enemyAttack(){
         activity.lifecycleScope.launch(Dispatchers.Default) {
             delay(1000)

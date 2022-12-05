@@ -159,6 +159,12 @@ class Pokemon : Serializable {
         }
         return false
     }
+    fun isAlive():Boolean{
+        if(this.getCurrentHp()==0){
+            return false
+        }
+        return true
+    }
 
     fun getImages(): ArrayList<String>{
         return this.images

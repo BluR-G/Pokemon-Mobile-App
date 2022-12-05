@@ -27,12 +27,12 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
         activity.getBinding().enemyLevel.text = "lv.${getCurrentEnemyPokemon().getLevel()}"
     }
     public override fun checkPokemonStatus(pokemonTarget: Pokemon, pokemonAttacker: Pokemon, attackerMove : MoveData, view : View){
-        if(!isAlive(pokemonTarget)){
+        if(!pokemonTarget.isAlive()){
             if(pokemonTarget == getCurrentEnemyPokemon()){
                 val check = swapEnemy()
             }
         } else {
-            if(isAlive(pokemonAttacker)){
+            if(pokemonAttacker.isAlive()){
                 attackPokemonTarget(pokemonTarget, pokemonAttacker,attackerMove.move)
                 updateFightMessage(pokemonTarget,pokemonAttacker,attackerMove)
             }
