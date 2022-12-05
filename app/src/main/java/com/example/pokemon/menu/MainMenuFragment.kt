@@ -40,10 +40,14 @@ class MainMenuFragment : Fragment() {
         menuActivity.getResult.launch(intent)
     }
     private fun switchTrainerBattle() {
-        switchBattle("trainer")
+        if(!menuActivity.getTeam().isTeamDead()){
+            switchBattle("trainer")
+        }
     }
     private fun switchWildBattle() {
-        switchBattle("wild")
+        if(!menuActivity.getTeam().isTeamDead()) {
+            switchBattle("wild")
+        }
     }
 
 

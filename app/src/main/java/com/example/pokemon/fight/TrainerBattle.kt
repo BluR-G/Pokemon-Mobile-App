@@ -43,15 +43,15 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
         view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
         val enemyMove = pickEnemyRandomMove()
         playPokemonsTurns(move,enemyMove,view)
-        if(!isAlive(getCurrentEnemyPokemon())){
+        if(!getCurrentEnemyPokemon().isAlive()){
             // Trainer battle experience gained is double
             addExperience()
             addExperience()
             swapEnemy()
         }
-        if(isEnemyTeamDead()){
+        if(enemyTeam.isTeamDead()){
           displayFinalMessage("You won")
-        } else if(isAllyTeamDead()){
+        } else if(this.allyPokemonTeam.isTeamDead()){
             displayFinalMessage("You lost!")
         }
     }
@@ -82,10 +82,5 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
                 }
             }
         }
-    }
-
-    // Checks if enemy full team is dead
-    private fun isEnemyTeamDead():Boolean{
-        return isTeamDead(enemyTeam)
     }
 }
