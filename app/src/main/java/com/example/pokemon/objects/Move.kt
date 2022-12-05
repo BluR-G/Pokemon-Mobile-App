@@ -9,17 +9,13 @@ class Move : Serializable {
     private var heal: Int = 0
     private var target: String = ""
     private var type: String = ""
-    private var effect: String = ""
-    private var effectChance: Int = 0
 
-    constructor(accuracy: Int, power: Int, damageClass: String, heal : Int, target: String, effect: String, effectChance: Int, type: String){
+    constructor(accuracy: Int, power: Int, damageClass: String, heal : Int, target: String, type: String){
         this.accuracy = accuracy
         this.power = power
         this.damageClass = damageClass
         this.heal = heal
         this.target = target
-        this.effect = effect
-        this.effectChance = effectChance
         this.type = type
     }
 
@@ -37,14 +33,6 @@ class Move : Serializable {
 
     fun getTarget(): String{
         return this.target
-    }
-
-    fun getEffect(): String{
-        return this.effect
-    }
-
-    fun getEffectChance(): Int{
-        return this.effectChance
     }
 
     fun getTypes(): String{
