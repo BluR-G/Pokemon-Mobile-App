@@ -28,6 +28,7 @@ data class PlayerPokemon(
     @ColumnInfo(name = "level") val level: Int,
     @ColumnInfo(name = "types") val types: String,
     @ColumnInfo(name = "maxHp") val maxHp: Int,
+    @ColumnInfo(name = "currentHp") val currentHp: Int,
     @ColumnInfo(name = "attack") val attack: Int,
     @ColumnInfo(name = "defense") val defense: Int,
     @ColumnInfo(name = "special_attack") val specialAttack: Int,
@@ -45,7 +46,7 @@ data class PokemonInTeam(
         parentColumn = "position_id",
         entityColumn = "id"
     )
-    val positions: List<PokemonTeam>
+    val position: PokemonTeam
 )
 
 @Entity
@@ -59,7 +60,7 @@ data class PokemonInCollection(
         parentColumn = "position_id",
         entityColumn = "id"
     )
-    val positions: List<PokemonCollection>
+    val position: PokemonCollection
 )
 
 @Entity

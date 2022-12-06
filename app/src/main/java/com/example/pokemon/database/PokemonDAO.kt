@@ -10,6 +10,10 @@ interface PokemonDAO {
     fun getPlayerPokemonById(id: Int) : PlayerPokemon
 
     @Transaction
+    @Query("SELECT id FROM PlayerPokemon WHERE pokemon_id = :id AND name = :name")
+    fun getPlayerPokemonByIdAndName(id: Int, name: String) : PlayerPokemon
+
+    @Transaction
     @Query("SELECT * FROM PokemonTeam WHERE position_id = :pos_id")
     fun getPokemonTeamByPosition(pos_id: Int) : PokemonTeam
 
@@ -55,6 +59,13 @@ interface PokemonDAO {
 //    @Insert(onConflict = OnConflictStrategy.IGNORE)
 //    suspend fun insertPokemon(pokemon : Pokemon)
 //
+
+    @Query("DELETE FROM PokemonTeam")
+    fun clearTeam()
+
+    @Query("DELETE FROM PokemonCollection")
+    fun clearCollection()
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMove(move: Move)
 
