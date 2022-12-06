@@ -53,7 +53,7 @@ class FightActivity : AppCompatActivity(){
                 }
             }
         }
-        currentPokemon = this.pokemonTeam.getPokemonTeam()[0]
+        currentPokemon = this.pokemonTeam.getPokemonTeam()[getCurrentPokemonIndex()]
        // binding.allyPokemonSprite.setImageBitmap(getImage(currentPokemon,1))
         binding.allyPokemon.text=currentPokemon.getName()
         binding.allyPokemonHp.text="HP: ${currentPokemon.getCurrentHp()}/${currentPokemon.getMaxHp()}"
@@ -97,6 +97,7 @@ class FightActivity : AppCompatActivity(){
 
         return creator.createPokemon(pokemonId, "", level)
     }
+    // Generate random pokemon team based on team level
     private suspend fun generatePokemonTeam(): PokemonTeam{
         val pokemonTeam = PokemonTeam()
         val pokemonCount = (0..5).random()
@@ -104,6 +105,18 @@ class FightActivity : AppCompatActivity(){
             pokemonTeam.addPokemonToTeam(generatePokemon())
         }
         return pokemonTeam
+    }
+    // Return index of first pokemon alive
+    private fun getCurrentPokemonIndex(): Int {
+        var index = 0
+        for(pokemon in pokemonTeam.getPokemonTeam()){
+            if(pokemon.isAlive()){
+                return index
+            } else {
+                index++
+            }
+        }
+        return index
     }
     private fun getHighestLevel(): Int{
         var highLevel = pokemonTeam.getPokemonTeam()[0].getLevel()

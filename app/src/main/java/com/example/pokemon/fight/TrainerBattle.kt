@@ -1,6 +1,7 @@
 package com.example.pokemon.fight
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -27,33 +28,28 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
         activity.getBinding().enemyLevel.text = "lv.${getCurrentEnemyPokemon().getLevel()}"
     }
     public override fun checkPokemonStatus(pokemonTarget: Pokemon, pokemonAttacker: Pokemon, attackerMove : MoveData, view : View){
-        if(!pokemonTarget.isAlive()){
-            if(pokemonTarget == getCurrentEnemyPokemon()){
-                val check = swapEnemy()
+        if(pokemonAttacker.isAlive()){
+            attackPokemonTarget(pokemonAttacker,pokemonTarget,attackerMove.move)
+            if(enemyTeam.isTeamDead()){
+                // Double experience
+                addExperience()
+                displayFinalMessage("You won!")
+            } else if(allyPokemonTeam.isTeamDead()){
+                displayFinalMessage("You lost!")
             }
-        } else {
-            if(pokemonAttacker.isAlive()){
-                attackPokemonTarget(pokemonTarget, pokemonAttacker,attackerMove.move)
-                updateFightMessage(pokemonTarget,pokemonAttacker,attackerMove)
+            if(!getCurrentEnemyPokemon().isAlive() && pokemonTarget == getCurrentEnemyPokemon()){
+                swapEnemy()
             }
+            updateFightMessage(pokemonAttacker,pokemonTarget,attackerMove)
         }
+
     }
     // Fight between the current pokemon
     public override fun fight(view: View, move : MoveData){
         view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
         val enemyMove = pickEnemyRandomMove()
         playPokemonsTurns(move,enemyMove,view)
-        if(!getCurrentEnemyPokemon().isAlive()){
-            // Trainer battle experience gained is double
-            addExperience()
-            addExperience()
-            swapEnemy()
-        }
-        if(enemyTeam.isTeamDead()){
-          displayFinalMessage("You won")
-        } else if(this.allyPokemonTeam.isTeamDead()){
-            displayFinalMessage("You lost!")
-        }
+
     }
 
     // Attempt to catch wild pokemon

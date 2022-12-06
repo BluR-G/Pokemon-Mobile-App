@@ -35,36 +35,24 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
         }
     }
     // Check Target Pokemon status and attack according to status
-    override fun checkPokemonStatus(
-        pokemonTarget: Pokemon,
-        pokemonAttacker: Pokemon,
-        attackerMove: MoveData,
-        view: View
-    ) {
-        if(!pokemonTarget.isAlive()){
-            if(pokemonTarget == getCurrentEnemyPokemon()){
+    override fun checkPokemonStatus(pokemonTarget: Pokemon, pokemonAttacker: Pokemon,
+        attackerMove: MoveData, view: View) {
+        if(pokemonAttacker.isAlive()){
+            attackPokemonTarget(pokemonAttacker, pokemonTarget, attackerMove.move)
+            updateFightMessage(pokemonAttacker,pokemonTarget,attackerMove)
+            if(!pokemonTarget.isAlive() && pokemonTarget == getCurrentEnemyPokemon()){
                 addExperience()
-                displayFinalMessage("You won")
-            }
-        } else {
-            if(pokemonAttacker.isAlive()){
-                attackPokemonTarget(pokemonTarget, pokemonAttacker, attackerMove.move)
-                updateFightMessage(pokemonTarget,pokemonAttacker,attackerMove)
+                displayFinalMessage("You won!")
+            } else if(!pokemonTarget.isAlive() && pokemonTarget == currentAllyPokemon){
+                displayFinalMessage("You lost!")
             }
         }
     }
     // Fight between the current pokemon
-    override fun fight(view: View, allyMoveData: MoveData) {
+    override fun fight(view: View, move: MoveData) {
         view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
         val enemyMove = pickEnemyRandomMove()
-        val move = allyMoveData
         playPokemonsTurns(move,enemyMove,view)
-        if(!getCurrentEnemyPokemon().isAlive()){
-            addExperience()
-            displayFinalMessage("You won")
-        } else if(this.allyPokemonTeam.isTeamDead()){
-            displayFinalMessage("You lost!")
-        }
     }
     // Catch Pokemon
     override fun throwPokeball(view: View) {
