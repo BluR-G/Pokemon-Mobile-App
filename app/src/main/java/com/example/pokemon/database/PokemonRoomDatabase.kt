@@ -7,10 +7,6 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [
     PlayerPokemon::class,
-    PokemonTeam::class,
-    PokemonInTeam::class,
-    PokemonCollection::class,
-    PokemonInCollection::class,
     Move::class,
     PokemonWithMoves::class,
     PokemonWithCurrentMoves::class

@@ -19,7 +19,9 @@ import androidx.room.*
 
 @Entity
 data class PlayerPokemon(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey val id: Int,
+    @ColumnInfo(name = "position") val position: Int,
+    @ColumnInfo(name = "isTeam") val isTeam: Int,
     @ColumnInfo(name = "pokemon_id") val pokemon_id : Int,
     @ColumnInfo(name = "species") val species : String,
     @ColumnInfo(name = "name") val name : String,
@@ -35,33 +37,33 @@ data class PlayerPokemon(
     @ColumnInfo(name = "special_defense") val specialDefense: Int,
     @ColumnInfo(name = "Speed") val speed: Int
 )
-@Entity
-data class PokemonTeam(
-    @PrimaryKey val position_id : Int
-)
-
-data class PokemonInTeam(
-    @Embedded val pokemon: PlayerPokemon,
-    @Relation(
-        parentColumn = "position_id",
-        entityColumn = "id"
-    )
-    val position: PokemonTeam
-)
-
-@Entity
-data class PokemonCollection(
-    @PrimaryKey val position_id : Int
-)
-
-data class PokemonInCollection(
-    @Embedded val pokemon: PlayerPokemon,
-    @Relation(
-        parentColumn = "position_id",
-        entityColumn = "id"
-    )
-    val position: PokemonCollection
-)
+//@Entity
+//data class PokemonTeam(
+//    @PrimaryKey val position_id : Int
+//)
+//
+//data class PokemonInTeam(
+//    @Embedded val pokemon: PlayerPokemon,
+//    @Relation(
+//        parentColumn = "id",
+//        entityColumn = "position_id"
+//    )
+//    val position: PokemonTeam
+//)
+//
+//@Entity
+//data class PokemonCollection(
+//    @PrimaryKey val position_id : Int
+//)
+//
+//data class PokemonInCollection(
+//    @Embedded val pokemon: PlayerPokemon,
+//    @Relation(
+//        parentColumn = "id",
+//        entityColumn = "position_id"
+//    )
+//    val position: PokemonCollection
+//)
 
 @Entity
 data class Move(
@@ -75,18 +77,35 @@ data class Move(
 )
 
 
-@Entity(primaryKeys = ["pokemon_id", "move"])
+@Entity(primaryKeys = ["id", "move"])
 data class PokemonWithMoves(
-    val pokemon_id: Int,
+    val id: Int,
     val move: String,
     val level_learned_at: Int
 )
 
-@Entity(primaryKeys = ["pokemon_id", "move"])
+@Entity(primaryKeys = ["id", "move"])
 data class PokemonWithCurrentMoves(
-    val pokemon_id: Int,
+    val id: Int,
     val move: String,
     val level_learned_at: Int
+)
+
+data class PlayerPokemonMovePair(
+    @Embedded
+    var pokemon: PlayerPokemon,
+
+    @Relation(
+        parentColumn = "id",
+        entity = Move::class,
+        entityColumn = "move",
+        associateBy = Junction(
+            value = PokemonWithMoves::class,
+            parentColumn = "id",
+            entityColumn = "move"
+        )
+    )
+    var move: List<Move>
 )
 
 data class PlayerPokemonCurrentMovePair(
@@ -94,28 +113,12 @@ data class PlayerPokemonCurrentMovePair(
     var pokemon: PlayerPokemon,
 
     @Relation(
-        parentColumn = "pokemon_id",
-        entity = Move::class,
-        entityColumn = "move",
-        associateBy = Junction(
-            value = PokemonWithMoves::class,
-            parentColumn = "pokemon_id",
-            entityColumn = "move"
-        )
-    )
-    var move: List<Move>
-)
-data class PlayerPokemonMovePair(
-    @Embedded
-    var pokemon: PlayerPokemon,
-
-    @Relation(
-        parentColumn = "pokemon_id",
+        parentColumn = "id",
         entity = Move::class,
         entityColumn = "move",
         associateBy = Junction(
             value = PokemonWithCurrentMoves::class,
-            parentColumn = "pokemon_id",
+            parentColumn = "id",
             entityColumn = "move"
         )
     )
