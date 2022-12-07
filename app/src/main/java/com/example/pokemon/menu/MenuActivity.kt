@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.pokemon.data.PokemonCreation
+import com.example.pokemon.database.PlayerPokemon
 import com.example.pokemon.database.PokemonRoomDatabase
 import com.example.pokemon.databinding.ActivityMenuBinding
 import com.example.pokemon.objects.*
@@ -32,22 +33,6 @@ class MenuActivity : AppCompatActivity() {
         } else {
             val pokemon = intent.getSerializableExtra("pokemon") as Pokemon
             pokemonTeam.addPokemonToTeam(pokemon)
-            for(i in 0..4){
-                lifecycleScope.launch(Dispatchers.IO){
-                    val rand = Random.nextInt(0, 100).toString()
-                    val pokemon = PokemonCreation().createPokemon(rand, "", 5)
-                    pokemonTeam.addPokemonToTeam(pokemon)
-                }
-
-            }
-            for(i in 0..10){
-                lifecycleScope.launch(Dispatchers.IO){
-                    val rand = Random.nextInt(0, 100).toString()
-                    val pokemon = PokemonCreation().createPokemon(rand, "", 5)
-                    pokemonCollection.addPokemonToCollection(pokemon)
-                }
-
-            }
         }
     }
 
@@ -55,37 +40,56 @@ class MenuActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO){
             val playerPokemon = database.PokemonDAO().getPlayerPokemons()
             for(i in playerPokemon.indices){
-                val pokemonDB = playerPokemon[i]
-                val uniqueId = pokemonDB.id
-                val pokemonWithMovesDB = database.PokemonDAO().getPokemonMoves(uniqueId)
-                val moveDataArr = mutableListOf<MoveData>()
-                for(j in pokemonWithMovesDB.indices){
-                    val moveDB = database.PokemonDAO().getMove(pokemonWithMovesDB[j].move)
-                    val move = Move(moveDB.accuracy, moveDB.power, moveDB.damageClass, moveDB.heal, moveDB.target, moveDB.type)
-                    val moveData = MoveData(pokemonWithMovesDB[j].move, pokemonWithMovesDB[j].level_learned_at, move)
-                    moveDataArr.add(moveData)
-                }
-                val pokemonTypesStr = pokemonDB.types
-                val pokemonImagesStr = pokemonDB.images
-                val pokemonTypesJson = Gson().fromJson(pokemonTypesStr, JsonArray::class.java)
-                val pokemonTypes = JsonArrayToStringList(pokemonTypesJson)
-                val pokemonImagesJson = Gson().fromJson(pokemonImagesStr, JsonArray::class.java)
-                val pokemonImages = JsonArrayToStringList(pokemonImagesJson)
-                val moveDataArrList = ArrayList(moveDataArr)
-                val pokemon = Pokemon(pokemonDB.pokemon_id, pokemonDB.species,
-                    pokemonDB.name, pokemonDB.level, pokemonTypes,
-                    pokemonDB.maxHp, pokemonDB.attack, pokemonDB.defense, pokemonDB.specialAttack,
-                    pokemonDB.specialDefense, pokemonDB.speed, moveDataArrList, pokemonImages)
-                if(pokemonDB.isTeam == 1){
-                    pokemonTeam.addPokemonToTeam(pokemon)
-                } else {
-                    pokemonCollection.addPokemonToCollection(pokemon)
-                }
+                createPokemonObj(playerPokemon[i])
             }
         }
     }
 
-    private fun JsonArrayToStringList(moves: JsonArray): ArrayList<String> {
+    private fun createPokemonObj(pokemonDB: PlayerPokemon) {
+        val moveDataArrList = getMoveData(pokemonDB)
+        val pokemonTypes = toArrayList(pokemonDB.types)
+        val pokemonImages = toArrayList(pokemonDB.images)
+        val pokemon = Pokemon(
+            pokemonDB.pokemon_id, pokemonDB.species, pokemonDB.name,
+            pokemonDB.level, pokemonTypes, pokemonDB.maxHp,
+            pokemonDB.attack, pokemonDB.defense, pokemonDB.specialAttack,
+            pokemonDB.specialDefense, pokemonDB.speed,
+            moveDataArrList, pokemonImages
+        )
+        if (pokemonDB.isTeam == 1) {
+            pokemonTeam.addPokemonToTeam(pokemon)
+        } else {
+            pokemonCollection.addPokemonToCollection(pokemon)
+        }
+    }
+    
+    private fun getMoveData(pokemonDB : PlayerPokemon): ArrayList<MoveData> {
+        val uniqueId = pokemonDB.id
+        val pokemonWithMovesDB = database.PokemonDAO().getPokemonMoves(uniqueId)
+        val moveDataArr = mutableListOf<MoveData>()
+        for (i in pokemonWithMovesDB.indices) {
+            val moveDB = database.PokemonDAO().getMove(pokemonWithMovesDB[i].move)
+            val move = Move(
+                moveDB.accuracy,
+                moveDB.power,
+                moveDB.damageClass,
+                moveDB.heal,
+                moveDB.target,
+                moveDB.type
+            )
+            val moveData =
+                MoveData(pokemonWithMovesDB[i].move, pokemonWithMovesDB[i].level_learned_at, move)
+            moveDataArr.add(moveData)
+        }
+        return ArrayList(moveDataArr)
+    }
+
+    private fun toArrayList(arrayStr : String): ArrayList<String> {
+        val jsonArr = Gson().fromJson(arrayStr, JsonArray::class.java)
+        return jsonArrayToStringList(jsonArr)
+    }
+
+    private fun jsonArrayToStringList(moves: JsonArray): ArrayList<String> {
         val list = ArrayList<String>()
         for (i in 0 until moves.size()) {
             list.add(moves[i].asString)
@@ -96,7 +100,6 @@ class MenuActivity : AppCompatActivity() {
     override fun onBackPressed() {
         Toast.makeText(this, "Button Disabled", Toast.LENGTH_SHORT).show()
     }
-
 
     fun getTeam() : PokemonTeam {
         return this.pokemonTeam
@@ -113,6 +116,4 @@ class MenuActivity : AppCompatActivity() {
     fun setPokemon(pokemon : Pokemon) {
         this.pokemon = pokemon
     }
-
-
 }
