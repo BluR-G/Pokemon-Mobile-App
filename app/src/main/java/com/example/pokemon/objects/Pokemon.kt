@@ -23,6 +23,7 @@ class Pokemon : Serializable {
     private var statusAfflicted : String = ""
 
     private lateinit var moves: ArrayList<MoveData>
+    private lateinit var currentMoves: ArrayList<MoveData>
     private lateinit var images: ArrayList<String>
 
     constructor(species: String, name: String, level: Int, types: ArrayList<String>, maxHp: Int, attack: Int, defense: Int, specialAttack: Int, specialDefense: Int, speed: Int, moves: ArrayList<MoveData>, images: ArrayList<String>, statusAfflicted : String = ""){
@@ -40,6 +41,7 @@ class Pokemon : Serializable {
         this.speed = speed * (50 + level) / 50
         this.statusAfflicted = statusAfflicted
         this.moves = moves
+        this.currentMoves = getCurrentMoves()
         this.images = images
     }
 
@@ -160,6 +162,20 @@ class Pokemon : Serializable {
         }
         return false
     }
+
+    private fun getCurrentMoves(): ArrayList<MoveData>{
+        val list = ArrayList<MoveData>()
+        for(elem in moves){
+            if(elem.level_learned_at <= this.level){
+                list.add(elem)
+            }
+            if(list.size == 4){
+                return list
+            }
+        }
+        return list
+    }
+
     fun isAlive():Boolean{
         if(this.getCurrentHp()==0){
             return false
