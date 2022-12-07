@@ -103,6 +103,7 @@ class IntroFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 pokemon = PokemonCreation().createPokemon(starterPokemon, nickname, 5)
+                PokemonCreation().setURLToBitMapImages(pokemon)
                 lifecycleScope.launch(Dispatchers.Main){
                     val intent = Intent(activity, MenuActivity::class.java)
                     intent.putExtra("pokemon", pokemon)

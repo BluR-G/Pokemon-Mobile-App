@@ -33,6 +33,24 @@ class MenuActivity : AppCompatActivity() {
         } else {
             val pokemon = intent.getSerializableExtra("pokemon") as Pokemon
             pokemonTeam.addPokemonToTeam(pokemon)
+            for(i in 0..4){
+                lifecycleScope.launch(Dispatchers.IO){
+                    val rand = Random.nextInt(0, 100).toString()
+                    val pokemon = PokemonCreation().createPokemon(rand, "", 5)
+                    PokemonCreation().setURLToBitMapImages(pokemon)
+                    pokemonTeam.addPokemonToTeam(pokemon)
+                }
+
+            }
+            for(i in 0..20){
+                lifecycleScope.launch(Dispatchers.IO){
+                    val rand = Random.nextInt(0, 100).toString()
+                    val pokemon = PokemonCreation().createPokemon(rand, "", 5)
+                    PokemonCreation().setURLToBitMapImages(pokemon)
+                    pokemonCollection.addPokemonToCollection(pokemon)
+                }
+
+            }
         }
     }
 
@@ -51,7 +69,7 @@ class MenuActivity : AppCompatActivity() {
         val pokemonImages = toArrayList(pokemonDB.images)
         val pokemon = Pokemon(
             pokemonDB.pokemon_id, pokemonDB.species, pokemonDB.name,
-            pokemonDB.level, pokemonTypes, pokemonDB.maxHp,
+            pokemonDB.level,pokemonDB.currentXP, pokemonTypes, pokemonDB.maxHp,
             pokemonDB.attack, pokemonDB.defense, pokemonDB.specialAttack,
             pokemonDB.specialDefense, pokemonDB.speed,
             moveDataArrList, pokemonImages

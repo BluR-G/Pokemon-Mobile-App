@@ -75,7 +75,7 @@ class PokemonCreation {
         if (nickname == "") {
             pokemonNickname = species
         }
-        return Pokemon(id, species, pokemonNickname, initialLevel, types, hp, attack, defense, spAttack, spDefense, speed, moves, images)
+        return Pokemon(id, species, pokemonNickname, initialLevel, exp, types, hp, attack, defense, spAttack, spDefense, speed, moves, images)
     }
 
     private fun getImages(pokemon: JsonObject): ArrayList<String> {
@@ -83,12 +83,10 @@ class PokemonCreation {
         val imageObject = pokemon.get("sprites").asJsonObject
 
         val imageFrontUrl = imageObject.get("front").asString
-        val imageFrontStr = urlToBitmapStr(imageFrontUrl)
-
         val imageBackUrl = imageObject.get("back").asString
-        val imageBackStr = urlToBitmapStr(imageBackUrl)
-        list.add(imageFrontStr)
-        list.add(imageBackStr)
+
+        list.add(imageFrontUrl)
+        list.add(imageBackUrl)
         return list
     }
 
@@ -175,5 +173,10 @@ class PokemonCreation {
             list.add(MoveData(name, level, moveDetails))
         }
         return list
+    }
+
+    fun setURLToBitMapImages(pokemon: Pokemon) {
+        pokemon.getImages()[0] = urlToBitmapStr(pokemon.getImages()[0])
+        pokemon.getImages()[1] = urlToBitmapStr(pokemon.getImages()[1])
     }
 }

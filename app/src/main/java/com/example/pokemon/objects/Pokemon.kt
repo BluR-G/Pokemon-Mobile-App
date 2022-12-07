@@ -11,6 +11,7 @@ class Pokemon : Serializable {
     private var name: String = ""
     private var level: Int = 0
     private var experience: Int = 0
+    private var experienceReward: Int = 0
     private var types: ArrayList<String>
     private var currentHp: Int = 0
 
@@ -24,11 +25,12 @@ class Pokemon : Serializable {
     private var moves: ArrayList<MoveData>
     private var images: ArrayList<String>
 
-    constructor(id : Int, species: String, name: String, level: Int, types: ArrayList<String>, maxHp: Int, attack: Int, defense: Int, specialAttack: Int, specialDefense: Int, speed: Int, moves: ArrayList<MoveData>, images: ArrayList<String>){
+    constructor(id : Int, species: String, name: String, level: Int, experienceReward: Int, types: ArrayList<String>, maxHp: Int, attack: Int, defense: Int, specialAttack: Int, specialDefense: Int, speed: Int, moves: ArrayList<MoveData>, images: ArrayList<String>){
         this.id = id
         this.species = species
         this.name = name
         this.level = level
+        this.experienceReward = experienceReward
         this.experience = level.toDouble().pow(3.0).toInt()
         this.types = types
         this.maxHp = maxHp * (50 + level) / 50
@@ -58,6 +60,10 @@ class Pokemon : Serializable {
     }
     private fun setLevel(level: Int){
         this.level = level
+    }
+
+    fun getExperienceReward(): Int {
+        return this.experienceReward
     }
 
     fun getExperience(): Int{
