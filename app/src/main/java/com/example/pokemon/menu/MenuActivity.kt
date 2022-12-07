@@ -33,24 +33,6 @@ class MenuActivity : AppCompatActivity() {
         } else {
             val pokemon = intent.getSerializableExtra("pokemon") as Pokemon
             pokemonTeam.addPokemonToTeam(pokemon)
-            for(i in 0..4){
-                lifecycleScope.launch(Dispatchers.IO){
-                    val rand = Random.nextInt(0, 100).toString()
-                    val pokemon = PokemonCreation().createPokemon(rand, "", 5)
-                    PokemonCreation().setURLToBitMapImages(pokemon)
-                    pokemonTeam.addPokemonToTeam(pokemon)
-                }
-
-            }
-            for(i in 0..20){
-                lifecycleScope.launch(Dispatchers.IO){
-                    val rand = Random.nextInt(0, 100).toString()
-                    val pokemon = PokemonCreation().createPokemon(rand, "", 5)
-                    PokemonCreation().setURLToBitMapImages(pokemon)
-                    pokemonCollection.addPokemonToCollection(pokemon)
-                }
-
-            }
         }
     }
 
