@@ -41,7 +41,8 @@ class Pokemon : Serializable {
         this.speed = speed * (50 + level) / 50
         this.statusAfflicted = statusAfflicted
         this.moves = moves
-        this.currentMoves = getCurrentMoves()
+        this.currentMoves = ArrayList<MoveData>()
+        setCurrentMoves()
         this.images = images
     }
 
@@ -80,6 +81,7 @@ class Pokemon : Serializable {
                 setSpecialAttack()
                 setSpecialDefense()
                 setSpeed()
+                setCurrentMoves()
                 setLevel(this.level + 1)
             }
         }
@@ -163,17 +165,20 @@ class Pokemon : Serializable {
         return false
     }
 
-    private fun getCurrentMoves(): ArrayList<MoveData>{
-        val list = ArrayList<MoveData>()
+    private fun setCurrentMoves(){
+        currentMoves.clear()
         for(elem in moves){
             if(elem.level_learned_at <= this.level){
-                list.add(elem)
+                currentMoves.add(elem)
             }
-            if(list.size == 4){
-                return list
+            if(currentMoves.size == 4){
+                return
             }
         }
-        return list
+    }
+
+    fun getCurrentMoves(): ArrayList<MoveData> {
+        return this.currentMoves
     }
 
     fun isAlive():Boolean{
