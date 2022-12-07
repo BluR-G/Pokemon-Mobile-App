@@ -106,6 +106,7 @@ class IntroFragment : Fragment() {
                 lifecycleScope.launch(Dispatchers.Main){
                     val intent = Intent(activity, MenuActivity::class.java)
                     intent.putExtra("pokemon", pokemon)
+                    intent.putExtra("fromContinue", false)
                     startActivity(intent)
                 }
             }catch (e: Exception){

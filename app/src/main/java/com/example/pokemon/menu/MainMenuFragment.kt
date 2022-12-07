@@ -67,11 +67,11 @@ class MainMenuFragment : Fragment() {
                 val pokemon = pokemonTeam.getPokemon(i)
                 val playerPokemon = createPlayerPokemon(pokemon, i, 1, uniqueId)
                 database.PokemonDAO().insertPokemon(playerPokemon)
-                val id = database.PokemonDAO().getPlayerPokemonId(playerPokemon.position, playerPokemon.isTeam, playerPokemon.pokemon_id, playerPokemon.name)
+                //val id = database.PokemonDAO().getPlayerPokemonId(playerPokemon.position, playerPokemon.isTeam, playerPokemon.pokemon_id, playerPokemon.name)
 
                 //val pokemonInTeam = PokemonInTeam(playerPokemon, teamPositionDB)
                 //database.PokemonDAO().insertPokemonInTeam(pokemonInTeam)
-                addMovesToDB(pokemon.getMoves(), id)
+                addMovesToDB(pokemon.getMoves(), uniqueId)
                 uniqueId++
             }
             for(i in 0 until pokemonCollection.getSize()){
@@ -80,14 +80,13 @@ class MainMenuFragment : Fragment() {
                 val pokemon = pokemonCollection.getPokemon(i)
                 val playerPokemon = createPlayerPokemon(pokemon, i, 0, uniqueId)
                 database.PokemonDAO().insertPokemon(playerPokemon)
-                val id = database.PokemonDAO().getPlayerPokemonId(playerPokemon.position, playerPokemon.isTeam, playerPokemon.pokemon_id, playerPokemon.name)
+                //val id = database.PokemonDAO().getPlayerPokemonId(playerPokemon.position, playerPokemon.isTeam, playerPokemon.pokemon_id, playerPokemon.name)
                 //val pokemonInCollection = PokemonInCollection(playerPokemon, collectionPosition)
                 //database.PokemonDAO().insertPokemonInCollection(pokemonInCollection)
-                addMovesToDB(pokemon.getMoves(), id)
+                addMovesToDB(pokemon.getMoves(), uniqueId)
                 uniqueId++
             }
         }
-        Log.d("test", "Hello")
     }
 
     private fun addMovesToDB(movesData: ArrayList<MoveData>, id: Int) {

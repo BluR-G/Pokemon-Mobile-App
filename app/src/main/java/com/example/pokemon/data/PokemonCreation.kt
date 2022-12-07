@@ -171,10 +171,7 @@ class PokemonCreation {
             val target = parseMove.get("target").asString
             val type = parseMove.get("type").asString
 
-            val effect = parseMove.get("ailment").asString
-            val effectChance = Integer.parseInt(parseMove.get("ailmentChance").asString)
-
-            val moveDetails = Move(accuracy, power, damageClass, heal, target, effect, effectChance, type)
+            val moveDetails = Move(accuracy, power, damageClass, heal, target, type)
             list.add(MoveData(name, level, moveDetails))
         }
         return list
