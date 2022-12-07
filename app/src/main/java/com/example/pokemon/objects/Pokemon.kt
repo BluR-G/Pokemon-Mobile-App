@@ -2,6 +2,7 @@ package com.example.pokemon.objects
 
 import android.graphics.drawable.Drawable
 import java.io.Serializable
+import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.pow
 
@@ -90,7 +91,7 @@ class Pokemon : Serializable {
         return this.maxHp
     }
     private fun setMaxHp(){
-        this.maxHp = this.maxHp + (this.maxHp / (50 + this.level))
+        this.maxHp = ceil(this.maxHp + (this.maxHp / (50 + this.level).toDouble())).toInt()
     }
 
     fun getCurrentHp(): Int{
@@ -104,35 +105,35 @@ class Pokemon : Serializable {
         return this.attack
     }
     private fun setAttack(){
-        this.attack = this.attack + (this.attack / (50 + this.level))
+        this.attack = ceil(this.attack + (this.attack / (50 + this.level).toDouble())).toInt()
     }
 
     fun getDefense(): Int{
         return this.defense
     }
     private fun setDefense(){
-        this.defense = this.defense + (this.defense / (50 + this.level))
+        this.defense = ceil(this.defense + (this.defense / (50 + this.level).toDouble())).toInt()
     }
 
     fun getSpecialAttack(): Int{
         return this.specialAttack
     }
     private fun setSpecialAttack(){
-       this.specialAttack = this.specialAttack + (this.specialAttack / (50 + this.level))
+       this.specialAttack = ceil(this.specialAttack + (this.specialAttack / (50 + this.level).toDouble())).toInt()
     }
 
     fun getSpecialDefense(): Int{
         return this.specialDefense
     }
     private fun setSpecialDefense(){
-        this.specialDefense = this.specialDefense + (this.specialDefense / (50 + this.level))
+        this.specialDefense = ceil(this.specialDefense + (this.specialDefense / (50 + this.level).toDouble())).toInt()
     }
 
     fun getSpeed(): Int{
         return this.speed
     }
     private fun setSpeed(){
-        this.speed = this.speed + (this.speed / (50 + this.level))
+        this.speed = ceil(this.speed + (this.speed / (50 + this.level).toDouble())).toInt()
     }
 
     fun getMoves(): ArrayList<MoveData>{
