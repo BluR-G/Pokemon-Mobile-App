@@ -68,14 +68,14 @@ class PokemonCreation {
         val spAttack = getSpecialAttack(pokemonObject)
         val spDefense = getSpecialDefense(pokemonObject)
         val speed = getSpeed(pokemonObject)
-        val exp = getExperience(pokemonObject)
+        val exp = getExperience(pokemonObject).toDouble()
         val types = getType(pokemonObject)
         val moves = getMoves(pokemonObject)
         var pokemonNickname = nickname
         if (nickname == "") {
             pokemonNickname = species
         }
-        return Pokemon(species, pokemonNickname, initialLevel, types, hp, attack, defense, spAttack, spDefense, speed, moves, images)
+        return Pokemon(species, pokemonNickname, initialLevel, exp, types, hp, attack, defense, spAttack, spDefense, speed, moves, images)
     }
 
     private fun getImages(pokemon: JsonObject): ArrayList<String> {

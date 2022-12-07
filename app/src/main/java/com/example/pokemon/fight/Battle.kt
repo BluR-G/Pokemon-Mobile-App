@@ -7,8 +7,8 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.pokemon.MenuActivity
 import com.example.pokemon.R
+import com.example.pokemon.menu.MenuActivity
 import com.example.pokemon.objects.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
