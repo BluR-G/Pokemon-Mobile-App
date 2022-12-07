@@ -21,6 +21,7 @@ import com.example.pokemon.databinding.ActivityMenuBinding
 import com.example.pokemon.objects.Pokemon
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class IntroFragment : Fragment() {
 
@@ -111,7 +112,8 @@ class IntroFragment : Fragment() {
                 Handler(Looper.getMainLooper()).post {
                     Toast.makeText(activity, "Pokemon Data not found", Toast.LENGTH_SHORT).show()
                 }
-                binding.IntroGoToMainMenu.isEnabled = true;
+                    binding.IntroGoToMainMenu.isEnabled = true;
+
             }
         }
     }

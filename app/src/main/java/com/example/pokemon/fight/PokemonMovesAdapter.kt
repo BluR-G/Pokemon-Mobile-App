@@ -28,7 +28,7 @@ class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Co
     }
 
     override fun onBindViewHolder(holder: MovesViewHolder, position: Int) {
-        val move = pokemon.getMoves()[position]
+        val move = pokemon.getCurrentMoves()[position]
         holder.moveButton.text = move.moveName
         holder.moveButton.setOnClickListener{ view: View ->
             handleEvent(view, pokemon, move)
@@ -40,7 +40,7 @@ class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Co
     }
 
     override fun getItemCount(): Int {
-        return 4
+        return pokemon.getCurrentMoves().size
     }
 
 }

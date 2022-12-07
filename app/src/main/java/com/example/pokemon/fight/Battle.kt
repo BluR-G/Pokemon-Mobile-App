@@ -93,6 +93,9 @@ abstract class Battle {
             if (selfHealHp > attacker.getCurrentHp()){
                 attacker.setCurrentHp(attacker.getMaxHp())
             }
+            else {
+                attacker.setCurrentHp(selfHealHp)
+            }
             if (targetHp < 0){
                 target.setCurrentHp(0)
                 if(target == currentAllyPokemon) {
@@ -170,8 +173,9 @@ abstract class Battle {
     // Generates the next enemy move
     public fun pickEnemyRandomMove(): MoveData {
         val random = Random()
-        val moveNumber = random.nextInt(4)
-        return currentEnemyPokemon.getMoves()[moveNumber]
+        val enemyMoves = currentEnemyPokemon.getMoves()
+        val moveNumber = random.nextInt(enemyMoves.size)
+        return enemyMoves[moveNumber]
     }
     // Apply potion effect to pokemon
     public fun usePotion(view: View, pokemon: Pokemon){
