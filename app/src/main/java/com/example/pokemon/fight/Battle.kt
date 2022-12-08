@@ -344,7 +344,11 @@ abstract class Battle {
     public fun addExperience(){
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         val expGain = 0.3 * getCurrentEnemyPokemon().getBaseExperience().toDouble() * getCurrentEnemyPokemon().getLevel().toDouble() + 2600
+=======
+        val expGain = 0.3 * getCurrentEnemyPokemon().getExperience().toDouble() * getCurrentEnemyPokemon().getLevel().toDouble()
+>>>>>>> parent of b0cbad5 (Use base experience instead of all experience)
 =======
         val expGain = 0.3 * getCurrentEnemyPokemon().getExperience().toDouble() * getCurrentEnemyPokemon().getLevel().toDouble()
 >>>>>>> parent of b0cbad5 (Use base experience instead of all experience)
