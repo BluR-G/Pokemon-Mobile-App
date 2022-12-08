@@ -47,15 +47,11 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                 attackPokemonTarget(pokemonAttacker, pokemonTarget, attackerMove.move)
                 updateFightMessage(pokemonAttacker,pokemonTarget,attackerMove)
                 if(!pokemonTarget.isAlive() && pokemonTarget == getCurrentEnemyPokemon()){
-                    activity.setFightState(-1)
                     // Battle Won
                     val previousLevel = currentAllyPokemon.getLevel()
                     // Double experience
                     addExperience()
                     checkAddToCurrentMoves(previousLevel)
-                    // temporary fix, Lets 5 seconds for users to decide move before exiting
-                    delay(5000)
-                    displayFinalMessage("You won!")
                 } else if(!pokemonTarget.isAlive() && pokemonTarget == currentAllyPokemon){
                     displayFinalMessage("You lost!")
                 }

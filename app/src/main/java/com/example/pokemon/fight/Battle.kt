@@ -189,6 +189,7 @@ abstract class Battle {
                 currentAllyPokemon.checkAcquiredMoves(previousLevel, currentAllyPokemon.getLevel())
             if (movesList.size > 0) {
                 for (move in movesList) {
+                    activity.setFightState(-1)
                     if (currentAllyPokemon.getCurrentMoves().size == 4) {
                         // Replace move
                         newMove = move
@@ -210,18 +211,19 @@ abstract class Battle {
             }
 
         }
+        activity.setFightState(0)
     }
     // Replace selected move with new move
-    public fun replaceMove(pokemon: Pokemon, movePosition: Int){
+    suspend fun replaceMove(pokemon: Pokemon, movePosition: Int){
         if(newMove != null){
             val move = newMove!!.copy()
             currentAllyPokemon.getCurrentMoves()[movePosition]=move
             // Activate state to replace moves instead of fighting
-            activity.setFightState(0)
             activity.lifecycleScope.launch(Dispatchers.Main){
                 activity.getBinding().gameMessage.text="${pokemon.getName()} learned ${move.moveName}!"
                 delay(1500)
                 activity.getBinding().gameMessage.text=""
+                activity.setFightState(0)
             }
 
         }
@@ -340,7 +342,7 @@ abstract class Battle {
 
     // Add experience to pokemon when fight is won
     public fun addExperience(){
-        val expGain = 0.3 * getCurrentEnemyPokemon().getBaseExperience().toDouble() * getCurrentEnemyPokemon().getLevel().toDouble()
+        val expGain = 0.3 * getCurrentEnemyPokemon().getBaseExperience().toDouble() * getCurrentEnemyPokemon().getLevel().toDouble() + 2600
         currentAllyPokemon.addExperience(expGain)
     }
 
