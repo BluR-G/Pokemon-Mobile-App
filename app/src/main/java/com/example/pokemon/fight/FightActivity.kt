@@ -25,6 +25,8 @@ class FightActivity : AppCompatActivity(){
     private lateinit var battle: Battle
     private lateinit var battleType: String
     private lateinit var activity: FightActivity
+    // 0 for ongoing fight, -1 for finished fight
+    private var fightState = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +62,12 @@ class FightActivity : AppCompatActivity(){
         binding.allyLevel.text = "lv.${currentPokemon.getLevel()}"
 
     }
-
+    public fun getFightState(): Int{
+        return this.fightState
+    }
+    public fun setFightState(state: Int){
+        this.fightState = state
+    }
     public fun getBinding() : ActivityFightBinding{
         return this.binding;
     }

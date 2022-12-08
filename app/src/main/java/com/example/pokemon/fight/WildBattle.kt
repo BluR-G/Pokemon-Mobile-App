@@ -1,9 +1,11 @@
 package com.example.pokemon.fight
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.pokemon.R
 import com.example.pokemon.data.PokemonCreation
 import com.example.pokemon.objects.Move
@@ -16,11 +18,13 @@ import kotlin.collections.ArrayList
 
 class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: FightActivity) : Battle(pokemonTeam, enemyPokemon,activity){
     private lateinit var enemyPokemon: Pokemon
+
     init {
         this.enemyPokemon = enemyPokemon
         initializeMessage()
 
-       }
+    }
+
     private fun initializeMessage(){
         activity.getBinding().enemyPokemonText.text=getCurrentEnemyPokemon().getSpecies()
         activity.getBinding().enemyPokemonHp.text="HP: ${getCurrentEnemyPokemon().getCurrentHp()}/${getCurrentEnemyPokemon().getMaxHp()}"
@@ -34,20 +38,31 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
             }
         }
     }
+
     // Check Target Pokemon status and attack according to status
     override fun checkPokemonStatus(pokemonTarget: Pokemon, pokemonAttacker: Pokemon,
         attackerMove: MoveData, view: View) {
-        if(pokemonAttacker.isAlive()){
-            attackPokemonTarget(pokemonAttacker, pokemonTarget, attackerMove.move)
-            updateFightMessage(pokemonAttacker,pokemonTarget,attackerMove)
-            if(!pokemonTarget.isAlive() && pokemonTarget == getCurrentEnemyPokemon()){
-                addExperience()
-                displayFinalMessage("You won!")
-            } else if(!pokemonTarget.isAlive() && pokemonTarget == currentAllyPokemon){
-                displayFinalMessage("You lost!")
+        activity.lifecycleScope.launch(Dispatchers.Main){
+            if(pokemonAttacker.isAlive()){
+                attackPokemonTarget(pokemonAttacker, pokemonTarget, attackerMove.move)
+                updateFightMessage(pokemonAttacker,pokemonTarget,attackerMove)
+                if(!pokemonTarget.isAlive() && pokemonTarget == getCurrentEnemyPokemon()){
+                    activity.setFightState(-1)
+                    // Battle Won
+                    val previousLevel = currentAllyPokemon.getLevel()
+                    // Double experience
+                    addExperience()
+                    checkAddToCurrentMoves(previousLevel)
+                    // temporary fix, Lets 5 seconds for users to decide move before exiting
+                    delay(5000)
+                    displayFinalMessage("You won!")
+                } else if(!pokemonTarget.isAlive() && pokemonTarget == currentAllyPokemon){
+                    displayFinalMessage("You lost!")
+                }
             }
         }
     }
+
     // Fight between the current pokemon
     override fun fight(view: View, move: MoveData) {
         view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)

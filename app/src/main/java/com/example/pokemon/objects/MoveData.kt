@@ -7,3 +7,4 @@ data class MoveData (
     val level_learned_at: Int,
     val move: Move,
     ) : Serializable
+

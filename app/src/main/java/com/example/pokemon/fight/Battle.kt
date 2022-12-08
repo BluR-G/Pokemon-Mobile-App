@@ -21,6 +21,7 @@ abstract class Battle {
     public lateinit var allyPokemonTeam: PokemonTeam
     public lateinit var allyPokemonCollection: PokemonCollection
     public lateinit var currentAllyPokemon : Pokemon
+    public var newMove: MoveData? = null
     private lateinit var currentEnemyPokemon: Pokemon
 
     public lateinit var activity: FightActivity
@@ -32,19 +33,24 @@ abstract class Battle {
         this.currentAllyPokemon = pokemonTeam.getPokemonTeam()[0]
         this.currentEnemyPokemon = currentEnemyPokemon
     }
-    public fun setCurrentEnemyPokemon(pokemon: Pokemon){
-        this.currentEnemyPokemon = pokemon
-    }
+
+    abstract fun checkPokemonStatus(pokemonTarget: Pokemon, pokemonAttacker: Pokemon, attackerMove : MoveData, view : View)
+
+    abstract fun fight(view: View, allyMoveData : MoveData)
+
+    abstract fun throwPokeball(view: View)
+
     public fun getCurrentEnemyPokemon(): Pokemon{
         return this.currentEnemyPokemon
     }
 
-    abstract fun checkPokemonStatus(pokemonTarget: Pokemon, pokemonAttacker: Pokemon, attackerMove : MoveData, view : View)
-    abstract fun fight(view: View, allyMoveData : MoveData)
-    abstract fun throwPokeball(view: View)
+    public fun setCurrentEnemyPokemon(pokemon: Pokemon){
+        this.currentEnemyPokemon = pokemon
+    }
 
     // Plays the turns of both pokemon
     public fun playPokemonsTurns(move:MoveData, enemyMove: MoveData, view: View){
+        activity.setFightState(0)
         activity.lifecycleScope.launch(Dispatchers.Main){
                 if(currentAllyPokemon.getSpeed() > getCurrentEnemyPokemon().getSpeed()){
                     checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
@@ -57,6 +63,7 @@ abstract class Battle {
                 }
         }
     }
+
     // Swap pokemon
     public fun swapPokemon(view: View, pokemon: Pokemon){
         lateinit var enemyMove : MoveData
@@ -71,11 +78,11 @@ abstract class Battle {
             }
         }
     }
+
     // Attack pokemon target with move
     public fun attackPokemonTarget(attacker: Pokemon, target: Pokemon, move: Move){
         val moveChance = (1..100).random()
         var moveDamage = 0
-        Log.d("fight", "damage class: ${move.getDamageClass()}")
         if(move.getDamageClass() == "PHYSICAL"){
             moveDamage = calculateDamage(attacker, target, move, attacker.getAttack(),
                                          target.getDefense())
@@ -83,24 +90,30 @@ abstract class Battle {
             moveDamage = calculateDamage(attacker, target, move, attacker.getSpecialAttack(),
                                          target.getSpecialDefense())
         }
-        Log.d("fight", "move damage: ${moveDamage}")
 
         if(move.getAccuracy()>=moveChance){
-            Log.d("fight", attacker.getName())
-            Log.d("fight", "move chance: ${moveChance}, move accuracy: ${move.getAccuracy()}" )
             val targetHp = target.getCurrentHp() - moveDamage
             val selfHealHp = attacker.getCurrentHp() + move.getHeal()
-            if (selfHealHp > attacker.getCurrentHp()){
-                attacker.setCurrentHp(attacker.getMaxHp())
+            if(move.getHeal()>0){
+                if (selfHealHp > attacker.getCurrentHp()){
+                    attacker.setCurrentHp(attacker.getMaxHp())
+                }
+                else {
+                    attacker.setCurrentHp(selfHealHp)
+                }
+                activity.lifecycleScope.launch(Dispatchers.Main){
+                    if(attacker == currentAllyPokemon){
+                        activity.getBinding().allyPokemonHp.text = "${attacker.getCurrentHp()}/${attacker.getMaxHp()}"
+                    } else{
+                        activity.getBinding().enemyPokemonHp.text= "${attacker.getCurrentHp()}/${attacker.getMaxHp()}"
+                    }
+                }
             }
-            else {
-                attacker.setCurrentHp(selfHealHp)
-            }
+
             if (targetHp < 0){
                 target.setCurrentHp(0)
                 if(target == currentAllyPokemon) {
-                    val navHostFragment =
-                        activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
+                    val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
                     val navController = navHostFragment.navController
                     navController.navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
                 }
@@ -118,6 +131,7 @@ abstract class Battle {
             }
         }
     }
+
     // Calculate base damage with multipliers according to pokemon types
     private fun calculateDamage(attacker: Pokemon, target : Pokemon, move: Move,
                                 attack :Int, defense: Int) : Int {
@@ -128,9 +142,6 @@ abstract class Battle {
         val baseDamage = (((1.0/50.0)* (((2.0*attacker.getLevel().toDouble())/5.0)+2.0) *
                             move.getPower().toDouble()*((attack.toDouble()/defense.toDouble())+2.0)))
         var effectiveMultiplier = damageChart.getDamageMultiplier(move.getTypes(), target.getTypes()[0])
-//        Log.d("multiplier", "target type: ${target.getTypes()[0]}")
-//        Log.d("multiplier", attacker.getName())
-//        Log.d("multiplier", effectiveMultiplier.toString())
 
         // Check if target has many types
         if (target.getTypes().size == 2){
@@ -170,10 +181,56 @@ abstract class Battle {
             }
         }
     }
+    suspend fun checkAddToCurrentMoves(previousLevel: Int) {
+        if (previousLevel < currentAllyPokemon.getLevel()) {
+            Log.d("moveslearned", "levelled up ")
+            //Level up
+            val movesList =
+                currentAllyPokemon.checkAcquiredMoves(previousLevel, currentAllyPokemon.getLevel())
+            if (movesList.size > 0) {
+                for (move in movesList) {
+                    if (currentAllyPokemon.getCurrentMoves().size == 4) {
+                        // Replace move
+                        newMove = move
+                        delay(2000)
+                        activity.getBinding().gameMessage.text =
+                            "${currentAllyPokemon.getName()} wants to learn ${move.moveName}. Pick one move to replace"
+                        val navHostFragment =
+                            activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
+                        val navController = navHostFragment.navController
+                        if (navController.currentDestination.toString() == activity.getString(R.string.fight_menu_navigation)) {
+                            // Navigate to moves fragment so that user picks which move to replace
+                            navController.navigate(R.id.action_fightMenuFragment_to_fightFragment)
+                        }
+                    } else {
+                        // add move
+                        currentAllyPokemon.addCurrentMove(move)
+                    }
+                }
+            }
+
+        }
+    }
+    // Replace selected move with new move
+    public fun replaceMove(pokemon: Pokemon, movePosition: Int){
+        if(newMove != null){
+            val move = newMove!!.copy()
+            currentAllyPokemon.getCurrentMoves()[movePosition]=move
+            // Activate state to replace moves instead of fighting
+            activity.setFightState(0)
+            activity.lifecycleScope.launch(Dispatchers.Main){
+                activity.getBinding().gameMessage.text="${pokemon.getName()} learned ${move.moveName}!"
+                delay(1500)
+                activity.getBinding().gameMessage.text=""
+            }
+
+        }
+
+    }
     // Generates the next enemy move
     public fun pickEnemyRandomMove(): MoveData {
         val random = Random()
-        val enemyMoves = currentEnemyPokemon.getMoves()
+        val enemyMoves = currentEnemyPokemon.getCurrentMoves()
         val moveNumber = random.nextInt(enemyMoves.size)
         return enemyMoves[moveNumber]
     }
@@ -203,6 +260,7 @@ abstract class Battle {
         activity.setResult(Activity.RESULT_OK, intent)
         activity.finish()
     }
+
     // Display the win or loss message and exits fight
     public fun displayFinalMessage(message:String){
         activity.lifecycleScope.launch(Dispatchers.Default){
@@ -213,6 +271,7 @@ abstract class Battle {
             }
         }
     }
+
     // Warns player that they cannot swap to same pokemon
     private fun displayCannotSwapMessage(){
         activity.lifecycleScope.launch(Dispatchers.Default){
@@ -223,6 +282,7 @@ abstract class Battle {
             }
         }
     }
+
     // Update the messages after fight sequence
     public fun updateFightMessage(attacker: Pokemon, target:  Pokemon, firstMove: MoveData){
         activity.lifecycleScope.launch(Dispatchers.Main){
@@ -237,6 +297,7 @@ abstract class Battle {
             activity.getBinding().gameMessage.text=""
         }
     }
+
     // Updates game message when current pokemon is swapped
     public fun updateSwapMessage(pokemon: Pokemon, enemyPokemon: Pokemon, enemyMove: MoveData, view: View){
         activity.lifecycleScope.launch(Dispatchers.Default){
@@ -261,6 +322,7 @@ abstract class Battle {
             }
         }
     }
+
     // Updates game message when current pokemon is healed
     public fun updateHealMessage(view: View, pokemon: Pokemon){
         activity.lifecycleScope.launch(Dispatchers.Default){
@@ -275,13 +337,11 @@ abstract class Battle {
             enemyAttack()
         }
     }
+
     // Add experience to pokemon when fight is won
     public fun addExperience(){
-        Log.d("exp", currentAllyPokemon.getExperience().toString())
         val expGain = 0.3 * getCurrentEnemyPokemon().getExperience().toDouble() * getCurrentEnemyPokemon().getLevel().toDouble()
         currentAllyPokemon.addExperience(expGain)
-        Log.d("exp", expGain.toString())
-        Log.d("exp", currentAllyPokemon.getExperience().toString())
     }
 
 }

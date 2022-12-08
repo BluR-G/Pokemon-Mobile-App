@@ -1,6 +1,7 @@
 package com.example.pokemon.fight
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,12 +32,17 @@ class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Co
         val move = pokemon.getCurrentMoves()[position]
         holder.moveButton.text = move.moveName
         holder.moveButton.setOnClickListener{ view: View ->
-            handleEvent(view, pokemon, move)
+            handleEvent(view, pokemon, move, position)
         }
     }
 
-    private fun handleEvent(view: View, pokemon: Pokemon, move: MoveData) {
-        battle.fight(view,move)
+    private fun handleEvent(view: View, pokemon: Pokemon, move: MoveData, position: Int) {
+        if(fightActivity.getFightState() == 0){
+            battle.fight(view,move)
+        } else {
+            battle.replaceMove(pokemon,position)
+        }
+
     }
 
     override fun getItemCount(): Int {

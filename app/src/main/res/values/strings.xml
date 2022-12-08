@@ -30,4 +30,5 @@
     <string name="new_game">New Game</string>
     <string name="members_text">Game created by:\n\nDan Willis\nJohnny Hoang\nRobert Gutkowski\nRay Hernaez</string>
     <string name="pokemon_sprite">Pokemon\'s Sprite</string>
+    <string name="fight_menu_navigation">Destination(com.example.pokemon:id/fightMenuFragment) label=fragment_fight_menu class=com.example.pokemon.fight.FightMenuFragment</string>
 </resources>

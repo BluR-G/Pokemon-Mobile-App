@@ -83,7 +83,6 @@ class Pokemon : Serializable {
                 setSpecialAttack()
                 setSpecialDefense()
                 setSpeed()
-                setCurrentMoves()
                 setLevel(this.level + 1)
             }
         }
@@ -179,8 +178,33 @@ class Pokemon : Serializable {
         }
     }
 
+    fun addCurrentMove(move: MoveData){
+        if(this.currentMoves.size < 4){
+            this.currentMoves.add(move)
+        }
+    }
     fun getCurrentMoves(): ArrayList<MoveData> {
         return this.currentMoves
+    }
+
+    public fun checkAcquiredMoves(previousLevel: Int, currentLevel: Int): ArrayList<MoveData> {
+        val list = ArrayList<MoveData>()
+        for (i in previousLevel + 1..currentLevel) {
+            val learnedMove = checkLearnedMove(i, moves)
+            if (learnedMove != null) {
+                list.add(learnedMove)
+            }
+        }
+        return list
+    }
+
+    private fun checkLearnedMove(levelLearned: Int, moves: ArrayList<MoveData>):MoveData?{
+        for(move in moves){
+            if(move.level_learned_at == levelLearned){
+                return move
+            }
+        }
+        return null
     }
 
     fun isAlive():Boolean{

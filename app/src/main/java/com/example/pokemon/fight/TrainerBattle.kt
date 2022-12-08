@@ -22,18 +22,26 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
         setCurrentEnemyPokemon(enemyTeam.getPokemonTeam()[0])
         initializeMessage()
     }
+
     private fun initializeMessage(){
         activity.getBinding().enemyPokemonText.text=getCurrentEnemyPokemon().getSpecies()
         activity.getBinding().enemyPokemonHp.text="HP: ${getCurrentEnemyPokemon().getCurrentHp()}/${getCurrentEnemyPokemon().getMaxHp()}"
         activity.getBinding().enemyLevel.text = "lv.${getCurrentEnemyPokemon().getLevel()}"
     }
+
     public override fun checkPokemonStatus(pokemonTarget: Pokemon, pokemonAttacker: Pokemon, attackerMove : MoveData, view : View){
+        Log.d("enemyteam", enemyTeam.getSize().toString())
         if(pokemonAttacker.isAlive()){
             attackPokemonTarget(pokemonAttacker,pokemonTarget,attackerMove.move)
-            if(enemyTeam.isTeamDead()){
-                // Double experience
-                addExperience()
-                displayFinalMessage("You won!")
+            if(!getCurrentEnemyPokemon().isAlive() || enemyTeam.isTeamDead()){
+                activity.lifecycleScope.launch(Dispatchers.Main){
+                    val previousLevel = currentAllyPokemon.getLevel()
+                    addExperience()
+                    checkAddToCurrentMoves(previousLevel)
+                }
+                if(enemyTeam.isTeamDead()) {
+                    displayFinalMessage("You won!")
+                }
             } else if(allyPokemonTeam.isTeamDead()){
                 displayFinalMessage("You lost!")
             }
@@ -44,6 +52,7 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
         }
 
     }
+
     // Fight between the current pokemon
     public override fun fight(view: View, move : MoveData){
         view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
@@ -63,6 +72,7 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
         }
 
     }
+    // Swap enemy when previous enemy dies
     private fun swapEnemy(){
         val enemyTeam = enemyTeam.getPokemonTeam()
         if(count<enemyTeam.size-1){
