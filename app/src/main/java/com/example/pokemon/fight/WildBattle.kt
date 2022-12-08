@@ -52,7 +52,8 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                     // Double experience
                     addExperience()
                     checkAddToCurrentMoves(previousLevel)
-                } else if(!pokemonTarget.isAlive() && pokemonTarget == currentAllyPokemon){
+                    displayFinalMessage("You won!")
+                } else if(allyPokemonTeam.isTeamDead()){
                     displayFinalMessage("You lost!")
                 }
             }

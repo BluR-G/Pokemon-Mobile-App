@@ -43,12 +43,12 @@ class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Co
             battle.fight(view,move)
         } else {
             runBlocking {
+                fightActivity.setFightState(-1)
                 battle.replaceMove(pokemon,position)
-                view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
+
             }
-            if(battle is WildBattle){
-                battle.displayFinalMessage("You won!")
-            }
+            fightActivity.setFightState(0)
+            view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
         }
     }
 

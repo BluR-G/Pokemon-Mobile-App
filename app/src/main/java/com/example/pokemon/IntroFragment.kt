@@ -102,7 +102,7 @@ class IntroFragment : Fragment() {
         Toast.makeText(activity, "Loading...", Toast.LENGTH_SHORT).show()
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                pokemon = PokemonCreation().createPokemon(starterPokemon, nickname, 21)
+                pokemon = PokemonCreation().createPokemon(starterPokemon, nickname, 20)
                 lifecycleScope.launch(Dispatchers.Main){
                     val intent = Intent(activity, MenuActivity::class.java)
                     intent.putExtra("pokemon", pokemon)

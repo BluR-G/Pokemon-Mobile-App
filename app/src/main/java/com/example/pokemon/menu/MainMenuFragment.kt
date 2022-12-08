@@ -28,8 +28,8 @@ class MainMenuFragment : Fragment() {
         binding.goToPokeCenter.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.action_mainMenuFragment_to_pokeCenterFragment)
         }
-        binding.goToTrainerBattle.setOnClickListener { switchTrainerBattle() }
-        binding.goToWildBattle.setOnClickListener{ switchWildBattle() }
+        binding.goToTrainerBattle.setOnClickListener { switchToBattle("trainer") }
+        binding.goToWildBattle.setOnClickListener{ switchToBattle("wild") }
         return binding.root
     }
     private fun switchBattle(type:String){
@@ -39,14 +39,11 @@ class MainMenuFragment : Fragment() {
         intent.putExtra("battleType", type)
         menuActivity.getResult.launch(intent)
     }
-    private fun switchTrainerBattle() {
+    private fun switchToBattle(battleType:String) {
         if(!menuActivity.getTeam().isTeamDead()){
-            switchBattle("trainer")
-        }
-    }
-    private fun switchWildBattle() {
-        if(!menuActivity.getTeam().isTeamDead()) {
-            switchBattle("wild")
+            switchBattle(battleType)
+        } else {
+            Toast.makeText(activity, "Your team is dead! Go to the Pokecenter.", Toast.LENGTH_SHORT).show()
         }
     }
 

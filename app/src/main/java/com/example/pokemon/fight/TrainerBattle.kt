@@ -35,9 +35,11 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
             attackPokemonTarget(pokemonAttacker,pokemonTarget,attackerMove.move)
             if(!getCurrentEnemyPokemon().isAlive() || enemyTeam.isTeamDead()){
                 activity.lifecycleScope.launch(Dispatchers.Main){
+                    activity.setFightState(-1)
                     val previousLevel = currentAllyPokemon.getLevel()
                     addExperience()
                     checkAddToCurrentMoves(previousLevel)
+                    activity.setFightState(0)
                 }
                 if(enemyTeam.isTeamDead()) {
                     displayFinalMessage("You won!")
