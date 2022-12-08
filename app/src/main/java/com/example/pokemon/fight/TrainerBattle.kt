@@ -36,8 +36,6 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
             if(!getCurrentEnemyPokemon().isAlive() || enemyTeam.isTeamDead()){
                 activity.lifecycleScope.launch(Dispatchers.Main){
                     val previousLevel = currentAllyPokemon.getLevel()
-                    // Trainer battle returns double the amount of experience
-                    addExperience()
                     addExperience()
                     checkAddToCurrentMoves(previousLevel)
                 }
