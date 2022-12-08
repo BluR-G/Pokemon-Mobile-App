@@ -115,7 +115,10 @@ abstract class Battle {
                 if(target == currentAllyPokemon) {
                     val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
                     val navController = navHostFragment.navController
-                    navController.navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
+                    // If team is still alive, give the choice to swap pokemon
+                    if(!allyPokemonTeam.isTeamDead()){
+                        navController.navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
+                    }
                 }
             } else {
                 target.setCurrentHp(targetHp)
@@ -169,12 +172,12 @@ abstract class Battle {
             withContext(Dispatchers.Main) {
                 var enemyMove = pickEnemyRandomMove()
                 // Attacks swapped Pokemon
-                attackPokemonTarget(currentAllyPokemon,currentEnemyPokemon, enemyMove.move)
+                attackPokemonTarget(currentEnemyPokemon,currentAllyPokemon, enemyMove.move)
                 activity.getBinding().gameMessage.text =
                     "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!"
                 delay(1000)
                 activity.getBinding().gameMessage.text = ""
-                delay(1500)
+                delay(1000)
                 // Updates pokemon text
                 activity.getBinding().allyPokemonHp.text =
                     "${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
@@ -183,7 +186,7 @@ abstract class Battle {
     }
     suspend fun checkAddToCurrentMoves(previousLevel: Int) {
         if (previousLevel < currentAllyPokemon.getLevel()) {
-            Log.d("moveslearned", "levelled up ")
+            activity.getBinding().allyLevel.text="lv.${currentAllyPokemon.getLevel()}"
             //Level up
             val movesList =
                 currentAllyPokemon.checkAcquiredMoves(previousLevel, currentAllyPokemon.getLevel())
@@ -340,7 +343,7 @@ abstract class Battle {
 
     // Add experience to pokemon when fight is won
     public fun addExperience(){
-        val expGain = 0.3 * getCurrentEnemyPokemon().getBaseExperience().toDouble() * getCurrentEnemyPokemon().getLevel().toDouble()
+        val expGain = 0.3 * getCurrentEnemyPokemon().getExperience().toDouble() * getCurrentEnemyPokemon().getLevel().toDouble()
         currentAllyPokemon.addExperience(expGain)
     }
 

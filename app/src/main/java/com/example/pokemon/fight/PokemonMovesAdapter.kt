@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemon.R
 import com.example.pokemon.objects.MoveData
 import com.example.pokemon.objects.Pokemon
+import kotlinx.coroutines.runBlocking
 
 class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Context, private val battle: Battle): RecyclerView.Adapter<PokemonMovesAdapter.MovesViewHolder>() {
     lateinit var fightActivity: FightActivity
@@ -40,7 +42,13 @@ class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Co
         if(fightActivity.getFightState() == 0){
             battle.fight(view,move)
         } else {
-            battle.replaceMove(pokemon,position)
+            runBlocking {
+                fightActivity.setFightState(-1)
+                battle.replaceMove(pokemon,position)
+
+            }
+            fightActivity.setFightState(0)
+            view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
         }
 
     }

@@ -53,10 +53,8 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                     // Double experience
                     addExperience()
                     checkAddToCurrentMoves(previousLevel)
-                    // temporary fix, Lets 5 seconds for users to decide move before exiting
-                    delay(5000)
                     displayFinalMessage("You won!")
-                } else if(!pokemonTarget.isAlive() && pokemonTarget == currentAllyPokemon){
+                } else if(allyPokemonTeam.isTeamDead()){
                     displayFinalMessage("You lost!")
                 }
             }
