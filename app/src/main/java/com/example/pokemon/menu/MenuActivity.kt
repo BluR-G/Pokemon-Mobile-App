@@ -51,7 +51,7 @@ class MenuActivity : AppCompatActivity() {
         val pokemonImages = toArrayList(pokemonDB.images)
         val pokemon = Pokemon(
             pokemonDB.pokemon_id, pokemonDB.species, pokemonDB.name,
-            pokemonDB.level,pokemonDB.currentXP, pokemonTypes, pokemonDB.maxHp,
+            pokemonDB.level,pokemonDB.baseExperience, pokemonTypes, pokemonDB.maxHp,
             pokemonDB.attack, pokemonDB.defense, pokemonDB.specialAttack,
             pokemonDB.specialDefense, pokemonDB.speed,
             moveDataArrList, pokemonImages

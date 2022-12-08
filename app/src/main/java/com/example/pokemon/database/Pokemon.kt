@@ -12,6 +12,7 @@ data class PlayerPokemon(
     @ColumnInfo(name = "name") val name : String,
     @ColumnInfo(name = "images") val images : String,
     @ColumnInfo(name = "currentXP") val currentXP: Int,
+    @ColumnInfo(name = "baseExperience") val baseExperience: Int,
     @ColumnInfo(name = "level") val level: Int,
     @ColumnInfo(name = "types") val types: String,
     @ColumnInfo(name = "maxHp") val maxHp: Int,
