@@ -30,6 +30,7 @@ abstract class Battle {
     public var newNickname=""
     public var capturedSpecies=""
     public lateinit var activity: FightActivity
+    public var isAttacking = false
 
     constructor(pokemonTeam: PokemonTeam, currentEnemyPokemon: Pokemon,activity: FightActivity) {
         this.activity = activity
@@ -78,6 +79,7 @@ abstract class Battle {
     fun playPokemonsTurns(move:MoveData, enemyMove: MoveData, view: View){
         activity.setFightState(0)
         activity.lifecycleScope.launch(Dispatchers.Main){
+                isAttacking = true
                 if(currentAllyPokemon.getSpeed() > getCurrentEnemyPokemon().getSpeed()){
                     checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
                     delay(1500)
@@ -87,6 +89,8 @@ abstract class Battle {
                     delay(1500)
                     checkPokemonStatus(getCurrentEnemyPokemon(),currentAllyPokemon, move, view)
                 }
+                isAttacking = false
+
         }
     }
 
@@ -151,8 +155,6 @@ abstract class Battle {
                 activity.lifecycleScope.launch(Dispatchers.Main){
                     delay(1000)
                     activity.getBinding().gameMessage.text="${currentAllyPokemon.getName()} fainted. Pick another Pokemon!"
-                    delay(2000)
-                    activity.getBinding().gameMessage.text=""
                 }
                 navController.navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
             }
@@ -247,6 +249,10 @@ abstract class Battle {
                         if (navController.currentDestination.toString() == activity.getString(R.string.fight_menu_navigation)) {
                             // Navigate to moves fragment so that user picks which move to replace
                             navController.navigate(R.id.action_fightMenuFragment_to_fightFragment)
+                            withContext(Dispatchers.IO) {
+                                while(activity.getFightState()==-1){ }
+                            }
+
                         }
                     } else {
                         // add move
@@ -388,7 +394,7 @@ abstract class Battle {
 
     // Add experience to pokemon when fight is won
     public fun addExperience(){
-        val expGain = 0.3 * getCurrentEnemyPokemon().getExperienceReward() * getCurrentEnemyPokemon().getLevel() + 1000
+        val expGain = 0.3 * getCurrentEnemyPokemon().getExperienceReward() * getCurrentEnemyPokemon().getLevel() + 4000
         currentAllyPokemon.addExperience(expGain.toInt())
     }
 

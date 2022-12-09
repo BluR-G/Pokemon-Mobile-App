@@ -24,16 +24,24 @@ class FightMenuFragment : Fragment()  {
         fightActivity = context as FightActivity
         val binding = FragmentFightMenuBinding.inflate(layoutInflater)
         binding.selectFight.setOnClickListener { view : View ->
-            view.findNavController().navigate(R.id.action_fightMenuFragment_to_fightFragment)
+            if(!fightActivity.getBattle().isAttacking && fightActivity.getBattle().currentAllyPokemon.isAlive()){
+                view.findNavController().navigate(R.id.action_fightMenuFragment_to_fightFragment)
+            }
         }
         binding.selectBag.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_fightMenuFragment_to_bagFragment)
+            if(!fightActivity.getBattle().isAttacking && fightActivity.getBattle().currentAllyPokemon.isAlive()) {
+                view.findNavController().navigate(R.id.action_fightMenuFragment_to_bagFragment)
+            }
         }
         binding.selectTeam.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
+            if(!fightActivity.getBattle().isAttacking && fightActivity.getBattle().currentAllyPokemon.isAlive()){
+                view.findNavController().navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
+            }
         }
         binding.selectRun.setOnClickListener{
-            fightActivity.getBattle().run()
+            if(!fightActivity.getBattle().isAttacking && fightActivity.getBattle().currentAllyPokemon.isAlive()){
+                fightActivity.getBattle().run()
+            }
         }
         return binding.root
     }

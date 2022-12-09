@@ -42,11 +42,8 @@ class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Co
         if(fightActivity.getFightState() == 0){
             battle.fight(view,move)
         } else {
-            runBlocking {
-                fightActivity.setFightState(-1)
-                battle.replaceMove(pokemon,position)
 
-            }
+            battle.replaceMove(pokemon,position)
             fightActivity.setFightState(0)
             view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
         }

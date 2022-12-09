@@ -52,9 +52,9 @@ class MainMenuFragment : Fragment() {
         return binding.root
     }
     private fun switchToBattle(battleType:String) {
-        Toast.makeText(activity, "Loading...", Toast.LENGTH_SHORT).show()
         if(!menuActivity.getTeam().isTeamDead()){
             if(battleType == "wild"){
+                Toast.makeText(activity, "Loading...", Toast.LENGTH_SHORT).show()
                 lifecycleScope.launch(Dispatchers.IO) {
                     val wildPokemon = generatePokemon()
                     lifecycleScope.launch(Dispatchers.Main){
@@ -62,6 +62,7 @@ class MainMenuFragment : Fragment() {
                     }
                 }
             } else {
+                Toast.makeText(activity, "Loading...", Toast.LENGTH_LONG).show()
                 lifecycleScope.launch(Dispatchers.IO) {
                     val trainerTeam = generatePokemonTeam()
                     lifecycleScope.launch(Dispatchers.Main){
