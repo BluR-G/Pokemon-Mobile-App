@@ -1,6 +1,9 @@
 package com.example.pokemon.fight
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
@@ -21,22 +24,7 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
 
     init {
         this.enemyPokemon = enemyPokemon
-        initializeMessage()
-
-    }
-
-    private fun initializeMessage(){
-        activity.getBinding().enemyPokemonText.text=getCurrentEnemyPokemon().getSpecies()
-        activity.getBinding().enemyPokemonHp.text="HP: ${getCurrentEnemyPokemon().getCurrentHp()}/${getCurrentEnemyPokemon().getMaxHp()}"
-        activity.getBinding().enemyLevel.text = "lv.${getCurrentEnemyPokemon().getLevel()}"
-        activity.lifecycleScope.launch(Dispatchers.Default){
-            withContext(Dispatchers.Main){
-                delay(200)
-                activity.getBinding().gameMessage.text="A wild ${getCurrentEnemyPokemon().getSpecies()} appeared!"
-                delay(1500)
-                activity.getBinding().gameMessage.text=""
-            }
-        }
+        initializeMessage("A wild ${getCurrentEnemyPokemon().getSpecies()} appeared!")
     }
 
     // Check Target Pokemon status and attack according to status
@@ -47,9 +35,10 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                 attackPokemonTarget(pokemonAttacker, pokemonTarget, attackerMove.move)
                 updateFightMessage(pokemonAttacker,pokemonTarget,attackerMove)
                 if(!pokemonTarget.isAlive() && pokemonTarget == getCurrentEnemyPokemon()){
-                    // Battle Won
+                    activity.setFightState(-1)
+                    // battle Won
                     val previousLevel = currentAllyPokemon.getLevel()
-                    // Double experience
+                    // add experience to pokemon and check for possible moves that can be learned
                     addExperience()
                     checkAddToCurrentMoves(previousLevel)
                     displayFinalMessage("You won!")
@@ -80,18 +69,45 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                     activity.getBinding().gameMessage.text = "You captured ${getCurrentEnemyPokemon().getSpecies()}!"
                     delay(500)
                     activity.getBinding().gameMessage.text = ""
-                    if(allyPokemonTeam.getSize()==6){
-                        allyPokemonCollection.addPokemonToCollection(getCurrentEnemyPokemon())
-                    } else {
-                        allyPokemonTeam.addPokemonToTeam(getCurrentEnemyPokemon())
-                    }
-                    run()
+                    handleTeamCollection()
+                    handleCapturedPokemonName()
                 } else {
                     activity.getBinding().gameMessage.text="${getCurrentEnemyPokemon().getSpecies()} broke free!"
+                    // pokemon attacks if capturing fails
                     enemyAttack()
                 }
             }
 
+        }
+    }
+    // Handle the team and collection when pokemon is captured
+    private fun handleTeamCollection() {
+        if (allyPokemonTeam.getSize() == 6) {
+            // add to collection when pokemon team is full
+            allyPokemonCollection.addPokemonToCollection(getCurrentEnemyPokemon())
+        } else {
+            // add to team when pokemon team is not full
+            allyPokemonTeam.addPokemonToTeam(getCurrentEnemyPokemon())
+        }
+    }
+
+    // Handle the captured pokemon and change its nickname depending on user
+    private suspend fun handleCapturedPokemonName() {
+        val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.navigate(R.id.action_fightMenuFragment_to_pokemonCaptureFragment)
+        activity.getBinding().gameMessage.text = "Enter a nickname for the captured pokemon:"
+        withContext(Dispatchers.IO) {
+            // waits for user response
+            while (newNickname == "") {
+            }
+            // set nickname to captured pokemon
+            capturedSpecies=getCurrentEnemyPokemon().getSpecies()
+            getCurrentEnemyPokemon().setNickame(newNickname)
+            // reset names
+            newNickname=""
+            capturedSpecies=""
+            run()
         }
     }
 }

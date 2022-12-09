@@ -66,4 +66,23 @@ class PokemonTeam : Serializable {
         return true
     }
 
+    public fun getHighestLevel(): Int{
+        var highLevel = this.getPokemonTeam()[0].getLevel()
+        for(pokemon in this.getPokemonTeam()){
+            if(pokemon.getLevel() > highLevel){
+                highLevel = pokemon.getLevel()
+            }
+        }
+        return highLevel
     }
+
+    public fun getLowestLevel():Int{
+        var lowLevel = this.getPokemonTeam()[0].getLevel()
+        for(pokemon in this.getPokemonTeam()){
+            if(pokemon.getLevel() < lowLevel){
+                lowLevel = pokemon.getLevel()
+            }
+        }
+        return lowLevel
+    }
+}

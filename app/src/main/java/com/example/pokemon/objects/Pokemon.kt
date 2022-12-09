@@ -7,12 +7,13 @@ import kotlin.math.floor
 import kotlin.math.pow
 
 class Pokemon : Serializable {
+    private var id : Int = 0
     private var species: String = ""
     private var name: String = ""
     private var level: Int = 0
-    private var experience: Double = 0.0
-    private var baseExperience: Double = 0.0
-    private lateinit var types: ArrayList<String>
+    private var experience: Int = 0
+    private var experienceReward: Int = 0
+    private var types: ArrayList<String>
     private var currentHp: Int = 0
 
     private var maxHp: Int = 0
@@ -21,18 +22,18 @@ class Pokemon : Serializable {
     private var specialAttack: Int = 0
     private var specialDefense: Int = 0
     private var speed: Int = 0
-    private var statusAfflicted : String = ""
 
-    private lateinit var moves: ArrayList<MoveData>
     private lateinit var currentMoves: ArrayList<MoveData>
-    private lateinit var images: ArrayList<String>
+    private var moves: ArrayList<MoveData>
+    private var images: ArrayList<String>
 
-    constructor(species: String, name: String, level: Int, baseExperience: Double, types: ArrayList<String>, maxHp: Int, attack: Int, defense: Int, specialAttack: Int, specialDefense: Int, speed: Int, moves: ArrayList<MoveData>, images: ArrayList<String>, statusAfflicted : String = ""){
+    constructor(id : Int, species: String, name: String, level: Int, experienceReward: Int, types: ArrayList<String>, maxHp: Int, attack: Int, defense: Int, specialAttack: Int, specialDefense: Int, speed: Int, moves: ArrayList<MoveData>, images: ArrayList<String>){
+        this.id = id
         this.species = species
         this.name = name
         this.level = level
-        this.experience = level.toDouble().pow(3.0)
-        this.baseExperience = baseExperience
+        this.experienceReward = experienceReward
+        this.experience = level.toDouble().pow(3.0).toInt()
         this.types = types
         this.maxHp = maxHp * (50 + level) / 50
         this.currentHp = this.maxHp
@@ -41,23 +42,25 @@ class Pokemon : Serializable {
         this.specialAttack = specialAttack * (50 + level) / 50
         this.specialDefense = specialDefense * (50 + level) / 50
         this.speed = speed * (50 + level) / 50
-        this.statusAfflicted = statusAfflicted
         this.moves = moves
         this.currentMoves = ArrayList<MoveData>()
         setCurrentMoves()
         this.images = images
     }
 
-    fun getStatusAfflicted(): String {
-        return this.statusAfflicted
+    fun getId() : Int{
+        return this.id
     }
-
     fun getSpecies(): String{
         return this.species
     }
 
     fun getName(): String{
         return this.name
+    }
+
+    fun setNickame(nickname: String) {
+        this.name=nickname
     }
 
     fun getLevel(): Int{
@@ -67,11 +70,10 @@ class Pokemon : Serializable {
         this.level = level
     }
 
-    fun getExperience(): Double{
+    fun getExperience(): Int{
         return this.experience
     }
-
-    fun addExperience(exp: Double){
+    fun addExperience(exp: Int){
         this.experience += exp
         val newLevel = floor(Math.cbrt(this.experience.toDouble())).toInt()
         if(newLevel > this.level){
@@ -218,7 +220,7 @@ class Pokemon : Serializable {
         return this.images
     }
 
-    fun getBaseExperience(): Double {
-        return this.baseExperience
+    fun getExperienceReward(): Int{
+        return this.experienceReward
     }
 }

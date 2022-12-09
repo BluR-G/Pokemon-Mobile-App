@@ -16,7 +16,7 @@
             android:layout_gravity="center"
             android:clipToPadding="false"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/removePokemonBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
