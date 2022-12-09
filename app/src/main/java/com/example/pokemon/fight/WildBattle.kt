@@ -25,7 +25,6 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
     init {
         this.enemyPokemon = enemyPokemon
         initializeMessage()
-
     }
 
     private fun initializeMessage(){
@@ -52,9 +51,9 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                 updateFightMessage(pokemonAttacker,pokemonTarget,attackerMove)
                 if(!pokemonTarget.isAlive() && pokemonTarget == getCurrentEnemyPokemon()){
                     activity.setFightState(-1)
-                    // Battle Won
+                    // battle Won
                     val previousLevel = currentAllyPokemon.getLevel()
-                    // Double experience
+                    // add experience to pokemon and check for possible moves that can be learned
                     addExperience()
                     checkAddToCurrentMoves(previousLevel)
                     displayFinalMessage("You won!")
@@ -85,36 +84,48 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                     activity.getBinding().gameMessage.text = "You captured ${getCurrentEnemyPokemon().getSpecies()}!"
                     delay(500)
                     activity.getBinding().gameMessage.text = ""
-                    if(allyPokemonTeam.getSize()==6){
-                        allyPokemonCollection.addPokemonToCollection(getCurrentEnemyPokemon())
-                    } else {
-                        allyPokemonTeam.addPokemonToTeam(getCurrentEnemyPokemon())
-                    }
-                    val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
-                    val navController = navHostFragment.navController
-                    navController.navigate(R.id.action_fightMenuFragment_to_pokemonCaptureFragment)
-                    activity.getBinding().gameMessage.text="Enter a nickname for the captured pokemon:"
-                    withContext(Dispatchers.IO){
-                        while(activity.getCapturedName()==""){
-                        }
-                        activity.setCapturedSpecies(getCurrentEnemyPokemon().getSpecies())
-                        getCurrentEnemyPokemon().setNickame(activity.getCapturedName())
-                        // reset names
-                        Log.d("pokemonname", getCurrentEnemyPokemon().getName())
-                        activity.setCapturedName("")
-                        activity.setCapturedSpecies("")
-                        run()
-                    }
-
-                    //run()
+                    handleTeamCollection()
+                    handleCapturedPokemonName()
                 } else {
                     activity.getBinding().gameMessage.text="${getCurrentEnemyPokemon().getSpecies()} broke free!"
+                    // pokemon attacks if capturing fails
                     enemyAttack()
                 }
             }
 
         }
     }
+    // Handle the team and collection when pokemon is captured
+    private fun handleTeamCollection() {
+        if (allyPokemonTeam.getSize() == 6) {
+            // add to collection when pokemon team is full
+            allyPokemonCollection.addPokemonToCollection(getCurrentEnemyPokemon())
+        } else {
+            // add to team when pokemon team is not full
+            allyPokemonTeam.addPokemonToTeam(getCurrentEnemyPokemon())
+        }
+    }
+
+    // Handle the captured pokemon and change its nickname depending on user
+    private suspend fun handleCapturedPokemonName() {
+        val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.navigate(R.id.action_fightMenuFragment_to_pokemonCaptureFragment)
+        activity.getBinding().gameMessage.text = "Enter a nickname for the captured pokemon:"
+        withContext(Dispatchers.IO) {
+            // waits for user response
+            while (newNickname == "") {
+            }
+            // set nickname to captured pokemon
+            capturedSpecies=getCurrentEnemyPokemon().getSpecies()
+            getCurrentEnemyPokemon().setNickame(newNickname)
+            // reset names
+            newNickname=""
+            capturedSpecies=""
+            run()
+        }
+    }
+
     public fun getImage(pokemon: Pokemon, id: Int): Bitmap {
         val img = pokemon.getImages()
         val imgFront = img[id]

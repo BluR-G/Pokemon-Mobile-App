@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.pokemon.data.PokemonCreation
@@ -25,8 +26,6 @@ class FightActivity : AppCompatActivity(){
     private lateinit var battle: Battle
     private lateinit var battleType: String
     private lateinit var activity: FightActivity
-    private var newNickname=""
-    private var capturedSpecies=""
     // 0 for ongoing fight, -1 for finished fight
     private var fightState = 0
 
@@ -150,20 +149,7 @@ class FightActivity : AppCompatActivity(){
         }
         return lowLevel
     }
-    fun setCapturedName(name:String){
-        this.newNickname=name
+    override fun onBackPressed() {
+        Toast.makeText(this, "Button Disabled", Toast.LENGTH_SHORT).show()
     }
-
-    fun getCapturedName():String {
-        return this.newNickname
-    }
-
-    fun getCapturedSpecies():String{
-        return this.capturedSpecies
-    }
-
-    fun setCapturedSpecies(species: String){
-        this.capturedSpecies = species
-    }
-
 }

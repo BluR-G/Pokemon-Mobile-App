@@ -21,9 +21,10 @@ abstract class Battle {
     public lateinit var allyPokemonTeam: PokemonTeam
     public lateinit var allyPokemonCollection: PokemonCollection
     public lateinit var currentAllyPokemon : Pokemon
-    public var newMove: MoveData? = null
     private lateinit var currentEnemyPokemon: Pokemon
-
+    public var newMove: MoveData? = null
+    public var newNickname=""
+    public var capturedSpecies=""
     public lateinit var activity: FightActivity
 
     constructor(pokemonTeam: PokemonTeam, currentEnemyPokemon: Pokemon,activity: FightActivity) {
@@ -40,16 +41,16 @@ abstract class Battle {
 
     abstract fun throwPokeball(view: View)
 
-    public fun getCurrentEnemyPokemon(): Pokemon{
+    fun getCurrentEnemyPokemon(): Pokemon{
         return this.currentEnemyPokemon
     }
 
-    public fun setCurrentEnemyPokemon(pokemon: Pokemon){
+    fun setCurrentEnemyPokemon(pokemon: Pokemon){
         this.currentEnemyPokemon = pokemon
     }
 
     // Plays the turns of both pokemon
-    public fun playPokemonsTurns(move:MoveData, enemyMove: MoveData, view: View){
+    fun playPokemonsTurns(move:MoveData, enemyMove: MoveData, view: View){
         activity.setFightState(0)
         activity.lifecycleScope.launch(Dispatchers.Main){
                 if(currentAllyPokemon.getSpeed() > getCurrentEnemyPokemon().getSpeed()){
@@ -65,10 +66,11 @@ abstract class Battle {
     }
 
     // Swap pokemon
-    public fun swapPokemon(view: View, pokemon: Pokemon){
+    fun swapPokemon(view: View, pokemon: Pokemon){
         lateinit var enemyMove : MoveData
         if(pokemon.isAlive()){
             if(activity.getCurrentPokemon() != pokemon){
+                currentAllyPokemon = pokemon
                 currentAllyPokemon = pokemon
                 activity.setCurrentPokemon(pokemon)
                 enemyMove = pickEnemyRandomMove()
@@ -80,7 +82,7 @@ abstract class Battle {
     }
 
     // Attack pokemon target with move
-    public fun attackPokemonTarget(attacker: Pokemon, target: Pokemon, move: Move){
+    fun attackPokemonTarget(attacker: Pokemon, target: Pokemon, move: Move){
         val moveChance = (1..100).random()
         var moveDamage = 0
         if(move.getDamageClass() == "PHYSICAL"){
@@ -95,34 +97,12 @@ abstract class Battle {
             val targetHp = target.getCurrentHp() - moveDamage
             val selfHealHp = attacker.getCurrentHp() + move.getHeal()
             if(move.getHeal()>0){
-                if (selfHealHp > attacker.getCurrentHp()){
-                    attacker.setCurrentHp(attacker.getMaxHp())
-                }
-                else {
-                    attacker.setCurrentHp(selfHealHp)
-                }
-                activity.lifecycleScope.launch(Dispatchers.Main){
-                    if(attacker == currentAllyPokemon){
-                        activity.getBinding().allyPokemonHp.text = "${attacker.getCurrentHp()}/${attacker.getMaxHp()}"
-                    } else{
-                        activity.getBinding().enemyPokemonHp.text= "${attacker.getCurrentHp()}/${attacker.getMaxHp()}"
-                    }
-                }
+                selfHealMove(selfHealHp, attacker)
             }
-
             if (targetHp < 0){
-                target.setCurrentHp(0)
-                if(target == currentAllyPokemon) {
-                    val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
-                    val navController = navHostFragment.navController
-                    // If team is still alive, give the choice to swap pokemon
-                    if(!allyPokemonTeam.isTeamDead()){
-                        navController.navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
-                    }
-                }
+                attackMove(target)
             } else {
                 target.setCurrentHp(targetHp)
-                Log.d("fight", "target: ${target.getName()} hp: ${target.getCurrentHp()}")
             }
         } else {
             activity.lifecycleScope.launch(Dispatchers.Default){
@@ -131,6 +111,36 @@ abstract class Battle {
                     delay(1000)
                     activity.getBinding().gameMessage.text=""
                 }
+            }
+        }
+    }
+    // Attacks target pokemon
+    private fun attackMove(target: Pokemon) {
+        target.setCurrentHp(0)
+        if (target == currentAllyPokemon) {
+            val navHostFragment =
+                activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
+            val navController = navHostFragment.navController
+            // If team is still alive, give the choice to swap pokemon
+            if (!allyPokemonTeam.isTeamDead()) {
+                navController.navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
+            }
+        }
+    }
+    // Self heal if move provides heal
+    private fun selfHealMove(selfHealHp: Int, attacker: Pokemon) {
+        if (selfHealHp > attacker.getCurrentHp()) {
+            attacker.setCurrentHp(attacker.getMaxHp())
+        } else {
+            attacker.setCurrentHp(selfHealHp)
+        }
+        activity.lifecycleScope.launch(Dispatchers.Main) {
+            if (attacker == currentAllyPokemon) {
+                activity.getBinding().allyPokemonHp.text =
+                    "${attacker.getCurrentHp()}/${attacker.getMaxHp()}"
+            } else {
+                activity.getBinding().enemyPokemonHp.text =
+                    "${attacker.getCurrentHp()}/${attacker.getMaxHp()}"
             }
         }
     }
@@ -166,7 +176,7 @@ abstract class Battle {
         return false
     }
     // Make enemy instantly attack when ally round is skipped
-    public fun enemyAttack(){
+    fun enemyAttack(){
         activity.lifecycleScope.launch(Dispatchers.Default) {
             delay(1000)
             withContext(Dispatchers.Main) {
@@ -180,10 +190,11 @@ abstract class Battle {
                 delay(1000)
                 // Updates pokemon text
                 activity.getBinding().allyPokemonHp.text =
-                    "${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
+                    "${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
             }
         }
     }
+    // Teach moves to pokemon if it levels up
     suspend fun checkAddToCurrentMoves(previousLevel: Int) {
         if (previousLevel < currentAllyPokemon.getLevel()) {
             activity.getBinding().allyLevel.text="lv.${currentAllyPokemon.getLevel()}"
@@ -215,7 +226,7 @@ abstract class Battle {
         }
     }
     // Replace selected move with new move
-    public fun replaceMove(pokemon: Pokemon, movePosition: Int){
+    fun replaceMove(pokemon: Pokemon, movePosition: Int){
         if(newMove != null){
             val move = newMove!!.copy()
             currentAllyPokemon.getCurrentMoves()[movePosition]=move
@@ -231,14 +242,14 @@ abstract class Battle {
 
     }
     // Generates the next enemy move
-    public fun pickEnemyRandomMove(): MoveData {
+    fun pickEnemyRandomMove(): MoveData {
         val random = Random()
         val enemyMoves = currentEnemyPokemon.getCurrentMoves()
         val moveNumber = random.nextInt(enemyMoves.size)
         return enemyMoves[moveNumber]
     }
     // Apply potion effect to pokemon
-    public fun usePotion(view: View, pokemon: Pokemon){
+    fun usePotion(view: View, pokemon: Pokemon){
         heal(pokemon)
         updateHealMessage(view, pokemon)
     }
@@ -256,7 +267,7 @@ abstract class Battle {
     }
 
     // Exits the current activity and sends back team to menu
-    public fun run(){
+    fun run(){
         val intent = Intent(activity, MenuActivity::class.java)
         intent.putExtra("pokemonTeam", activity.getPokemonTeam())
         intent.putExtra("pokemonCollection", activity.getPokemonCollection())
@@ -265,7 +276,7 @@ abstract class Battle {
     }
 
     // Display the win or loss message and exits fight
-    public fun displayFinalMessage(message:String){
+    fun displayFinalMessage(message:String){
         activity.lifecycleScope.launch(Dispatchers.Default){
             withContext(Dispatchers.Main){
                 activity.getBinding().gameMessage.text=message
@@ -287,7 +298,7 @@ abstract class Battle {
     }
 
     // Update the messages after fight sequence
-    public fun updateFightMessage(attacker: Pokemon, target:  Pokemon, firstMove: MoveData){
+    fun updateFightMessage(attacker: Pokemon, target:  Pokemon, firstMove: MoveData){
         activity.lifecycleScope.launch(Dispatchers.Main){
             activity.getBinding().gameMessage.text="${attacker.getName()} used ${firstMove.moveName}!"
             delay(500)
@@ -302,7 +313,7 @@ abstract class Battle {
     }
 
     // Updates game message when current pokemon is swapped
-    public fun updateSwapMessage(pokemon: Pokemon, enemyPokemon: Pokemon, enemyMove: MoveData, view: View){
+    fun updateSwapMessage(pokemon: Pokemon, enemyPokemon: Pokemon, enemyMove: MoveData, view: View){
         activity.lifecycleScope.launch(Dispatchers.Default){
             withContext(Dispatchers.Main){
                 activity.getBinding().gameMessage.text="Swapping to ${pokemon.getName()} !"
@@ -327,7 +338,7 @@ abstract class Battle {
     }
 
     // Updates game message when current pokemon is healed
-    public fun updateHealMessage(view: View, pokemon: Pokemon){
+    fun updateHealMessage(view: View, pokemon: Pokemon){
         activity.lifecycleScope.launch(Dispatchers.Default){
             withContext(Dispatchers.Main){
                 view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
@@ -337,6 +348,7 @@ abstract class Battle {
                 delay(1000)
                 activity.getBinding().gameMessage.text=""
             }
+            // Ally pokemon skips a round and enemy attacks
             enemyAttack()
         }
     }

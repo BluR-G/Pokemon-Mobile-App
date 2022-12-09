@@ -32,9 +32,8 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
         activity.getBinding().enemyPokemonHp.text="HP: ${getCurrentEnemyPokemon().getCurrentHp()}/${getCurrentEnemyPokemon().getMaxHp()}"
         activity.getBinding().enemyLevel.text = "lv.${getCurrentEnemyPokemon().getLevel()}"
     }
-
+    // Check Target Pokemon status and attack according to status
     public override fun checkPokemonStatus(pokemonTarget: Pokemon, pokemonAttacker: Pokemon, attackerMove : MoveData, view : View){
-        Log.d("enemyteam", enemyTeam.getSize().toString())
         if(pokemonAttacker.isAlive()){
             attackPokemonTarget(pokemonAttacker,pokemonTarget,attackerMove.move)
             if(!getCurrentEnemyPokemon().isAlive() || enemyTeam.isTeamDead()){

@@ -15,7 +15,8 @@ import com.example.pokemon.objects.PokemonTeam
 
 class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val context: Context) : RecyclerView.Adapter<FightPokemonTeamAdapter.TeamViewHolder>() {
     //Define viewholder for managing roll textViews
-    lateinit var fightActivity: FightActivity
+    private lateinit var fightActivity: FightActivity
+    private lateinit var battle: Battle
     class TeamViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val pokemonButton: Button = view.findViewById<Button>(R.id.pokemon_text_item)
     }
@@ -26,7 +27,7 @@ class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val
         val layout = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.pokemon_item, parent, false)
-
+        battle = fightActivity.getBattle()
         return TeamViewHolder(layout)
 
     }
@@ -51,9 +52,9 @@ class FightPokemonTeamAdapter (private val pokemonTeam: PokemonTeam, private val
     ) {
         val previousFragmentId = view.findNavController().previousBackStackEntry?.destination?.displayName
         if (previousFragmentId == context.getString(R.string.teamFightFragment)) {
-            fightActivity.getBattle().usePotion(view, pokemon)
+            battle.usePotion(view, pokemon)
         } else if (previousFragmentId == context.getString(R.string.potionFragment)) {
-            fightActivity.getBattle().swapPokemon(view, pokemon)
+            battle.swapPokemon(view, pokemon)
         }
     }
 

@@ -25,7 +25,7 @@ class PokemonCaptureFragment : Fragment()  {
         binding.pokemonNickname.setText(fightActivity.getEnemyPokemon().getName())
         binding.nameButton.setOnClickListener{
             val pokemonName = binding.pokemonNickname.text.toString()
-            fightActivity.setCapturedName(pokemonName)
+            fightActivity.getBattle().newNickname=pokemonName
         }
         return binding.root
     }

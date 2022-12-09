@@ -23,6 +23,9 @@ class FightPokemonTeamFragment : Fragment()  {
             view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
         }
         fightActivity = context as FightActivity
+        if(!fightActivity.getBattle().currentAllyPokemon.isAlive()){
+            binding.pokemonTeamFightGoToFightMenu.visibility=View.GONE
+        }
         return binding.root
     }
 
