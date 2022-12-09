@@ -12,10 +12,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.pokemon.fight.FightActivity
 import com.example.pokemon.R
+import com.example.pokemon.data.PokemonCreation
 import com.example.pokemon.database.*
 import com.example.pokemon.databinding.FragmentMainMenuBinding
 import com.example.pokemon.objects.MoveData
 import com.example.pokemon.objects.Pokemon
+import com.example.pokemon.objects.PokemonCollection
+import com.example.pokemon.objects.PokemonTeam
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,11 +27,15 @@ import kotlinx.coroutines.launch
 class MainMenuFragment : Fragment() {
     lateinit var menuActivity: MenuActivity
     private val database by lazy { PokemonRoomDatabase.getDatabase(menuActivity)}
+    private lateinit var pokemonTeam: PokemonTeam
+    private lateinit var pokemonCollection: PokemonCollection
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         menuActivity = context as MenuActivity
+        pokemonTeam = menuActivity.getTeam()
+        pokemonCollection = menuActivity.getCollect()
         val binding = FragmentMainMenuBinding.inflate(layoutInflater)
         binding.goToTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_mainMenuFragment_to_teamFragment)
@@ -45,25 +52,42 @@ class MainMenuFragment : Fragment() {
         return binding.root
     }
     private fun switchToBattle(battleType:String) {
+        Toast.makeText(activity, "Loading...", Toast.LENGTH_SHORT).show()
         if(!menuActivity.getTeam().isTeamDead()){
-            switchBattle(battleType)
+            if(battleType == "wild"){
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val wildPokemon = generatePokemon()
+                    lifecycleScope.launch(Dispatchers.Main){
+                        switchBattle(battleType, wildPokemon, null)
+                    }
+                }
+            } else {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val trainerTeam = generatePokemonTeam()
+                    lifecycleScope.launch(Dispatchers.Main){
+                        switchBattle(battleType, null, trainerTeam)
+                    }
+                }
+            }
         } else {
             Toast.makeText(activity, "Your team is dead! Go to the Pokecenter.", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun switchBattle(type:String){
+    private fun switchBattle(type:String, wildPokemon : Pokemon?, trainerTeam: PokemonTeam?){
         val intent = Intent(menuActivity, FightActivity::class.java)
-        intent.putExtra("pokemonTeam", menuActivity.getTeam())
-        intent.putExtra("pokemonCollection", menuActivity.getCollect())
+        intent.putExtra("pokemonTeam", pokemonTeam)
+        intent.putExtra("pokemonCollection", pokemonCollection)
+        intent.putExtra("wildPokemon", wildPokemon)
+        intent.putExtra("trainerTeam", trainerTeam)
         intent.putExtra("battleType", type)
         menuActivity.getResult.launch(intent)
     }
 
     private fun saveToDatabase() {
         lifecycleScope.launch(Dispatchers.IO){
-            val pokemonTeam = menuActivity.getTeam()
-            val pokemonCollection = menuActivity.getCollect()
+            val pokemonTeam = pokemonTeam
+            val pokemonCollection = pokemonCollection
             database.PokemonDAO().clearPlayerPokemons()
             database.PokemonDAO().clearPokemonWithMoves()
             database.PokemonDAO().clearPokemonWithCurrentMoves()
@@ -120,5 +144,27 @@ class MainMenuFragment : Fragment() {
             pokemon.getSpecialDefense(),
             pokemon.getSpeed()
         )
+    }
+    // Generate random pokemon based on team level
+    private suspend fun generatePokemon() : Pokemon {
+        val creator = PokemonCreation()
+        val pokemonId = (1..151).random().toString()
+        val level = if(pokemonTeam.getLowestLevel()>5){
+            (pokemonTeam.getLowestLevel()-5..pokemonTeam.getHighestLevel()+5).random()
+        } else {
+            (pokemonTeam.getLowestLevel()..pokemonTeam.getHighestLevel()+5).random()
+        }
+        val pokemon = creator.createPokemon(pokemonId, "", level)
+        creator.setURLToBitMapImages(pokemon)
+        return pokemon
+    }
+
+    private suspend fun generatePokemonTeam(): PokemonTeam {
+        val pokemonTeam = PokemonTeam()
+        val pokemonCount = (0..5).random()
+        for(i in 0 .. pokemonCount){
+            pokemonTeam.addPokemonToTeam(generatePokemon())
+        }
+        return pokemonTeam
     }
 }

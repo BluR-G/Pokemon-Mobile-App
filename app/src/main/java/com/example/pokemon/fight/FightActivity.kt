@@ -38,23 +38,16 @@ class FightActivity : AppCompatActivity(){
         this.pokemonCollection = intent.getSerializableExtra("pokemonCollection") as PokemonCollection
         this.battleType=intent.getStringExtra("battleType") as String
         if(battleType == "wild"){
-            lifecycleScope.launch(Dispatchers.IO) {
                 // Generate wild pokemon
-                enemy = generatePokemon()
+                enemy = intent.getSerializableExtra("wildPokemon") as Pokemon
                 lifecycleScope.launch(Dispatchers.Main) {
                     activity.battle = WildBattle(pokemonTeam, enemy, activity)
                 }
-            }
-
         } else if(battleType == "trainer"){
-            lifecycleScope.launch(Dispatchers.IO) {
-                // Generate trainer pokemon team
-                val enemyTeam = generatePokemonTeam()
-                enemy = enemyTeam.getPokemon(0)
+                val enemyTeam = intent.getSerializableExtra("trainerTeam") as PokemonTeam
                 lifecycleScope.launch(Dispatchers.Main) {
                     activity.battle = TrainerBattle(pokemonTeam, enemyTeam, activity)
                 }
-            }
         }
         currentPokemon = this.pokemonTeam.getPokemonTeam()[getCurrentPokemonIndex()]
 
@@ -98,27 +91,27 @@ class FightActivity : AppCompatActivity(){
         return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
     }
     // Generate Random Wild Pokemon
-    private suspend fun generatePokemon() : Pokemon {
-        val creator = PokemonCreation()
-        val pokemonId = (1..151).random().toString()
-        val level = if(getLowestLevel()>5){
-            (getLowestLevel()-5..getHighestLevel()+5).random()
-        } else {
-            (getLowestLevel()..getHighestLevel()+5).random()
-        }
-        val pokemon = creator.createPokemon(pokemonId, "", level)
-        creator.setURLToBitMapImages(pokemon)
-        return pokemon
-    }
-    // Generate random pokemon team based on team level
-    private suspend fun generatePokemonTeam(): PokemonTeam{
-        val pokemonTeam = PokemonTeam()
-        val pokemonCount = (0..5).random()
-        for(i in 0 .. pokemonCount){
-            pokemonTeam.addPokemonToTeam(generatePokemon())
-        }
-        return pokemonTeam
-    }
+//    private suspend fun generatePokemon() : Pokemon {
+//        val creator = PokemonCreation()
+//        val pokemonId = (1..151).random().toString()
+//        val level = if(getLowestLevel()>5){
+//            (getLowestLevel()-5..getHighestLevel()+5).random()
+//        } else {
+//            (getLowestLevel()..getHighestLevel()+5).random()
+//        }
+//        val pokemon = creator.createPokemon(pokemonId, "", level)
+//        creator.setURLToBitMapImages(pokemon)
+//        return pokemon
+//    }
+//    // Generate random pokemon team based on team level
+//    private suspend fun generatePokemonTeam(): PokemonTeam{
+//        val pokemonTeam = PokemonTeam()
+//        val pokemonCount = (0..5).random()
+//        for(i in 0 .. pokemonCount){
+//            pokemonTeam.addPokemonToTeam(generatePokemon())
+//        }
+//        return pokemonTeam
+//    }
     // Return index of first pokemon alive
     private fun getCurrentPokemonIndex(): Int {
         var index = 0
@@ -131,24 +124,24 @@ class FightActivity : AppCompatActivity(){
         }
         return index
     }
-    private fun getHighestLevel(): Int{
-        var highLevel = pokemonTeam.getPokemonTeam()[0].getLevel()
-        for(pokemon in pokemonTeam.getPokemonTeam()){
-            if(pokemon.getLevel() > highLevel){
-                highLevel = pokemon.getLevel()
-            }
-        }
-        return highLevel
-    }
-    private fun getLowestLevel():Int{
-        var lowLevel = pokemonTeam.getPokemonTeam()[0].getLevel()
-        for(pokemon in pokemonTeam.getPokemonTeam()){
-            if(pokemon.getLevel() < lowLevel){
-                lowLevel = pokemon.getLevel()
-            }
-        }
-        return lowLevel
-    }
+//    private fun getHighestLevel(): Int{
+//        var highLevel = pokemonTeam.getPokemonTeam()[0].getLevel()
+//        for(pokemon in pokemonTeam.getPokemonTeam()){
+//            if(pokemon.getLevel() > highLevel){
+//                highLevel = pokemon.getLevel()
+//            }
+//        }
+//        return highLevel
+//    }
+//    private fun getLowestLevel():Int{
+//        var lowLevel = pokemonTeam.getPokemonTeam()[0].getLevel()
+//        for(pokemon in pokemonTeam.getPokemonTeam()){
+//            if(pokemon.getLevel() < lowLevel){
+//                lowLevel = pokemon.getLevel()
+//            }
+//        }
+//        return lowLevel
+//    }
     override fun onBackPressed() {
         Toast.makeText(this, "Button Disabled", Toast.LENGTH_SHORT).show()
     }
