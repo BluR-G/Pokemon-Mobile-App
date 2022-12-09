@@ -93,6 +93,7 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                     val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
                     val navController = navHostFragment.navController
                     navController.navigate(R.id.action_fightMenuFragment_to_pokemonCaptureFragment)
+                    activity.getBinding().gameMessage.text="Enter a nickname for the captured pokemon:"
                     withContext(Dispatchers.IO){
                         while(activity.getCapturedName()==""){
                         }
