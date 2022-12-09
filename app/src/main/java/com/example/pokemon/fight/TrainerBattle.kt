@@ -23,10 +23,10 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
     init {
         this.enemyTeam = enemyTeam
         setCurrentEnemyPokemon(enemyTeam.getPokemonTeam()[0])
-        initializeMessage()
+        initializeMessage("You were challenged by a trainer!")
     }
 
-    private fun initializeMessage(){
+    private fun updateEnemyPokemon(){
         activity.getBinding().enemyPokemonFront.setImageBitmap(getImage(getCurrentEnemyPokemon(), 0))
         activity.getBinding().enemyPokemonText.text=getCurrentEnemyPokemon().getSpecies()
         activity.getBinding().enemyPokemonHp.text="HP: ${getCurrentEnemyPokemon().getCurrentHp()}/${getCurrentEnemyPokemon().getMaxHp()}"
@@ -89,18 +89,11 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
                 withContext(Dispatchers.Main){
                     delay(3000)
                     activity.getBinding().gameMessage.text="Enemy swapping to ${getCurrentEnemyPokemon().getName()}!"
-                    initializeMessage()
+                    updateEnemyPokemon()
                     delay(1000)
                     activity.getBinding().gameMessage.text=""
                 }
             }
         }
-    }
-
-    public fun getImage(pokemon: Pokemon, id: Int): Bitmap {
-        val img = pokemon.getImages()
-        val imgFront = img[id]
-        val imageBytes = Base64.decode(imgFront, 0)
-        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
     }
 }

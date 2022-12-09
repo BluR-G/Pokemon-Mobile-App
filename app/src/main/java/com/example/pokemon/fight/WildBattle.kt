@@ -24,22 +24,7 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
 
     init {
         this.enemyPokemon = enemyPokemon
-        initializeMessage()
-    }
-
-    private fun initializeMessage(){
-        activity.getBinding().enemyPokemonFront.setImageBitmap(getImage(getCurrentEnemyPokemon(), 0))
-        activity.getBinding().enemyPokemonText.text=getCurrentEnemyPokemon().getSpecies()
-        activity.getBinding().enemyPokemonHp.text="HP: ${getCurrentEnemyPokemon().getCurrentHp()}/${getCurrentEnemyPokemon().getMaxHp()}"
-        activity.getBinding().enemyLevel.text = "lv.${getCurrentEnemyPokemon().getLevel()}"
-        activity.lifecycleScope.launch(Dispatchers.Default){
-            withContext(Dispatchers.Main){
-                delay(200)
-                activity.getBinding().gameMessage.text="A wild ${getCurrentEnemyPokemon().getSpecies()} appeared!"
-                delay(1500)
-                activity.getBinding().gameMessage.text=""
-            }
-        }
+        initializeMessage("A wild ${getCurrentEnemyPokemon().getSpecies()} appeared!")
     }
 
     // Check Target Pokemon status and attack according to status
@@ -124,12 +109,5 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
             capturedSpecies=""
             run()
         }
-    }
-
-    public fun getImage(pokemon: Pokemon, id: Int): Bitmap {
-        val img = pokemon.getImages()
-        val imgFront = img[id]
-        val imageBytes = Base64.decode(imgFront, 0)
-        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
     }
 }

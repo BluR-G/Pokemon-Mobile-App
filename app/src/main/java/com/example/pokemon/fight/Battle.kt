@@ -2,8 +2,12 @@ package com.example.pokemon.fight
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -41,6 +45,27 @@ abstract class Battle {
 
     abstract fun throwPokeball(view: View)
 
+    fun initializeMessage(message: String) {
+            activity.getBinding().enemyPokemonFront.setImageBitmap(getImage(getCurrentEnemyPokemon(), 0))
+            activity.getBinding().enemyPokemonText.text = getCurrentEnemyPokemon().getSpecies()
+            activity.getBinding().enemyPokemonHp.text =
+                "HP:${getCurrentEnemyPokemon().getCurrentHp()}/${getCurrentEnemyPokemon().getMaxHp()}"
+            activity.getBinding().enemyLevel.text = "lv.${getCurrentEnemyPokemon().getLevel()}"
+            activity.lifecycleScope.launch(Dispatchers.Default) {
+                withContext(Dispatchers.Main) {
+                    delay(200)
+                    activity.getBinding().gameMessage.text = message
+                    delay(1500)
+                    activity.getBinding().gameMessage.text = ""
+                }
+            }
+    }
+    fun getImage(pokemon: Pokemon, id: Int): Bitmap {
+        val img = pokemon.getImages()
+        val imgFront = img[id]
+        val imageBytes = Base64.decode(imgFront, 0)
+        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+    }
     fun getCurrentEnemyPokemon(): Pokemon{
         return this.currentEnemyPokemon
     }
@@ -100,7 +125,7 @@ abstract class Battle {
                 selfHealMove(selfHealHp, attacker)
             }
             if (targetHp < 0){
-                attackMove(target)
+                handleCurrentPokemonDeath(target)
             } else {
                 target.setCurrentHp(targetHp)
             }
@@ -115,7 +140,7 @@ abstract class Battle {
         }
     }
     // Attacks target pokemon
-    private fun attackMove(target: Pokemon) {
+    private fun handleCurrentPokemonDeath(target: Pokemon) {
         target.setCurrentHp(0)
         if (target == currentAllyPokemon) {
             val navHostFragment =
@@ -123,6 +148,12 @@ abstract class Battle {
             val navController = navHostFragment.navController
             // If team is still alive, give the choice to swap pokemon
             if (!allyPokemonTeam.isTeamDead()) {
+                activity.lifecycleScope.launch(Dispatchers.Main){
+                    delay(1000)
+                    activity.getBinding().gameMessage.text="${currentAllyPokemon.getName()} fainted. Pick another Pokemon!"
+                    delay(2000)
+                    activity.getBinding().gameMessage.text=""
+                }
                 navController.navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
             }
         }
@@ -137,10 +168,10 @@ abstract class Battle {
         activity.lifecycleScope.launch(Dispatchers.Main) {
             if (attacker == currentAllyPokemon) {
                 activity.getBinding().allyPokemonHp.text =
-                    "${attacker.getCurrentHp()}/${attacker.getMaxHp()}"
+                    "HP:${attacker.getCurrentHp()}/${attacker.getMaxHp()}"
             } else {
                 activity.getBinding().enemyPokemonHp.text =
-                    "${attacker.getCurrentHp()}/${attacker.getMaxHp()}"
+                    "HP:${attacker.getCurrentHp()}/${attacker.getMaxHp()}"
             }
         }
     }
@@ -190,7 +221,7 @@ abstract class Battle {
                 delay(1000)
                 // Updates pokemon text
                 activity.getBinding().allyPokemonHp.text =
-                    "${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
+                    "HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
             }
         }
     }
@@ -321,7 +352,7 @@ abstract class Battle {
                 delay(1000)
                 activity.getBinding().allyPokemonBack.setImageBitmap(activity.getImage(currentAllyPokemon,1))
                 activity.getBinding().allyPokemon.text=pokemon.getName()
-                activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
+                activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
                 activity.getBinding().allyLevel.text = "lv.${currentAllyPokemon.getLevel()}"
             }
             delay(1000)
@@ -330,8 +361,8 @@ abstract class Battle {
                 activity.getBinding().gameMessage.text=""
                 activity.getBinding().gameMessage.text="${enemyPokemon.getName()} used ${enemyMove.moveName}!"
                 delay(1500)
-                attackPokemonTarget(currentAllyPokemon, currentEnemyPokemon, enemyMove.move)
-                activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
+                attackPokemonTarget(currentEnemyPokemon,currentAllyPokemon, enemyMove.move)
+                activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
                 activity.getBinding().gameMessage.text=""
             }
         }
@@ -344,7 +375,7 @@ abstract class Battle {
                 view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
                 // Show current hp
                 activity.getBinding().gameMessage.text="${pokemon.getName()} has now ${pokemon.getCurrentHp()} HP!"
-                activity.getBinding().allyPokemonHp.text="${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
+                activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
                 delay(1000)
                 activity.getBinding().gameMessage.text=""
             }
