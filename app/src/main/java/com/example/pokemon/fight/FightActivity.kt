@@ -53,7 +53,7 @@ class FightActivity : AppCompatActivity(){
 
         binding.allyPokemonBack.setImageBitmap(getImage(currentPokemon,1))
         binding.allyPokemon.text=currentPokemon.getName()
-        binding.allyPokemonHp.text="HP: ${currentPokemon.getCurrentHp()}/${currentPokemon.getMaxHp()}"
+        binding.allyPokemonHp.text="HP:${currentPokemon.getCurrentHp()}/${currentPokemon.getMaxHp()}"
         binding.allyLevel.text = "lv.${currentPokemon.getLevel()}"
 
     }
@@ -90,28 +90,7 @@ class FightActivity : AppCompatActivity(){
         val imageBytes = Base64.decode(imgFront, 0)
         return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
     }
-    // Generate Random Wild Pokemon
-//    private suspend fun generatePokemon() : Pokemon {
-//        val creator = PokemonCreation()
-//        val pokemonId = (1..151).random().toString()
-//        val level = if(getLowestLevel()>5){
-//            (getLowestLevel()-5..getHighestLevel()+5).random()
-//        } else {
-//            (getLowestLevel()..getHighestLevel()+5).random()
-//        }
-//        val pokemon = creator.createPokemon(pokemonId, "", level)
-//        creator.setURLToBitMapImages(pokemon)
-//        return pokemon
-//    }
-//    // Generate random pokemon team based on team level
-//    private suspend fun generatePokemonTeam(): PokemonTeam{
-//        val pokemonTeam = PokemonTeam()
-//        val pokemonCount = (0..5).random()
-//        for(i in 0 .. pokemonCount){
-//            pokemonTeam.addPokemonToTeam(generatePokemon())
-//        }
-//        return pokemonTeam
-//    }
+
     // Return index of first pokemon alive
     private fun getCurrentPokemonIndex(): Int {
         var index = 0
