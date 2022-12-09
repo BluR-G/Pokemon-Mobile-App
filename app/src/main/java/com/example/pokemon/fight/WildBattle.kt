@@ -1,6 +1,9 @@
 package com.example.pokemon.fight
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +29,7 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
     }
 
     private fun initializeMessage(){
+        activity.getBinding().enemyPokemonFront.setImageBitmap(getImage(getCurrentEnemyPokemon(), 0))
         activity.getBinding().enemyPokemonText.text=getCurrentEnemyPokemon().getSpecies()
         activity.getBinding().enemyPokemonHp.text="HP: ${getCurrentEnemyPokemon().getCurrentHp()}/${getCurrentEnemyPokemon().getMaxHp()}"
         activity.getBinding().enemyLevel.text = "lv.${getCurrentEnemyPokemon().getLevel()}"
@@ -96,5 +100,11 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
             }
 
         }
+    }
+    public fun getImage(pokemon: Pokemon, id: Int): Bitmap {
+        val img = pokemon.getImages()
+        val imgFront = img[id]
+        val imageBytes = Base64.decode(imgFront, 0)
+        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
     }
 }
