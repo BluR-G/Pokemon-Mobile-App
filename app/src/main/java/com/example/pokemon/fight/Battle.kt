@@ -308,7 +308,7 @@ abstract class Battle {
                 activity.getBinding().gameMessage.text="Swapping to ${pokemon.getName()} !"
                 view.findNavController().navigate(R.id.action_fightPokemonTeamFragment_to_fightMenuFragment)
                 delay(1000)
-                //activity.getBinding().allyPokemonSprite.setImageBitmap(activity.getImage(currentAllyPokemon,1))
+                activity.getBinding().allyPokemonBack.setImageBitmap(activity.getImage(currentAllyPokemon,1))
                 activity.getBinding().allyPokemon.text=pokemon.getName()
                 activity.getBinding().allyPokemonHp.text="HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()} HP"
                 activity.getBinding().allyLevel.text = "lv.${currentAllyPokemon.getLevel()}"

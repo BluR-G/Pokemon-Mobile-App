@@ -58,7 +58,8 @@ class FightActivity : AppCompatActivity(){
             }
         }
         currentPokemon = this.pokemonTeam.getPokemonTeam()[getCurrentPokemonIndex()]
-       // binding.allyPokemonSprite.setImageBitmap(getImage(currentPokemon,1))
+
+        binding.allyPokemonBack.setImageBitmap(getImage(currentPokemon,1))
         binding.allyPokemon.text=currentPokemon.getName()
         binding.allyPokemonHp.text="HP: ${currentPokemon.getCurrentHp()}/${currentPokemon.getMaxHp()}"
         binding.allyLevel.text = "lv.${currentPokemon.getLevel()}"
