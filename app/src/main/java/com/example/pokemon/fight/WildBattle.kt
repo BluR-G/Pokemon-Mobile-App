@@ -23,9 +23,9 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
     private lateinit var enemyPokemon: Pokemon
 
     init {
+        this.playMusic()
         this.enemyPokemon = enemyPokemon
         initializeMessage("A wild ${getCurrentEnemyPokemon().getSpecies()} appeared!")
-        this.playMusic()
     }
 
     // Check Target Pokemon status and attack according to status

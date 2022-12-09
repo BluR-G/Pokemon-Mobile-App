@@ -21,10 +21,10 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
     private var count = 0
 
     init {
+        this.playMusic()
         this.enemyTeam = enemyTeam
         setCurrentEnemyPokemon(enemyTeam.getPokemonTeam()[0])
         initializeMessage("You were challenged by a trainer!")
-        this.playMusic()
     }
 
     private fun updateEnemyPokemon(){
