@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_fightMenuFragment_to_bagFragment"
             app:destination="@id/bagFragment" />
+        <action
+            android:id="@+id/action_fightMenuFragment_to_pokemonCaptureFragment"
+            app:destination="@id/pokemonCaptureFragment2" />
     </fragment>
     <fragment
         android:id="@+id/fightFragment"
@@ -49,4 +52,9 @@
             android:id="@+id/action_fightPokemonTeamFragment_to_fightMenuFragment"
             app:destination="@id/fightMenuFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/pokemonCaptureFragment2"
+        android:name="com.example.pokemon.fight.PokemonCaptureFragment"
+        android:label="fragment_pokemon_capture"
+        tools:layout="@layout/fragment_pokemon_capture" />
 </navigation>

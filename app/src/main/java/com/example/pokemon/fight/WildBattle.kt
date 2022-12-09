@@ -86,7 +86,22 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                     } else {
                         allyPokemonTeam.addPokemonToTeam(getCurrentEnemyPokemon())
                     }
-                    run()
+                    val navHostFragment = activity.supportFragmentManager.findFragmentById(R.id.fightNavHostFragment) as NavHostFragment
+                    val navController = navHostFragment.navController
+                    navController.navigate(R.id.action_fightMenuFragment_to_pokemonCaptureFragment)
+                    withContext(Dispatchers.IO){
+                        while(activity.getCapturedName()==""){
+                        }
+                        activity.setCapturedSpecies(getCurrentEnemyPokemon().getSpecies())
+                        getCurrentEnemyPokemon().setNickame(activity.getCapturedName())
+                        // reset names
+                        Log.d("pokemonname", getCurrentEnemyPokemon().getName())
+                        activity.setCapturedName("")
+                        activity.setCapturedSpecies("")
+                        run()
+                    }
+
+                    //run()
                 } else {
                     activity.getBinding().gameMessage.text="${getCurrentEnemyPokemon().getSpecies()} broke free!"
                     enemyAttack()

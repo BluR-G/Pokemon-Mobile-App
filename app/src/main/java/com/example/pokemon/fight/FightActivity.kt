@@ -25,6 +25,8 @@ class FightActivity : AppCompatActivity(){
     private lateinit var battle: Battle
     private lateinit var battleType: String
     private lateinit var activity: FightActivity
+    private var newNickname=""
+    private var capturedSpecies=""
     // 0 for ongoing fight, -1 for finished fight
     private var fightState = 0
 
@@ -70,6 +72,9 @@ class FightActivity : AppCompatActivity(){
     }
     public fun getBinding() : ActivityFightBinding{
         return this.binding;
+    }
+    public fun getEnemyPokemon() : Pokemon {
+        return this.enemy
     }
     public fun getCurrentPokemon() : Pokemon{
         return this.currentPokemon;
@@ -142,6 +147,21 @@ class FightActivity : AppCompatActivity(){
             }
         }
         return lowLevel
+    }
+    fun setCapturedName(name:String){
+        this.newNickname=name
+    }
+
+    fun getCapturedName():String {
+        return this.newNickname
+    }
+
+    fun getCapturedSpecies():String{
+        return this.capturedSpecies
+    }
+
+    fun setCapturedSpecies(species: String){
+        this.capturedSpecies = species
     }
 
 }

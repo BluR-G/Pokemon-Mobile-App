@@ -27,6 +27,7 @@
     <string name="nickname_input_hint">Leave this blank for default name</string>
     <string name="ready_text">Your very own Pokemon legend is about to unfold.\nA world of dreams and adventures with Pokemon awaits!\nAre you ready?</string>
     <string name="ready">Ready</string>
+    <string name="pokemon_name">Enter pokemon name:</string>
     <string name="new_game">New Game</string>
     <string name="members_text">Game created by:\n\nDan Willis\nJohnny Hoang\nRobert Gutkowski\nRay Hernaez</string>
     <string name="pokemon_sprite">Pokemon\'s Sprite</string>

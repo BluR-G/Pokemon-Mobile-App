@@ -60,6 +60,10 @@ class Pokemon : Serializable {
         return this.name
     }
 
+    fun setNickame(nickname: String) {
+        this.name=nickname
+    }
+
     fun getLevel(): Int{
         return this.level
     }
