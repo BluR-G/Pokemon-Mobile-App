@@ -44,6 +44,12 @@ class MenuActivity : AppCompatActivity() {
         } else {
             val pokemon = intent.getSerializableExtra("pokemon") as Pokemon
             pokemonTeam.addPokemonToTeam(pokemon)
+            pokemonTeam.addPokemonToTeam(pokemon)
+            pokemonTeam.addPokemonToTeam(pokemon)
+            pokemonTeam.addPokemonToTeam(pokemon)
+            pokemonTeam.addPokemonToTeam(pokemon)
+            pokemonTeam.addPokemonToTeam(pokemon)
+
         }
     }
 

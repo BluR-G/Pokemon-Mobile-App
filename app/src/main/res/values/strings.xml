@@ -41,4 +41,11 @@
     <string name="pokecenter">POKECENTER</string>
     <string name="moves">Moves</string>
     <string name="continue_game">continue</string>
+    <string name="pokeball">Pokéball</string>
+    <string name="potion">Potion</string>
+    <string name="back">Back</string>
+    <string name="pokemon_upper">POKÉMON</string>
+    <string name="run">RUN</string>
+    <string name="fight">FIGHT</string>
+    <string name="bag">BAG</string>
 </resources>
