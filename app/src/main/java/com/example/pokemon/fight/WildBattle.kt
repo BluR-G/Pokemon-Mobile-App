@@ -25,6 +25,7 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
     init {
         this.enemyPokemon = enemyPokemon
         initializeMessage("A wild ${getCurrentEnemyPokemon().getSpecies()} appeared!")
+        this.playMusic()
     }
 
     // Check Target Pokemon status and attack according to status
@@ -42,8 +43,10 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                     addExperience()
                     checkAddToCurrentMoves(previousLevel)
                     displayFinalMessage("You won!")
+                    pauseMusic()
                 } else if(allyPokemonTeam.isTeamDead()){
                     displayFinalMessage("You lost!")
+                    pauseMusic()
                 }
             }
         }
