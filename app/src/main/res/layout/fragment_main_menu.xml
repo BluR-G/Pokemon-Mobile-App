@@ -6,66 +6,62 @@
     android:layout_height="match_parent"
     tools:context=".menu.MainMenuFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:text="@string/main_menu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/goToPokeCenter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="@string/go_to_pokecenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <Button
-        android:id="@+id/goToTeam"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/go_to_teams"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goToPokeCenter" />
-
-    <Button
-        android:id="@+id/goToWildBattle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/go_to_wild_battle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goToTeam" />
-
-    <Button
-        android:id="@+id/goToTrainerBattle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/go_to_trainer_battle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goToWildBattle" />
-
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:layout_marginBottom="200dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goToTrainerBattle"/>
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pokemon_logo"/>
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_menu"
+            android:textSize="30sp"
+            android:fontFamily="@font/pokemongb"
+            android:layout_marginBottom="25dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/goToPokeCenter"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/go_to_pokecenter"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/goToTeam"
+            android:layout_width="280dp"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content"
+            android:text="@string/go_to_teams"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/goToWildBattle"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/go_to_wild_battle" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/goToTrainerBattle"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/go_to_trainer_battle" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/save"
+            android:layout_margin="5dp"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save"/>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

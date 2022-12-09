@@ -107,8 +107,9 @@ class FightActivity : AppCompatActivity(){
         } else {
             (getLowestLevel()..getHighestLevel()+5).random()
         }
-
-        return creator.createPokemon(pokemonId, "", level)
+        val pokemon = creator.createPokemon(pokemonId, "", level)
+        creator.setURLToBitMapImages(pokemon)
+        return pokemon
     }
     // Generate random pokemon team based on team level
     private suspend fun generatePokemonTeam(): PokemonTeam{

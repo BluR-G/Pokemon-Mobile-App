@@ -102,10 +102,12 @@ class IntroFragment : Fragment() {
         Toast.makeText(activity, "Loading...", Toast.LENGTH_SHORT).show()
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                pokemon = PokemonCreation().createPokemon(starterPokemon, nickname, 20)
+                pokemon = PokemonCreation().createPokemon(starterPokemon, nickname, 5)
+                PokemonCreation().setURLToBitMapImages(pokemon)
                 lifecycleScope.launch(Dispatchers.Main){
                     val intent = Intent(activity, MenuActivity::class.java)
                     intent.putExtra("pokemon", pokemon)
+                    intent.putExtra("fromContinue", false)
                     startActivity(intent)
                 }
             }catch (e: Exception){

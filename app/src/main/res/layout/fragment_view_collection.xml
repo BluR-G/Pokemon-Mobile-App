@@ -8,14 +8,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:text="@string/view_pokedex_entry"
+            android:layout_gravity="center"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/view_collection_recycler_view"
             android:layout_width="wrap_content"
-            android:layout_height="300dp"
+            android:layout_height="450dp"
             android:clipToPadding="false"
+            android:background="@drawable/button_border"
             android:layout_gravity="center" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/viewCollectionBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

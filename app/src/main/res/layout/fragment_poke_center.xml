@@ -6,46 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".menu.PokeCenterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <TextView
-        android:id="@+id/textView4"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:text="POKECENTER"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/pokeCenterGoToMainMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to main menu"
+        android:orientation="vertical"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.775" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="389dp"
-        android:layout_height="269dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="324dp"
-        android:src="@drawable/pokemoncenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pokecenter"
+            android:fontFamily="@font/pokemongb"
+            android:textSize="30sp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/healButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="228dp"
-        android:text="Heal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="280dp"
+            android:layout_height="250dp"
+            android:src="@drawable/pokemoncenter"
+            android:contentDescription="@string/pokecenter_building"
+            android:layout_marginBottom="35dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/healButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/heal"
+            android:layout_margin="5dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/pokeCenterGoToMainMenu"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/go_to_main_menu"
+            android:layout_margin="5dp"/>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
