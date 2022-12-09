@@ -58,6 +58,7 @@ class MenuActivity : AppCompatActivity() {
 
     private fun createPokemonObj(pokemonDB: PlayerPokemon) {
         val moveDataArrList = getMoveData(pokemonDB)
+        val currentMoveDataArrList = getCurrentMoveData(pokemonDB)
         val pokemonTypes = toArrayList(pokemonDB.types)
         val pokemonImages = toArrayList(pokemonDB.images)
         val pokemon = Pokemon(
@@ -67,13 +68,32 @@ class MenuActivity : AppCompatActivity() {
             pokemonDB.specialDefense, pokemonDB.speed,
             moveDataArrList, pokemonImages
         )
+        pokemon.setCurrentMoves(currentMoveDataArrList)
         if (pokemonDB.isTeam == 1) {
             pokemonTeam.addPokemonToTeam(pokemon)
         } else {
             pokemonCollection.addPokemonToCollection(pokemon)
         }
     }
-    
+    private fun getCurrentMoveData(pokemonDB : PlayerPokemon): ArrayList<MoveData> {
+        val uniqueId = pokemonDB.id
+        val pokemonWithCurrentMovesDB = database.PokemonDAO().getPokemonCurrentMoves(uniqueId)
+        val currentMoveDataArr = mutableListOf<MoveData>()
+        for(i in pokemonWithCurrentMovesDB.indices){
+            val moveDB = database.PokemonDAO().getMove(pokemonWithCurrentMovesDB[i].move)
+            val move = Move(
+                moveDB.accuracy,
+                moveDB.power,
+                moveDB.damageClass,
+                moveDB.heal,
+                moveDB.target,
+                moveDB.type
+            )
+            val moveData = MoveData(pokemonWithCurrentMovesDB[i].move, pokemonWithCurrentMovesDB[i].level_learned_at, move)
+            currentMoveDataArr.add(moveData)
+        }
+        return ArrayList(currentMoveDataArr)
+    }
     private fun getMoveData(pokemonDB : PlayerPokemon): ArrayList<MoveData> {
         val uniqueId = pokemonDB.id
         val pokemonWithMovesDB = database.PokemonDAO().getPokemonMoves(uniqueId)

@@ -97,26 +97,33 @@ class MainMenuFragment : Fragment() {
                 val pokemon = pokemonTeam.getPokemon(i)
                 val playerPokemon = createPlayerPokemon(pokemon, i, 1, uniqueId)
                 database.PokemonDAO().insertPokemon(playerPokemon)
-                addMovesToDB(pokemon.getMoves(), uniqueId)
+                addMovesToDB(pokemon.getMoves(), pokemon.getCurrentMoves(), uniqueId)
                 uniqueId++
             }
             for(i in 0 until pokemonCollection.getSize()){
                 val pokemon = pokemonCollection.getPokemon(i)
                 val playerPokemon = createPlayerPokemon(pokemon, i, 0, uniqueId)
                 database.PokemonDAO().insertPokemon(playerPokemon)
-                addMovesToDB(pokemon.getMoves(), uniqueId)
+                addMovesToDB(pokemon.getMoves(), pokemon.getCurrentMoves(), uniqueId)
                 uniqueId++
             }
         }
     }
 
-    private fun addMovesToDB(movesData: ArrayList<MoveData>, id: Int) {
+    private fun addMovesToDB(movesData: ArrayList<MoveData>, currentMoves: ArrayList<MoveData>, id: Int) {
         for(i in 0 until movesData.size){
             val move = movesData[i].move
             val moveDB = Move(movesData[i].moveName, move.getAccuracy(), move.getPower(), move.getDamageClass(), move.getHeal(),move.getTarget(), move.getTypes())
             database.PokemonDAO().insertMove(moveDB)
             val pokemonWithMoves = PokemonWithMoves(id, movesData[i].moveName, movesData[i].level_learned_at)
             database.PokemonDAO().insertPokemonWithMoves(pokemonWithMoves)
+        }
+        for(i in 0 until currentMoves.size){
+            val move = currentMoves[i].move
+            val moveDB = Move(currentMoves[i].moveName, move.getAccuracy(), move.getPower(), move.getDamageClass(), move.getHeal(),move.getTarget(), move.getTypes())
+            database.PokemonDAO().insertMove(moveDB)
+            val pokemonWithCurrentMoves = PokemonWithCurrentMoves(id, currentMoves[i].moveName, currentMoves[i].level_learned_at)
+            database.PokemonDAO().insertPokemonWithCurrentMoves(pokemonWithCurrentMoves)
         }
     }
 
