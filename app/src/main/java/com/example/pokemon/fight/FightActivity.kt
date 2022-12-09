@@ -103,24 +103,7 @@ class FightActivity : AppCompatActivity(){
         }
         return index
     }
-//    private fun getHighestLevel(): Int{
-//        var highLevel = pokemonTeam.getPokemonTeam()[0].getLevel()
-//        for(pokemon in pokemonTeam.getPokemonTeam()){
-//            if(pokemon.getLevel() > highLevel){
-//                highLevel = pokemon.getLevel()
-//            }
-//        }
-//        return highLevel
-//    }
-//    private fun getLowestLevel():Int{
-//        var lowLevel = pokemonTeam.getPokemonTeam()[0].getLevel()
-//        for(pokemon in pokemonTeam.getPokemonTeam()){
-//            if(pokemon.getLevel() < lowLevel){
-//                lowLevel = pokemon.getLevel()
-//            }
-//        }
-//        return lowLevel
-//    }
+
     override fun onBackPressed() {
         Toast.makeText(this, "Button Disabled", Toast.LENGTH_SHORT).show()
     }
