@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.example.pokemon.databinding.FragmentIntroBinding
 import com.example.pokemon.menu.MenuActivity
 import android.widget.Toast
@@ -22,6 +21,7 @@ import com.example.pokemon.databinding.ActivityMenuBinding
 import com.example.pokemon.objects.Pokemon
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class IntroFragment : Fragment() {
 
@@ -58,21 +58,21 @@ class IntroFragment : Fragment() {
         // Enable button if a radiobutton is checked and username is provided
         binding.bulbasaurRBtn.setOnClickListener {
             isStarterPicked = true;
-            starterPokemon = "Bulbasaur";
+            starterPokemon = "1";
             if (isUserNameValid) {
                 binding.IntroGoToMainMenu.isEnabled = true;
             }
         }
         binding.charmanderRBtn.setOnClickListener {
             isStarterPicked = true;
-            starterPokemon = "Charmander";
+            starterPokemon = "4";
             if (isUserNameValid) {
                 binding.IntroGoToMainMenu.isEnabled = true;
             }
         }
         binding.squirtleRBtn.setOnClickListener {
             isStarterPicked = true;
-            starterPokemon = "Squirtle";
+            starterPokemon = "7";
             if (isUserNameValid) {
                 binding.IntroGoToMainMenu.isEnabled = true;
             }
@@ -114,7 +114,8 @@ class IntroFragment : Fragment() {
                 Handler(Looper.getMainLooper()).post {
                     Toast.makeText(activity, "Pokemon Data not found", Toast.LENGTH_SHORT).show()
                 }
-                binding.IntroGoToMainMenu.isEnabled = true;
+                    binding.IntroGoToMainMenu.isEnabled = true;
+
             }
         }
     }

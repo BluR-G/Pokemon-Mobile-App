@@ -2,6 +2,7 @@ package com.example.pokemon.objects
 
 import android.graphics.drawable.Drawable
 import java.io.Serializable
+import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.pow
 
@@ -22,6 +23,7 @@ class Pokemon : Serializable {
     private var specialDefense: Int = 0
     private var speed: Int = 0
 
+    private lateinit var currentMoves: ArrayList<MoveData>
     private var moves: ArrayList<MoveData>
     private var images: ArrayList<String>
 
@@ -41,6 +43,8 @@ class Pokemon : Serializable {
         this.specialDefense = specialDefense * (50 + level) / 50
         this.speed = speed * (50 + level) / 50
         this.moves = moves
+        this.currentMoves = ArrayList<MoveData>()
+        setCurrentMoves()
         this.images = images
     }
 
@@ -55,6 +59,10 @@ class Pokemon : Serializable {
         return this.name
     }
 
+    fun setNickame(nickname: String) {
+        this.name=nickname
+    }
+
     fun getLevel(): Int{
         return this.level
     }
@@ -62,28 +70,23 @@ class Pokemon : Serializable {
         this.level = level
     }
 
-    fun getExperienceReward(): Int {
-        return this.experienceReward
-    }
-
     fun getExperience(): Int{
         return this.experience
-    }
-    private fun setExperience(){
-        this.experience = this.level.toDouble().pow(3.0).toInt()
     }
     fun addExperience(exp: Int){
         this.experience += exp
         val newLevel = floor(Math.cbrt(this.experience.toDouble())).toInt()
         if(newLevel > this.level){
-            setExperience()
-            setMaxHp()
-            setAttack()
-            setDefense()
-            setSpecialAttack()
-            setSpecialDefense()
-            setSpeed()
-            setLevel(newLevel)
+            val numberOfLevels = newLevel - this.level
+            for (i in 0 until numberOfLevels){
+                setMaxHp()
+                setAttack()
+                setDefense()
+                setSpecialAttack()
+                setSpecialDefense()
+                setSpeed()
+                setLevel(this.level + 1)
+            }
         }
     }
 
@@ -95,7 +98,7 @@ class Pokemon : Serializable {
         return this.maxHp
     }
     private fun setMaxHp(){
-        this.maxHp = this.maxHp + (this.maxHp / (50 + this.level))
+        this.maxHp = ceil(this.maxHp + (this.maxHp / (50 + this.level).toDouble())).toInt()
     }
 
     fun getCurrentHp(): Int{
@@ -109,35 +112,35 @@ class Pokemon : Serializable {
         return this.attack
     }
     private fun setAttack(){
-        this.attack = this.attack + (this.attack / (50 + this.level))
+        this.attack = ceil(this.attack + (this.attack / (50 + this.level).toDouble())).toInt()
     }
 
     fun getDefense(): Int{
         return this.defense
     }
     private fun setDefense(){
-        this.defense = this.defense + (this.defense / (50 + this.level))
+        this.defense = ceil(this.defense + (this.defense / (50 + this.level).toDouble())).toInt()
     }
 
     fun getSpecialAttack(): Int{
         return this.specialAttack
     }
     private fun setSpecialAttack(){
-       this.specialAttack = this.specialAttack + (this.specialAttack / (50 + this.level))
+       this.specialAttack = ceil(this.specialAttack + (this.specialAttack / (50 + this.level).toDouble())).toInt()
     }
 
     fun getSpecialDefense(): Int{
         return this.specialDefense
     }
     private fun setSpecialDefense(){
-        this.specialDefense = this.specialDefense + (this.specialDefense / (50 + this.level))
+        this.specialDefense = ceil(this.specialDefense + (this.specialDefense / (50 + this.level).toDouble())).toInt()
     }
 
     fun getSpeed(): Int{
         return this.speed
     }
     private fun setSpeed(){
-        this.speed = this.speed + (this.speed / (50 + this.level))
+        this.speed = ceil(this.speed + (this.speed / (50 + this.level).toDouble())).toInt()
     }
 
     fun getMoves(): ArrayList<MoveData>{
@@ -165,7 +168,59 @@ class Pokemon : Serializable {
         return false
     }
 
+    private fun setCurrentMoves(){
+        currentMoves.clear()
+        for(elem in moves){
+            if(elem.level_learned_at <= this.level){
+                currentMoves.add(elem)
+            }
+            if(currentMoves.size == 4){
+                return
+            }
+        }
+    }
+
+    fun addCurrentMove(move: MoveData){
+        if(this.currentMoves.size < 4){
+            this.currentMoves.add(move)
+        }
+    }
+    fun getCurrentMoves(): ArrayList<MoveData> {
+        return this.currentMoves
+    }
+
+    public fun checkAcquiredMoves(previousLevel: Int, currentLevel: Int): ArrayList<MoveData> {
+        val list = ArrayList<MoveData>()
+        for (i in previousLevel + 1..currentLevel) {
+            val learnedMove = checkLearnedMove(i, moves)
+            if (learnedMove != null) {
+                list.add(learnedMove)
+            }
+        }
+        return list
+    }
+
+    private fun checkLearnedMove(levelLearned: Int, moves: ArrayList<MoveData>):MoveData?{
+        for(move in moves){
+            if(move.level_learned_at == levelLearned){
+                return move
+            }
+        }
+        return null
+    }
+
+    fun isAlive():Boolean{
+        if(this.getCurrentHp()==0){
+            return false
+        }
+        return true
+    }
+
     fun getImages(): ArrayList<String>{
         return this.images
+    }
+
+    fun getExperienceReward(): Int{
+        return this.experienceReward
     }
 }

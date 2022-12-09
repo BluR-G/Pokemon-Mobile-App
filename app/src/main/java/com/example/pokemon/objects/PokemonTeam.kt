@@ -5,6 +5,9 @@ import java.io.Serializable
 class PokemonTeam : Serializable {
     private var pokemons: ArrayList<Pokemon> = ArrayList()
 
+    constructor(){
+        pokemons = ArrayList<Pokemon>()
+    }
     fun addPokemonToTeam(pokemon: Pokemon): Boolean{
         if(pokemons.size < 6){
             this.pokemons.add(pokemon)
@@ -28,7 +31,9 @@ class PokemonTeam : Serializable {
         }
     }
 
-
+    fun getPokemonTeam() : ArrayList<Pokemon> {
+        return pokemons
+    }
     fun getSize(): Int {
         return this.pokemons.size
     }
@@ -48,5 +53,36 @@ class PokemonTeam : Serializable {
             teamOrder[i]?.let { newTeam.add(it) }
         }
         pokemons = newTeam
+    }
+    fun isTeamDead():Boolean {
+        var check = false
+        for (pokemon in this.getPokemonTeam()) {
+            if (pokemon.getCurrentHp() == 0) {
+                check = true
+            } else {
+                return false
+            }
+        }
+        return true
+    }
+
+    public fun getHighestLevel(): Int{
+        var highLevel = this.getPokemonTeam()[0].getLevel()
+        for(pokemon in this.getPokemonTeam()){
+            if(pokemon.getLevel() > highLevel){
+                highLevel = pokemon.getLevel()
+            }
+        }
+        return highLevel
+    }
+
+    public fun getLowestLevel():Int{
+        var lowLevel = this.getPokemonTeam()[0].getLevel()
+        for(pokemon in this.getPokemonTeam()){
+            if(pokemon.getLevel() < lowLevel){
+                lowLevel = pokemon.getLevel()
+            }
+        }
+        return lowLevel
     }
 }

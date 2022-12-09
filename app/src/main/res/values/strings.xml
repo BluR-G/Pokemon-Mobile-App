@@ -2,6 +2,8 @@
     <string name="app_name">Pokemon</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="teamFightFragment">com.example.pokemon:id/bagFragment</string>
+    <string name="potionFragment">com.example.pokemon:id/fightMenuFragment</string>
     <string name="apply">Apply</string>
     <string name="go_back">Go Back</string>
     <string name="remove_pokemon_fragment">com.example.pokemon:id/teamRemovePokemonFragment</string>
@@ -27,9 +29,11 @@
     <string name="nickname_input_hint">Leave this blank for default name</string>
     <string name="ready_text">Your very own Pokemon legend is about to unfold.\nA world of dreams and adventures with Pokemon awaits!\nAre you ready?</string>
     <string name="ready">Ready</string>
+    <string name="pokemon_name">Enter pokemon name:</string>
     <string name="new_game">New Game</string>
     <string name="members_text">Game created by:\n\nDan Willis\nJohnny Hoang\nRobert Gutkowski</string>
     <string name="pokemon_sprite">Pokemon\'s Sprite</string>
+    <string name="fight_menu_navigation">Destination(com.example.pokemon:id/fightMenuFragment) label=fragment_fight_menu class=com.example.pokemon.fight.FightMenuFragment</string>
     <string name="image_view_desc">Image of Pokemon</string>
     <string name="view_pokedex_entry">Select pokemon to view their Pokedex entry</string>
     <string name="heal">Heal</string>

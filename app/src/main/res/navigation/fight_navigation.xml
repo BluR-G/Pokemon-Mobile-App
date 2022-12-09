@@ -6,7 +6,7 @@
     app:startDestination="@id/fightMenuFragment">
     <fragment
         android:id="@+id/fightMenuFragment"
-        android:name="com.example.pokemon.FightMenuFragment"
+        android:name="com.example.pokemon.fight.FightMenuFragment"
         android:label="fragment_fight_menu"
         tools:layout="@layout/fragment_fight_menu" >
         <action
@@ -18,10 +18,13 @@
         <action
             android:id="@+id/action_fightMenuFragment_to_bagFragment"
             app:destination="@id/bagFragment" />
+        <action
+            android:id="@+id/action_fightMenuFragment_to_pokemonCaptureFragment"
+            app:destination="@id/pokemonCaptureFragment2" />
     </fragment>
     <fragment
         android:id="@+id/fightFragment"
-        android:name="com.example.pokemon.FightFragment"
+        android:name="com.example.pokemon.fight.FightFragment"
         android:label="fragment_fight"
         tools:layout="@layout/fragment_fight" >
         <action
@@ -30,20 +33,28 @@
     </fragment>
     <fragment
         android:id="@+id/bagFragment"
-        android:name="com.example.pokemon.BagFragment"
+        android:name="com.example.pokemon.fight.BagFragment"
         android:label="fragment_bag"
         tools:layout="@layout/fragment_bag" >
         <action
             android:id="@+id/action_bagFragment_to_fightMenuFragment"
             app:destination="@id/fightMenuFragment" />
+        <action
+            android:id="@+id/action_bagFragment_to_fightPokemonTeamFragment"
+            app:destination="@id/fightPokemonTeamFragment" />
     </fragment>
     <fragment
         android:id="@+id/fightPokemonTeamFragment"
-        android:name="com.example.pokemon.FightPokemonTeamFragment"
+        android:name="com.example.pokemon.fight.FightPokemonTeamFragment"
         android:label="fragment_fight_pokemon_team"
         tools:layout="@layout/fragment_fight_pokemon_team" >
         <action
             android:id="@+id/action_fightPokemonTeamFragment_to_fightMenuFragment"
             app:destination="@id/fightMenuFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/pokemonCaptureFragment2"
+        android:name="com.example.pokemon.fight.PokemonCaptureFragment"
+        android:label="fragment_pokemon_capture"
+        tools:layout="@layout/fragment_pokemon_capture" />
 </navigation>
