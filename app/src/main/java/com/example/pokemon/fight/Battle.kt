@@ -228,7 +228,7 @@ abstract class Battle {
         }
     }
     // Teach moves to pokemon if it levels up
-    suspend fun checkAddToCurrentMoves(previousLevel: Int) {
+    suspend fun checkAddToCurrentMoves(previousLevel: Int) :Boolean {
         if (previousLevel < currentAllyPokemon.getLevel()) {
             activity.getBinding().allyLevel.text="lv.${currentAllyPokemon.getLevel()}"
             //Level up
@@ -259,9 +259,11 @@ abstract class Battle {
                         currentAllyPokemon.addCurrentMove(move)
                     }
                 }
+                return true
             }
 
         }
+        return false
     }
     // Replace selected move with new move
     fun replaceMove(pokemon: Pokemon, movePosition: Int){
@@ -394,7 +396,7 @@ abstract class Battle {
     // Add experience to pokemon when fight is won
     public fun addExperience(){
         val expGain = 0.3 * getCurrentEnemyPokemon().getExperienceReward() * getCurrentEnemyPokemon().getLevel()
-        currentAllyPokemon.addExperience(expGain.toInt())
+        currentAllyPokemon.addExperience(expGain.toInt()+1300)
     }
 }
 

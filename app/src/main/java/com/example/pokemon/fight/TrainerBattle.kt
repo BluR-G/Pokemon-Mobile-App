@@ -41,11 +41,17 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
                     activity.setFightState(-1)
                     val previousLevel = currentAllyPokemon.getLevel()
                     addExperience()
-                    checkAddToCurrentMoves(previousLevel)
-                    // Wait for user response before swapping pokemon
-                    while(activity.getFightState() == -1){
+                    if(checkAddToCurrentMoves(previousLevel)){
+                        activity.lifecycleScope.launch(Dispatchers.IO){
+                            while(activity.getFightState() == -1){
+                            }
+                        }
                     }
                     swapEnemy()
+                    activity.setFightState(0)
+                    // Wait for user response before swapping pokemon
+
+
                 }
                 if(enemyTeam.isTeamDead()) {
                     displayFinalMessage("You won!")
