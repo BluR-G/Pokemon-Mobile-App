@@ -20,6 +20,7 @@ import com.example.pokemon.objects.PokemonCollection
 import com.example.pokemon.objects.PokemonTeam
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -68,6 +69,7 @@ class MainMenuFragment : Fragment() {
                     val wildPokemon = generatePokemon()
                     lifecycleScope.launch(Dispatchers.Main){
                         switchBattle(battleType, wildPokemon, null)
+                        delay(1000)
                         enableBattleButtons()
                     }
                 }
@@ -77,6 +79,7 @@ class MainMenuFragment : Fragment() {
                     val trainerTeam = generatePokemonTeam()
                     lifecycleScope.launch(Dispatchers.Main){
                         switchBattle(battleType, null, trainerTeam)
+                        delay(1000)
                         enableBattleButtons()
                     }
                 }
