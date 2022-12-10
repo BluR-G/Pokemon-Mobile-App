@@ -7,7 +7,6 @@
     tools:context=".fight.FightFragment"
     android:background="@drawable/pokemon_touch_background_v2">
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/move_recycler_view"
         android:layout_width="match_parent"
@@ -18,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/fightGoToFightMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

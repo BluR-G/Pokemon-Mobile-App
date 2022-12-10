@@ -10,38 +10,46 @@
     tools:context=".fight.FightMenuFragment"
     android:background="@drawable/pokemon_touch_background_v2">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/selectFight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="0"
-        android:layout_gravity="left|top"
-        android:text="FIGHT"
+        android:layout_gravity="start|top"
+        android:text="@string/fight"
+        android:background="@drawable/red_button"
+        android:textColor="@color/red"
         android:layout_margin="50dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/selectBag"
-        android:layout_gravity="right|top"
+        android:layout_gravity="end|top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BAG"
+        android:text="@string/bag"
+        android:textColor="@color/purple"
+        android:background="@drawable/purple_button"
         android:layout_margin="50dp"
         />
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/selectTeam"
-        android:layout_gravity="left|top"
+        android:layout_gravity="start|top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="POKÉMON"
+        android:text="@string/pokemon_upper"
+        android:background="@drawable/green_button"
+        android:textColor="@color/green"
         android:layout_margin="50dp"
         />
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/selectRun"
-        android:layout_gravity="right|top"
+        android:layout_gravity="end|top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RUN"
+        android:text="@string/run"
+        android:background="@drawable/blue_button"
+        android:textColor="@color/blue"
         android:layout_margin="50dp"
         />
 </GridLayout>
