@@ -192,11 +192,17 @@ class MainMenuFragment : Fragment() {
         return pokemonTeam
     }
     private fun enableBattleButtons(){
+        binding.save.isEnabled = true
+        binding.goToTeam.isEnabled =  true
+        binding.goToPokeCenter.isEnabled = true
         binding.goToWildBattle.isEnabled = true
         binding.goToTrainerBattle.isEnabled = true
     }
 
     private fun disableButtons(){
+        binding.save.isEnabled = false
+        binding.goToTeam.isEnabled =  false
+        binding.goToPokeCenter.isEnabled = false
         binding.goToWildBattle.isEnabled = false
         binding.goToTrainerBattle.isEnabled = false
     }
