@@ -112,6 +112,10 @@ abstract class Battle {
 
     // Attack pokemon target with move
     fun attackPokemonTarget(attacker: Pokemon, target: Pokemon, move: Move){
+        if(attacker == getCurrentEnemyPokemon()){
+            Log.d("attack", "${attacker.getName()}, ${attacker.getCurrentHp()}")
+        }
+
         val moveChance = (1..100).random()
         var moveDamage = 0
         if(move.getDamageClass() == "PHYSICAL"){
@@ -156,6 +160,7 @@ abstract class Battle {
                     delay(1000)
                     activity.getBinding().gameMessage.text="${currentAllyPokemon.getName()} fainted. Pick another Pokemon!"
                 }
+                Log.d("fixing",navController.currentDestination.toString())
                 navController.navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
             }
         }
@@ -210,20 +215,24 @@ abstract class Battle {
     }
     // Make enemy instantly attack when ally round is skipped
     fun enemyAttack(){
-        activity.lifecycleScope.launch(Dispatchers.Default) {
-            delay(1000)
-            withContext(Dispatchers.Main) {
-                var enemyMove = pickEnemyRandomMove()
-                // Attacks swapped Pokemon
-                attackPokemonTarget(currentEnemyPokemon,currentAllyPokemon, enemyMove.move)
-                activity.getBinding().gameMessage.text =
-                    "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!"
+        if(currentEnemyPokemon.isAlive()){
+            activity.lifecycleScope.launch(Dispatchers.Default) {
+                isAttacking=true
                 delay(1000)
-                activity.getBinding().gameMessage.text = ""
-                delay(1000)
-                // Updates pokemon text
-                activity.getBinding().allyPokemonHp.text =
-                    "HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
+                withContext(Dispatchers.Main) {
+                    var enemyMove = pickEnemyRandomMove()
+                    // Attacks swapped Pokemon
+                    attackPokemonTarget(currentEnemyPokemon,currentAllyPokemon, enemyMove.move)
+                    activity.getBinding().gameMessage.text =
+                        "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!"
+                    delay(1000)
+                    activity.getBinding().gameMessage.text = ""
+                    delay(1000)
+                    // Updates pokemon text
+                    activity.getBinding().allyPokemonHp.text =
+                        "HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
+                }
+                isAttacking=false
             }
         }
     }

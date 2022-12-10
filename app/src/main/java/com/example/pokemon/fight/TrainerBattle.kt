@@ -36,6 +36,7 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
     public override fun checkPokemonStatus(pokemonTarget: Pokemon, pokemonAttacker: Pokemon, attackerMove : MoveData, view : View){
         if(pokemonAttacker.isAlive()){
             attackPokemonTarget(pokemonAttacker,pokemonTarget,attackerMove.move)
+            updateFightMessage(pokemonAttacker,pokemonTarget,attackerMove)
             if(!getCurrentEnemyPokemon().isAlive() || enemyTeam.isTeamDead()){
                 activity.lifecycleScope.launch(Dispatchers.Main){
                     // Pause Fight
@@ -59,7 +60,6 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
             } else if(allyPokemonTeam.isTeamDead()){
                 displayFinalMessage("You lost!")
             }
-            updateFightMessage(pokemonAttacker,pokemonTarget,attackerMove)
         }
         activity.setFightState(0)
     }
@@ -91,7 +91,7 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
             setCurrentEnemyPokemon(enemyTeam[count])
             activity.lifecycleScope.launch(Dispatchers.Default){
                 withContext(Dispatchers.Main){
-                    delay(3000)
+                    delay(1500)
                     activity.getBinding().gameMessage.text="Enemy swapping to ${getCurrentEnemyPokemon().getName()}!"
                     updateEnemyPokemon()
                     delay(1000)
