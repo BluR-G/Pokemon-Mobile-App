@@ -23,7 +23,6 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
     private lateinit var enemyPokemon: Pokemon
 
     init {
-        this.playMusic()
         this.enemyPokemon = enemyPokemon
         initializeMessage("A wild ${getCurrentEnemyPokemon().getSpecies()} appeared!")
     }
@@ -43,10 +42,10 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                     addExperience()
                     checkAddToCurrentMoves(previousLevel)
                     displayFinalMessage("You won!")
-                    pauseMusic()
+                    //pauseMusic()
                 } else if(allyPokemonTeam.isTeamDead()){
                     displayFinalMessage("You lost!")
-                    pauseMusic()
+                    //pauseMusic()
                 }
             }
         }

@@ -2,23 +2,17 @@ package com.example.pokemon.fight
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.AudioManager
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.pokemon.data.PokemonCreation
 import com.example.pokemon.databinding.ActivityFightBinding
 import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonCollection
 import com.example.pokemon.objects.PokemonTeam
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.IOException
-import java.util.*
 
 class FightActivity : AppCompatActivity(){
     private lateinit var binding: ActivityFightBinding
@@ -31,7 +25,6 @@ class FightActivity : AppCompatActivity(){
     private lateinit var activity: FightActivity
     // 0 for ongoing fight, -1 for finished fight
     private var fightState = 0
-    var mediaPlayer: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +52,6 @@ class FightActivity : AppCompatActivity(){
         binding.allyPokemon.text=currentPokemon.getName()
         binding.allyPokemonHp.text="HP:${currentPokemon.getCurrentHp()}/${currentPokemon.getMaxHp()}"
         binding.allyLevel.text = "lv.${currentPokemon.getLevel()}"
-
     }
     public fun getFightState(): Int{
         return this.fightState
@@ -110,26 +102,5 @@ class FightActivity : AppCompatActivity(){
 
     override fun onBackPressed() {
         Toast.makeText(this, "Button Disabled", Toast.LENGTH_SHORT).show()
-    }
-
-    fun playAudio() {
-        val audioURL = "https://vgmsite.com/soundtracks/pokemon-game-boy-pok-mon-sound-complete-set-play-cd/vfywpihuos/1-01.%20Opening.mp3"
-        mediaPlayer = MediaPlayer()
-        mediaPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC)
-        try {
-            mediaPlayer!!.setDataSource(audioURL)
-            mediaPlayer!!.prepare()
-            mediaPlayer!!.start()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-    fun pauseAudio() {
-        if(mediaPlayer!!.isPlaying){
-            mediaPlayer!!.stop()
-            mediaPlayer!!.reset()
-            mediaPlayer!!.release()
-        }
     }
 }

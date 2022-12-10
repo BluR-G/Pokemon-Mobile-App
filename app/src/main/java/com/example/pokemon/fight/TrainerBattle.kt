@@ -21,7 +21,6 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
     private var count = 0
 
     init {
-        this.playMusic()
         this.enemyTeam = enemyTeam
         setCurrentEnemyPokemon(enemyTeam.getPokemonTeam()[0])
         initializeMessage("You were challenged by a trainer!")
@@ -47,11 +46,11 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
                 }
                 if(enemyTeam.isTeamDead()) {
                     displayFinalMessage("You won!")
-                    pauseMusic()
+                    //pauseMusic() debug
                 }
             } else if(allyPokemonTeam.isTeamDead()){
                 displayFinalMessage("You lost!")
-                pauseMusic()
+                //pauseMusic() debug
             }
             if(!getCurrentEnemyPokemon().isAlive() && pokemonTarget == getCurrentEnemyPokemon()){
                 swapEnemy()

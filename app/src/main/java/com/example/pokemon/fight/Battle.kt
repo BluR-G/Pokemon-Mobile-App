@@ -307,7 +307,6 @@ abstract class Battle {
 
     // Exits the current activity and sends back team to menu
     fun run(){
-        pauseMusic()
         val intent = Intent(activity, MenuActivity::class.java)
         intent.putExtra("pokemonTeam", activity.getPokemonTeam())
         intent.putExtra("pokemonCollection", activity.getPokemonCollection())
@@ -398,18 +397,5 @@ abstract class Battle {
         val expGain = 0.3 * getCurrentEnemyPokemon().getExperienceReward() * getCurrentEnemyPokemon().getLevel()
         currentAllyPokemon.addExperience(expGain.toInt())
     }
-
-    fun playMusic() {
-        activity.lifecycleScope.launch(Dispatchers.IO){
-            activity.playAudio()
-        }
-    }
-
-    fun pauseMusic() {
-        activity.lifecycleScope.launch(Dispatchers.IO){
-            activity.pauseAudio()
-        }
-    }
-
 }
 
