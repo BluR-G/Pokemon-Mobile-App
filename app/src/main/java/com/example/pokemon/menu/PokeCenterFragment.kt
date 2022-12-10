@@ -27,7 +27,7 @@ class PokeCenterFragment : Fragment() {
 
         binding.healButton.setOnClickListener {
             pokemonTeam.healAllPokemons()
-            Toast.makeText(context, "All the pokemons in your team are healed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Pokemons in your team are healed", Toast.LENGTH_SHORT).show()
         }
         return binding.root
     }
