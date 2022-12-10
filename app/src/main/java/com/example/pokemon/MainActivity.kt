@@ -34,11 +34,8 @@ class MainActivity : AppCompatActivity() {
             mediaPlayer!!.prepare()
             mediaPlayer!!.start()
             while(true) {
+                // keeps playing the music
                 if(!mediaPlayer!!.isPlaying){
-                    mediaPlayer!!.stop()
-                    mediaPlayer!!.reset()
-                    mediaPlayer!!.setDataSource(audioURL)
-                    mediaPlayer!!.prepare()
                     mediaPlayer!!.start()
                 }
             }
