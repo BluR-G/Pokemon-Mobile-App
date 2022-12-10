@@ -63,6 +63,7 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
 
         activity.lifecycleScope.launch(Dispatchers.Default){
             withContext(Dispatchers.Main){
+                isAttacking = true
                 activity.getBinding().gameMessage.text="Catching ${getCurrentEnemyPokemon().getSpecies()}!"
                 delay(1000)
                 if(catchResult<catchRate) {
@@ -76,6 +77,7 @@ class WildBattle(pokemonTeam: PokemonTeam, enemyPokemon: Pokemon, activity: Figh
                     // pokemon attacks if capturing fails
                     enemyAttack()
                 }
+                isAttacking = false
             }
 
         }

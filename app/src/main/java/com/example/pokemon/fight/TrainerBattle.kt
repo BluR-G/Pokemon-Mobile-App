@@ -35,9 +35,15 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
     // Check Target Pokemon status and attack according to status
     public override fun checkPokemonStatus(pokemonTarget: Pokemon, pokemonAttacker: Pokemon, attackerMove : MoveData, view : View){
         if(pokemonAttacker.isAlive()){
+            if(pokemonAttacker == getCurrentEnemyPokemon()){
+                Log.d("attack", "${pokemonAttacker.getName()}, ${pokemonAttacker.getCurrentHp()}, ${pokemonAttacker.isAlive()}")
+            }
+
             attackPokemonTarget(pokemonAttacker,pokemonTarget,attackerMove.move)
-            if(!getCurrentEnemyPokemon().isAlive() || enemyTeam.isTeamDead()){
+            updateFightMessage(pokemonAttacker,pokemonTarget,attackerMove)
+            if(!getCurrentEnemyPokemon().isAlive()){
                 activity.lifecycleScope.launch(Dispatchers.Main){
+                    // Pause Fight
                     activity.setFightState(-1)
                     val previousLevel = currentAllyPokemon.getLevel()
                     addExperience()
@@ -47,21 +53,19 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
                             }
                         }
                     }
+                    // Wait for user response before swapping pokemon
                     swapEnemy()
                     activity.setFightState(0)
-                    // Wait for user response before swapping pokemon
-
-
+                    if(enemyTeam.isTeamDead()) {
+                        displayFinalMessage("You won!")
+                    }
                 }
-                if(enemyTeam.isTeamDead()) {
-                    displayFinalMessage("You won!")
-                }
+
             } else if(allyPokemonTeam.isTeamDead()){
                 displayFinalMessage("You lost!")
+
             }
-            updateFightMessage(pokemonAttacker,pokemonTarget,attackerMove)
         }
-        activity.setFightState(0)
     }
 
     // Fight between the current pokemon
@@ -91,7 +95,7 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
             setCurrentEnemyPokemon(enemyTeam[count])
             activity.lifecycleScope.launch(Dispatchers.Default){
                 withContext(Dispatchers.Main){
-                    delay(3000)
+                    delay(1500)
                     activity.getBinding().gameMessage.text="Enemy swapping to ${getCurrentEnemyPokemon().getName()}!"
                     updateEnemyPokemon()
                     delay(1000)

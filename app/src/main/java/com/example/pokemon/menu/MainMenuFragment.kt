@@ -20,10 +20,12 @@ import com.example.pokemon.objects.PokemonCollection
 import com.example.pokemon.objects.PokemonTeam
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
 class MainMenuFragment : Fragment() {
+    private lateinit var binding : FragmentMainMenuBinding
     lateinit var menuActivity: MenuActivity
     private val database by lazy { PokemonRoomDatabase.getDatabase(menuActivity)}
     private lateinit var pokemonTeam: PokemonTeam
@@ -39,7 +41,7 @@ class MainMenuFragment : Fragment() {
         pokemonCollection = menuActivity.getCollect()
         userNamePrint = menuActivity.getUsernamePrint()
         userNameData = menuActivity.getUsernameData()
-        val binding = FragmentMainMenuBinding.inflate(layoutInflater)
+        binding = FragmentMainMenuBinding.inflate(layoutInflater)
         binding.welcomeText.text = userNamePrint
         binding.goToTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_mainMenuFragment_to_teamFragment)
@@ -57,25 +59,29 @@ class MainMenuFragment : Fragment() {
     }
     private fun switchToBattle(battleType:String) {
         if(!menuActivity.getTeam().isTeamDead()){
-            if(battleType == "wild"){
-                Toast.makeText(activity, "Loading...", Toast.LENGTH_SHORT).show()
-                lifecycleScope.launch(Dispatchers.IO) {
-                    val wildPokemon = generatePokemon()
-                    lifecycleScope.launch(Dispatchers.Main){
-                        switchBattle(battleType, wildPokemon, null)
-                    }
-                }
-            } else {
-                Toast.makeText(activity, "Loading...", Toast.LENGTH_LONG).show()
-                lifecycleScope.launch(Dispatchers.IO) {
-                    val trainerTeam = generatePokemonTeam()
-                    lifecycleScope.launch(Dispatchers.Main){
-                        switchBattle(battleType, null, trainerTeam)
-                    }
-                }
-            }
+            // Prevent user to spam and promp many fights
+            disableButtons()
+            handleFightSwitch(battleType)
         } else {
             Toast.makeText(activity, "Your team is dead! Go to the Pokecenter.", Toast.LENGTH_SHORT).show()
+        }
+    }
+    // Switch to appropriate fight
+    private fun handleFightSwitch(battleType: String) {
+        Toast.makeText(activity, "Loading...", Toast.LENGTH_LONG).show()
+        var wildPokemon : Pokemon? = null
+        var trainerTeam : PokemonTeam? = null
+        lifecycleScope.launch(Dispatchers.IO) {
+            if(battleType=="trainer"){
+                trainerTeam = generatePokemonTeam()
+            } else {
+                wildPokemon = generatePokemon()
+            }
+            lifecycleScope.launch(Dispatchers.Main) {
+                switchBattle(battleType, wildPokemon, trainerTeam)
+                delay(1000)
+                enableBattleButtons()
+            }
         }
     }
 
@@ -181,5 +187,20 @@ class MainMenuFragment : Fragment() {
             pokemonTeam.addPokemonToTeam(generatePokemon())
         }
         return pokemonTeam
+    }
+    private fun enableBattleButtons(){
+        binding.save.isEnabled = true
+        binding.goToTeam.isEnabled =  true
+        binding.goToPokeCenter.isEnabled = true
+        binding.goToWildBattle.isEnabled = true
+        binding.goToTrainerBattle.isEnabled = true
+    }
+
+    private fun disableButtons(){
+        binding.save.isEnabled = false
+        binding.goToTeam.isEnabled =  false
+        binding.goToPokeCenter.isEnabled = false
+        binding.goToWildBattle.isEnabled = false
+        binding.goToTrainerBattle.isEnabled = false
     }
 }

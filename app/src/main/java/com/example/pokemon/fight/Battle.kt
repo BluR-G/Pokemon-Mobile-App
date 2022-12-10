@@ -26,6 +26,7 @@ abstract class Battle {
     public lateinit var allyPokemonCollection: PokemonCollection
     public lateinit var currentAllyPokemon : Pokemon
     private lateinit var currentEnemyPokemon: Pokemon
+    private var previousEnemyPokemon: Pokemon? = null
     public var newMove: MoveData? = null
     public var newNickname=""
     public var capturedSpecies=""
@@ -81,13 +82,21 @@ abstract class Battle {
         activity.lifecycleScope.launch(Dispatchers.Main){
                 isAttacking = true
                 if(currentAllyPokemon.getSpeed() > getCurrentEnemyPokemon().getSpeed()){
-                    checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
+                    val enemy = getCurrentEnemyPokemon()
+                    checkPokemonStatus(enemy, currentAllyPokemon, move, view)
                     delay(1500)
-                    checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
+                    // if enemy does not swap, let enemy attack second
+                    if(enemy==getCurrentEnemyPokemon()){
+                        checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
+                    }
                 } else {
-                    checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(),  enemyMove, view)
+                    // if enemy does not swap, let enemy attack first
+                    if(previousEnemyPokemon==getCurrentEnemyPokemon()){
+                        checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(),  enemyMove, view)
+                    }
                     delay(1500)
                     checkPokemonStatus(getCurrentEnemyPokemon(),currentAllyPokemon, move, view)
+                    previousEnemyPokemon = getCurrentEnemyPokemon()
                 }
                 isAttacking = false
 
@@ -156,6 +165,7 @@ abstract class Battle {
                     delay(1000)
                     activity.getBinding().gameMessage.text="${currentAllyPokemon.getName()} fainted. Pick another Pokemon!"
                 }
+                Log.d("fixing",navController.currentDestination.toString())
                 navController.navigate(R.id.action_fightMenuFragment_to_fightPokemonTeamFragment)
             }
         }
@@ -210,20 +220,24 @@ abstract class Battle {
     }
     // Make enemy instantly attack when ally round is skipped
     fun enemyAttack(){
-        activity.lifecycleScope.launch(Dispatchers.Default) {
-            delay(1000)
-            withContext(Dispatchers.Main) {
-                var enemyMove = pickEnemyRandomMove()
-                // Attacks swapped Pokemon
-                attackPokemonTarget(currentEnemyPokemon,currentAllyPokemon, enemyMove.move)
-                activity.getBinding().gameMessage.text =
-                    "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!"
+        if(currentEnemyPokemon.isAlive()){
+            activity.lifecycleScope.launch(Dispatchers.Default) {
+                isAttacking=true
                 delay(1000)
-                activity.getBinding().gameMessage.text = ""
-                delay(1000)
-                // Updates pokemon text
-                activity.getBinding().allyPokemonHp.text =
-                    "HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
+                withContext(Dispatchers.Main) {
+                    var enemyMove = pickEnemyRandomMove()
+                    // Attacks swapped Pokemon
+                    attackPokemonTarget(currentEnemyPokemon,currentAllyPokemon, enemyMove.move)
+                    activity.getBinding().gameMessage.text =
+                        "${currentEnemyPokemon.getName()} used ${enemyMove.moveName}!"
+                    delay(1000)
+                    activity.getBinding().gameMessage.text = ""
+                    delay(1000)
+                    // Updates pokemon text
+                    activity.getBinding().allyPokemonHp.text =
+                        "HP:${currentAllyPokemon.getCurrentHp()}/${currentAllyPokemon.getMaxHp()}"
+                }
+                isAttacking=false
             }
         }
     }
@@ -396,7 +410,7 @@ abstract class Battle {
     // Add experience to pokemon when fight is won
     public fun addExperience(){
         val expGain = 0.3 * getCurrentEnemyPokemon().getExperienceReward() * getCurrentEnemyPokemon().getLevel()
-        currentAllyPokemon.addExperience(expGain.toInt()+1300)
+        currentAllyPokemon.addExperience(expGain.toInt())
     }
 }
 
