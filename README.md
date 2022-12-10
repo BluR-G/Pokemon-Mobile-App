@@ -23,9 +23,12 @@ Pokemon mobile application featuring the core battle mechanics of the original g
     - Remove pokemon from team
     - change order of team
     - view team and collection
+- Levelling
+    - increase in stats
+    - learning new moves
 - Music
     - immersive music throughout the whole game
-  
+
 ## Contributors
 
 - Dan Willis Njoumene
