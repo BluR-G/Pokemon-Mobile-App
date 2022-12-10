@@ -28,6 +28,14 @@ Pokemon mobile application featuring the core battle mechanics of the original g
     - learning new moves
 - Music
     - immersive music throughout the whole game
+  
+## Setup
+- After cloning the project. Open the folder using Android Studio.
+- Once opened, press the 'run app' button to open up the application with a phone emulator of your choice 
+(Nexus 6 API 31 recommended to emulate on)
+
+- To run it on your physical phone: https://developer.android.com/studio/run/device
+
 
 ## Contributors
 
