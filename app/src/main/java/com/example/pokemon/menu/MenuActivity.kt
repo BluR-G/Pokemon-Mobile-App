@@ -8,25 +8,24 @@ import com.example.pokemon.objects.*
 import androidx.activity.result.ActivityResult
 import android.app.Activity
 import androidx.lifecycle.lifecycleScope
-import com.example.pokemon.data.PokemonCreation
 import com.example.pokemon.database.PlayerPokemon
 import com.example.pokemon.database.PokemonRoomDatabase
 import com.example.pokemon.databinding.ActivityMenuBinding
-import com.example.pokemon.objects.*
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 class MenuActivity : AppCompatActivity() {
     private var pokemonTeam = PokemonTeam()
     private var pokemonCollection = PokemonCollection()
     private val database by lazy { PokemonRoomDatabase.getDatabase(this)}
     private var pokemon : Pokemon? = null
+    private lateinit var userNamePrint : String
+    private lateinit var userNameData : String
 
     lateinit var binding: ActivityMenuBinding
-    public var getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+    var getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result: ActivityResult ->
         if(result.resultCode == Activity.RESULT_OK){
             val intent = result.data
@@ -39,17 +38,14 @@ class MenuActivity : AppCompatActivity() {
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val fromContinue = intent.getBooleanExtra("fromContinue", false)
+        userNameData = intent.getStringExtra("user_welcome_print").toString()
         if(fromContinue){
+            userNamePrint = "Welcome back $userNameData"
             loadPlayerPokemon()
         } else {
+            userNamePrint = "Welcome $userNameData"
             val pokemon = intent.getSerializableExtra("pokemon") as Pokemon
             pokemonTeam.addPokemonToTeam(pokemon)
-            pokemonTeam.addPokemonToTeam(pokemon)
-            pokemonTeam.addPokemonToTeam(pokemon)
-            pokemonTeam.addPokemonToTeam(pokemon)
-            pokemonTeam.addPokemonToTeam(pokemon)
-            pokemonTeam.addPokemonToTeam(pokemon)
-
         }
     }
 
@@ -152,5 +148,13 @@ class MenuActivity : AppCompatActivity() {
 
     fun setPokemon(pokemon : Pokemon) {
         this.pokemon = pokemon
+    }
+
+    fun getUsernamePrint(): String{
+        return this.userNamePrint
+    }
+
+    fun getUsernameData(): String{
+        return this.userNameData
     }
 }
