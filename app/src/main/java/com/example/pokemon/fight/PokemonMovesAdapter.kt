@@ -41,7 +41,7 @@ class PokemonMovesAdapter (private val pokemon: Pokemon, private val context: Co
     private fun handleEvent(view: View, pokemon: Pokemon, move: MoveData, position: Int) {
         if(fightActivity.getFightState() == 0){
             battle.fight(view,move)
-        } else {
+        } else if(fightActivity.getFightState() == -1){
             battle.replaceMove(pokemon,position)
             view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
         }

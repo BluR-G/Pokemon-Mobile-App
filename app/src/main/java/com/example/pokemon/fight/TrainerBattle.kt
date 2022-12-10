@@ -38,6 +38,7 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
             attackPokemonTarget(pokemonAttacker,pokemonTarget,attackerMove.move)
             if(!getCurrentEnemyPokemon().isAlive() || enemyTeam.isTeamDead()){
                 activity.lifecycleScope.launch(Dispatchers.Main){
+                    // Pause Fight
                     activity.setFightState(-1)
                     val previousLevel = currentAllyPokemon.getLevel()
                     addExperience()
@@ -47,10 +48,9 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
                             }
                         }
                     }
+                    // Wait for user response before swapping pokemon
                     swapEnemy()
                     activity.setFightState(0)
-                    // Wait for user response before swapping pokemon
-
 
                 }
                 if(enemyTeam.isTeamDead()) {
