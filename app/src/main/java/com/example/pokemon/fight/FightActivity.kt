@@ -4,18 +4,15 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.pokemon.data.PokemonCreation
 import com.example.pokemon.databinding.ActivityFightBinding
 import com.example.pokemon.objects.Pokemon
 import com.example.pokemon.objects.PokemonCollection
 import com.example.pokemon.objects.PokemonTeam
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 
 class FightActivity : AppCompatActivity(){
     private lateinit var binding: ActivityFightBinding
@@ -55,7 +52,6 @@ class FightActivity : AppCompatActivity(){
         binding.allyPokemon.text=currentPokemon.getName()
         binding.allyPokemonHp.text="HP:${currentPokemon.getCurrentHp()}/${currentPokemon.getMaxHp()}"
         binding.allyLevel.text = "lv.${currentPokemon.getLevel()}"
-
     }
     public fun getFightState(): Int{
         return this.fightState

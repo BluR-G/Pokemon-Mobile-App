@@ -19,7 +19,9 @@ class FightFragment : Fragment()  {
     ): View? {
         val binding = FragmentFightBinding.inflate(layoutInflater)
         binding.fightGoToFightMenu.setOnClickListener { view: View ->
+            fightActivity.setFightState(0)
             view.findNavController().navigate(R.id.action_fightFragment_to_fightMenuFragment)
+            fightActivity.setFightState(1)
         }
         fightActivity = context as FightActivity
         return binding.root
