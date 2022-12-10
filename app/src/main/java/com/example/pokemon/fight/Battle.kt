@@ -410,7 +410,7 @@ abstract class Battle {
     // Add experience to pokemon when fight is won
     public fun addExperience(){
         val expGain = 0.3 * getCurrentEnemyPokemon().getExperienceReward() * getCurrentEnemyPokemon().getLevel()
-        currentAllyPokemon.addExperience(expGain.toInt()+2000)
+        currentAllyPokemon.addExperience(expGain.toInt())
     }
 }
 
