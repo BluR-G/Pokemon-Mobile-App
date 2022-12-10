@@ -20,6 +20,7 @@ class TitleFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     private val database by lazy { PokemonRoomDatabase.getDatabase(mainActivity)}
     private lateinit var playerPokemon : List<PlayerPokemon>
+    private lateinit var userName: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,8 +38,10 @@ class TitleFragment : Fragment() {
             }
         }
         binding.continueGame.setOnClickListener {
+
             val intent = Intent(activity, MenuActivity::class.java)
             intent.putExtra("fromContinue", true)
+            intent.putExtra("user_welcome_print", userName)
             startActivity(intent)
         }
         return binding.root
@@ -46,6 +49,7 @@ class TitleFragment : Fragment() {
 
     private fun isSaveAvailable(): Boolean {
         playerPokemon = database.PokemonDAO().getPlayerPokemons()
+        userName = database.PokemonDAO().getPlayer()
         return playerPokemon.isNotEmpty()
     }
 }

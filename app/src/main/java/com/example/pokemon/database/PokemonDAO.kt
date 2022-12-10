@@ -6,6 +6,10 @@ import androidx.room.*
 interface PokemonDAO {
 
     @Transaction
+    @Query("SELECT * FROM Player")
+    fun getPlayer() : String
+
+    @Transaction
     @Query("SELECT * FROM PlayerPokemon")
     fun getPlayerPokemons() : List<PlayerPokemon>
 
@@ -30,6 +34,9 @@ interface PokemonDAO {
     @Query("DELETE FROM pokemonwithcurrentmoves")
     fun clearPokemonWithCurrentMoves()
 
+    @Query("DELETE FROM player")
+    fun clearPlayer()
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertPokemon(pokemon: PlayerPokemon)
 
@@ -41,5 +48,8 @@ interface PokemonDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPokemonWithCurrentMoves(pokemonWithCurrentMoves: PokemonWithCurrentMoves)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertPlayer(player: Player)
 
 }

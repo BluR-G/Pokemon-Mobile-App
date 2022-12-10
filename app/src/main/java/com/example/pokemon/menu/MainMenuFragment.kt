@@ -2,7 +2,6 @@ package com.example.pokemon.menu
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +28,8 @@ class MainMenuFragment : Fragment() {
     private val database by lazy { PokemonRoomDatabase.getDatabase(menuActivity)}
     private lateinit var pokemonTeam: PokemonTeam
     private lateinit var pokemonCollection: PokemonCollection
+    private lateinit var userNamePrint: String
+    private lateinit var userNameData: String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,7 +37,10 @@ class MainMenuFragment : Fragment() {
         menuActivity = context as MenuActivity
         pokemonTeam = menuActivity.getTeam()
         pokemonCollection = menuActivity.getCollect()
+        userNamePrint = menuActivity.getUsernamePrint()
+        userNameData = menuActivity.getUsernameData()
         val binding = FragmentMainMenuBinding.inflate(layoutInflater)
+        binding.welcomeText.text = userNamePrint
         binding.goToTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_mainMenuFragment_to_teamFragment)
         }
@@ -92,6 +96,7 @@ class MainMenuFragment : Fragment() {
             database.PokemonDAO().clearPlayerPokemons()
             database.PokemonDAO().clearPokemonWithMoves()
             database.PokemonDAO().clearPokemonWithCurrentMoves()
+            database.PokemonDAO().clearPlayer()
             var uniqueId = 0
             for(i in 0 until pokemonTeam.getSize()){
                 val pokemon = pokemonTeam.getPokemon(i)
@@ -107,6 +112,8 @@ class MainMenuFragment : Fragment() {
                 addMovesToDB(pokemon.getMoves(), pokemon.getCurrentMoves(), uniqueId)
                 uniqueId++
             }
+            val userNameDB = Player(userNameData)
+            database.PokemonDAO().insertPlayer(userNameDB)
         }
     }
 

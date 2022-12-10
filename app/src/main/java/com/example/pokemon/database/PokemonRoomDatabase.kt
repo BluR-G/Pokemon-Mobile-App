@@ -9,7 +9,8 @@ import androidx.room.RoomDatabase
     PlayerPokemon::class,
     Move::class,
     PokemonWithMoves::class,
-    PokemonWithCurrentMoves::class
+    PokemonWithCurrentMoves::class,
+    Player::class
                      ], version = 1, exportSchema = false)
 abstract class PokemonRoomDatabase : RoomDatabase() {
 
