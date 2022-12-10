@@ -42,7 +42,10 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
                     val previousLevel = currentAllyPokemon.getLevel()
                     addExperience()
                     checkAddToCurrentMoves(previousLevel)
-                    activity.setFightState(0)
+                    // Wait for user response before swapping pokemon
+                    while(activity.getFightState() == -1){
+                    }
+                    swapEnemy()
                 }
                 if(enemyTeam.isTeamDead()) {
                     displayFinalMessage("You won!")
@@ -50,12 +53,9 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
             } else if(allyPokemonTeam.isTeamDead()){
                 displayFinalMessage("You lost!")
             }
-            if(!getCurrentEnemyPokemon().isAlive() && pokemonTarget == getCurrentEnemyPokemon()){
-                swapEnemy()
-            }
             updateFightMessage(pokemonAttacker,pokemonTarget,attackerMove)
         }
-
+        activity.setFightState(0)
     }
 
     // Fight between the current pokemon
