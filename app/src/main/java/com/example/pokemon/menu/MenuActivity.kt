@@ -8,25 +8,24 @@ import com.example.pokemon.objects.*
 import androidx.activity.result.ActivityResult
 import android.app.Activity
 import androidx.lifecycle.lifecycleScope
-import com.example.pokemon.data.PokemonCreation
 import com.example.pokemon.database.PlayerPokemon
 import com.example.pokemon.database.PokemonRoomDatabase
 import com.example.pokemon.databinding.ActivityMenuBinding
-import com.example.pokemon.objects.*
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 class MenuActivity : AppCompatActivity() {
     private var pokemonTeam = PokemonTeam()
     private var pokemonCollection = PokemonCollection()
     private val database by lazy { PokemonRoomDatabase.getDatabase(this)}
     private var pokemon : Pokemon? = null
+    private lateinit var userNamePrint : String
+    private lateinit var userNameData : String
 
     lateinit var binding: ActivityMenuBinding
-    public var getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+    var getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result: ActivityResult ->
         if(result.resultCode == Activity.RESULT_OK){
             val intent = result.data
@@ -39,9 +38,12 @@ class MenuActivity : AppCompatActivity() {
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val fromContinue = intent.getBooleanExtra("fromContinue", false)
+        userNameData = intent.getStringExtra("user_welcome_print").toString()
         if(fromContinue){
+            userNamePrint = "Welcome back $userNameData"
             loadPlayerPokemon()
         } else {
+            userNamePrint = "Welcome $userNameData"
             val pokemon = intent.getSerializableExtra("pokemon") as Pokemon
             pokemonTeam.addPokemonToTeam(pokemon)
         }
@@ -58,6 +60,7 @@ class MenuActivity : AppCompatActivity() {
 
     private fun createPokemonObj(pokemonDB: PlayerPokemon) {
         val moveDataArrList = getMoveData(pokemonDB)
+        val currentMoveDataArrList = getCurrentMoveData(pokemonDB)
         val pokemonTypes = toArrayList(pokemonDB.types)
         val pokemonImages = toArrayList(pokemonDB.images)
         val pokemon = Pokemon(
@@ -67,13 +70,32 @@ class MenuActivity : AppCompatActivity() {
             pokemonDB.specialDefense, pokemonDB.speed,
             moveDataArrList, pokemonImages
         )
+        pokemon.setCurrentMoves(currentMoveDataArrList)
         if (pokemonDB.isTeam == 1) {
             pokemonTeam.addPokemonToTeam(pokemon)
         } else {
             pokemonCollection.addPokemonToCollection(pokemon)
         }
     }
-    
+    private fun getCurrentMoveData(pokemonDB : PlayerPokemon): ArrayList<MoveData> {
+        val uniqueId = pokemonDB.id
+        val pokemonWithCurrentMovesDB = database.PokemonDAO().getPokemonCurrentMoves(uniqueId)
+        val currentMoveDataArr = mutableListOf<MoveData>()
+        for(i in pokemonWithCurrentMovesDB.indices){
+            val moveDB = database.PokemonDAO().getMove(pokemonWithCurrentMovesDB[i].move)
+            val move = Move(
+                moveDB.accuracy,
+                moveDB.power,
+                moveDB.damageClass,
+                moveDB.heal,
+                moveDB.target,
+                moveDB.type
+            )
+            val moveData = MoveData(pokemonWithCurrentMovesDB[i].move, pokemonWithCurrentMovesDB[i].level_learned_at, move)
+            currentMoveDataArr.add(moveData)
+        }
+        return ArrayList(currentMoveDataArr)
+    }
     private fun getMoveData(pokemonDB : PlayerPokemon): ArrayList<MoveData> {
         val uniqueId = pokemonDB.id
         val pokemonWithMovesDB = database.PokemonDAO().getPokemonMoves(uniqueId)
@@ -126,5 +148,13 @@ class MenuActivity : AppCompatActivity() {
 
     fun setPokemon(pokemon : Pokemon) {
         this.pokemon = pokemon
+    }
+
+    fun getUsernamePrint(): String{
+        return this.userNamePrint
+    }
+
+    fun getUsernameData(): String{
+        return this.userNameData
     }
 }

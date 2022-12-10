@@ -1,6 +1,5 @@
 package com.example.pokemon.objects
 
-import android.graphics.drawable.Drawable
 import java.io.Serializable
 import kotlin.math.ceil
 import kotlin.math.floor
@@ -23,7 +22,7 @@ class Pokemon : Serializable {
     private var specialDefense: Int = 0
     private var speed: Int = 0
 
-    private lateinit var currentMoves: ArrayList<MoveData>
+    private var currentMoves: ArrayList<MoveData>
     private var moves: ArrayList<MoveData>
     private var images: ArrayList<String>
 
@@ -43,8 +42,8 @@ class Pokemon : Serializable {
         this.specialDefense = specialDefense * (50 + level) / 50
         this.speed = speed * (50 + level) / 50
         this.moves = moves
-        this.currentMoves = ArrayList<MoveData>()
-        setCurrentMoves()
+        this.currentMoves = ArrayList()
+        setMoves()
         this.images = images
     }
 
@@ -168,7 +167,7 @@ class Pokemon : Serializable {
         return false
     }
 
-    private fun setCurrentMoves(){
+    private fun setMoves(){
         currentMoves.clear()
         for(elem in moves){
             if(elem.level_learned_at <= this.level){
@@ -179,7 +178,9 @@ class Pokemon : Serializable {
             }
         }
     }
-
+    fun setCurrentMoves(currentMoves : ArrayList<MoveData>){
+        this.currentMoves = currentMoves
+    }
     fun addCurrentMove(move: MoveData){
         if(this.currentMoves.size < 4){
             this.currentMoves.add(move)
@@ -189,7 +190,7 @@ class Pokemon : Serializable {
         return this.currentMoves
     }
 
-    public fun checkAcquiredMoves(previousLevel: Int, currentLevel: Int): ArrayList<MoveData> {
+    fun checkAcquiredMoves(previousLevel: Int, currentLevel: Int): ArrayList<MoveData> {
         val list = ArrayList<MoveData>()
         for (i in previousLevel + 1..currentLevel) {
             val learnedMove = checkLearnedMove(i, moves)

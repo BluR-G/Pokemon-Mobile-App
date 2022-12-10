@@ -3,6 +3,11 @@ package com.example.pokemon.database
 import androidx.room.*
 
 @Entity
+data class Player(
+    @PrimaryKey val name: String
+)
+
+@Entity
 data class PlayerPokemon(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "position") val position: Int,

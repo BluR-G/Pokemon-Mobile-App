@@ -107,6 +107,7 @@ class IntroFragment : Fragment() {
                 lifecycleScope.launch(Dispatchers.Main){
                     val intent = Intent(activity, MenuActivity::class.java)
                     intent.putExtra("pokemon", pokemon)
+                    intent.putExtra("user_welcome_print", binding.usernameInput.text.toString())
                     intent.putExtra("fromContinue", false)
                     startActivity(intent)
                 }

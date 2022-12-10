@@ -12,5 +12,7 @@
     <color name="light_gray">#E1E1E1</color>
     <color name="red">#CA0000</color>
     <color name="dark_red">#6F0000</color>
-    <color name="yellow">#FCD800</color>
+    <color name="green">#2b8700</color>
+    <color name="blue">#0066bf</color>
+    <color name="purple">#740194</color>
 </resources>
