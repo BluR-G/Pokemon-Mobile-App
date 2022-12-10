@@ -26,6 +26,7 @@ abstract class Battle {
     public lateinit var allyPokemonCollection: PokemonCollection
     public lateinit var currentAllyPokemon : Pokemon
     private lateinit var currentEnemyPokemon: Pokemon
+    private var previousEnemyPokemon: Pokemon? = null
     public var newMove: MoveData? = null
     public var newNickname=""
     public var capturedSpecies=""
@@ -81,13 +82,21 @@ abstract class Battle {
         activity.lifecycleScope.launch(Dispatchers.Main){
                 isAttacking = true
                 if(currentAllyPokemon.getSpeed() > getCurrentEnemyPokemon().getSpeed()){
-                    checkPokemonStatus(getCurrentEnemyPokemon(), currentAllyPokemon, move, view)
+                    val enemy = getCurrentEnemyPokemon()
+                    checkPokemonStatus(enemy, currentAllyPokemon, move, view)
                     delay(1500)
-                    checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
+                    // if enemy does not swap, let enemy attack second
+                    if(enemy==getCurrentEnemyPokemon()){
+                        checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(), enemyMove, view)
+                    }
                 } else {
-                    checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(),  enemyMove, view)
+                    // if enemy does not swap, let enemy attack first
+                    if(previousEnemyPokemon==getCurrentEnemyPokemon()){
+                        checkPokemonStatus(currentAllyPokemon, getCurrentEnemyPokemon(),  enemyMove, view)
+                    }
                     delay(1500)
                     checkPokemonStatus(getCurrentEnemyPokemon(),currentAllyPokemon, move, view)
+                    previousEnemyPokemon = getCurrentEnemyPokemon()
                 }
                 isAttacking = false
 
@@ -112,10 +121,6 @@ abstract class Battle {
 
     // Attack pokemon target with move
     fun attackPokemonTarget(attacker: Pokemon, target: Pokemon, move: Move){
-        if(attacker == getCurrentEnemyPokemon()){
-            Log.d("attack", "${attacker.getName()}, ${attacker.getCurrentHp()}")
-        }
-
         val moveChance = (1..100).random()
         var moveDamage = 0
         if(move.getDamageClass() == "PHYSICAL"){
@@ -405,7 +410,7 @@ abstract class Battle {
     // Add experience to pokemon when fight is won
     public fun addExperience(){
         val expGain = 0.3 * getCurrentEnemyPokemon().getExperienceReward() * getCurrentEnemyPokemon().getLevel()
-        currentAllyPokemon.addExperience(expGain.toInt()+1300)
+        currentAllyPokemon.addExperience(expGain.toInt())
     }
 }
 
