@@ -56,16 +56,16 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
                     // Wait for user response before swapping pokemon
                     swapEnemy()
                     activity.setFightState(0)
+                    if(enemyTeam.isTeamDead()) {
+                        displayFinalMessage("You won!")
+                    }
+                }
 
-                }
-                if(enemyTeam.isTeamDead()) {
-                    displayFinalMessage("You won!")
-                }
             } else if(allyPokemonTeam.isTeamDead()){
                 displayFinalMessage("You lost!")
+
             }
         }
-        activity.setFightState(0)
     }
 
     // Fight between the current pokemon

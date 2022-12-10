@@ -23,7 +23,7 @@ class FightActivity : AppCompatActivity(){
     private lateinit var battle: Battle
     private lateinit var battleType: String
     private lateinit var activity: FightActivity
-    // 0 for ongoing fight, -1 for paused fight
+    // 0 for ongoing fight, -1 for paused fight,
     private var fightState = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 
 
 class MainMenuFragment : Fragment() {
+    private lateinit var binding : FragmentMainMenuBinding
     lateinit var menuActivity: MenuActivity
     private val database by lazy { PokemonRoomDatabase.getDatabase(menuActivity)}
     private lateinit var pokemonTeam: PokemonTeam
@@ -39,7 +40,7 @@ class MainMenuFragment : Fragment() {
         pokemonCollection = menuActivity.getCollect()
         userNamePrint = menuActivity.getUsernamePrint()
         userNameData = menuActivity.getUsernameData()
-        val binding = FragmentMainMenuBinding.inflate(layoutInflater)
+        binding = FragmentMainMenuBinding.inflate(layoutInflater)
         binding.welcomeText.text = userNamePrint
         binding.goToTeam.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_mainMenuFragment_to_teamFragment)
@@ -56,13 +57,18 @@ class MainMenuFragment : Fragment() {
         return binding.root
     }
     private fun switchToBattle(battleType:String) {
+
+
         if(!menuActivity.getTeam().isTeamDead()){
+            // Prevent user to spam and promp many fights
+            disableButtons()
             if(battleType == "wild"){
                 Toast.makeText(activity, "Loading...", Toast.LENGTH_SHORT).show()
                 lifecycleScope.launch(Dispatchers.IO) {
                     val wildPokemon = generatePokemon()
                     lifecycleScope.launch(Dispatchers.Main){
                         switchBattle(battleType, wildPokemon, null)
+                        enableBattleButtons()
                     }
                 }
             } else {
@@ -71,12 +77,15 @@ class MainMenuFragment : Fragment() {
                     val trainerTeam = generatePokemonTeam()
                     lifecycleScope.launch(Dispatchers.Main){
                         switchBattle(battleType, null, trainerTeam)
+                        enableBattleButtons()
                     }
                 }
             }
         } else {
             Toast.makeText(activity, "Your team is dead! Go to the Pokecenter.", Toast.LENGTH_SHORT).show()
         }
+
+
     }
 
     private fun switchBattle(type:String, wildPokemon : Pokemon?, trainerTeam: PokemonTeam?){
@@ -181,5 +190,14 @@ class MainMenuFragment : Fragment() {
             pokemonTeam.addPokemonToTeam(generatePokemon())
         }
         return pokemonTeam
+    }
+    private fun enableBattleButtons(){
+        binding.goToWildBattle.isEnabled = true
+        binding.goToTrainerBattle.isEnabled = true
+    }
+
+    private fun disableButtons(){
+        binding.goToWildBattle.isEnabled = false
+        binding.goToTrainerBattle.isEnabled = false
     }
 }
