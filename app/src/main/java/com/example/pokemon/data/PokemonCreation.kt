@@ -21,7 +21,7 @@ class PokemonCreation {
     // search for pokemon on DB and if not there, search on the web
     private suspend fun searchPokemon(input : String): JsonObject {
         val GSON: Gson = GsonBuilder().setPrettyPrinting().create()
-        val url = URL("https://pokeapi.co/api/v2/pokemon/${input}")
+        val url = URL("https://pokeapi.co/api/v2/pokemon/${input.lowercase()}")
         val conn: HttpsURLConnection = url.openConnection() as HttpsURLConnection
 
         conn.requestMethod = "GET"
