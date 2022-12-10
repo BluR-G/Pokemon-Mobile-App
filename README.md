@@ -23,6 +23,9 @@ Pokemon mobile application featuring the core battle mechanics of the original g
     - Remove pokemon from team
     - change order of team
     - view team and collection
+- Levelling
+    - increase in stats
+    - learning new moves
 - Music
     - immersive music throughout the whole game
   
@@ -32,6 +35,7 @@ Pokemon mobile application featuring the core battle mechanics of the original g
 (Nexus 6 API 31 recommended to emulate on)
 
 - To run it on your physical phone: https://developer.android.com/studio/run/device
+
 
 ## Contributors
 
