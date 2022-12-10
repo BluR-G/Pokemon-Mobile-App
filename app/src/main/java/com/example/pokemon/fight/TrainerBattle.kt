@@ -46,11 +46,9 @@ class TrainerBattle(pokemonTeam: PokemonTeam, enemyTeam: PokemonTeam, activity: 
                 }
                 if(enemyTeam.isTeamDead()) {
                     displayFinalMessage("You won!")
-                    //pauseMusic() debug
                 }
             } else if(allyPokemonTeam.isTeamDead()){
                 displayFinalMessage("You lost!")
-                //pauseMusic() debug
             }
             if(!getCurrentEnemyPokemon().isAlive() && pokemonTarget == getCurrentEnemyPokemon()){
                 swapEnemy()
