@@ -58,37 +58,31 @@ class MainMenuFragment : Fragment() {
         return binding.root
     }
     private fun switchToBattle(battleType:String) {
-
-
         if(!menuActivity.getTeam().isTeamDead()){
             // Prevent user to spam and promp many fights
             disableButtons()
-            if(battleType == "wild"){
-                Toast.makeText(activity, "Loading...", Toast.LENGTH_SHORT).show()
-                lifecycleScope.launch(Dispatchers.IO) {
-                    val wildPokemon = generatePokemon()
-                    lifecycleScope.launch(Dispatchers.Main){
-                        switchBattle(battleType, wildPokemon, null)
-                        delay(1000)
-                        enableBattleButtons()
-                    }
-                }
-            } else {
-                Toast.makeText(activity, "Loading...", Toast.LENGTH_LONG).show()
-                lifecycleScope.launch(Dispatchers.IO) {
-                    val trainerTeam = generatePokemonTeam()
-                    lifecycleScope.launch(Dispatchers.Main){
-                        switchBattle(battleType, null, trainerTeam)
-                        delay(1000)
-                        enableBattleButtons()
-                    }
-                }
-            }
+            handleFightSwitch(battleType)
         } else {
             Toast.makeText(activity, "Your team is dead! Go to the Pokecenter.", Toast.LENGTH_SHORT).show()
         }
-
-
+    }
+    // Switch to appropriate fight
+    private fun handleFightSwitch(battleType: String) {
+        Toast.makeText(activity, "Loading...", Toast.LENGTH_LONG).show()
+        var wildPokemon : Pokemon? = null
+        var trainerTeam : PokemonTeam? = null
+        lifecycleScope.launch(Dispatchers.IO) {
+            if(battleType=="trainer"){
+                trainerTeam = generatePokemonTeam()
+            } else {
+                wildPokemon = generatePokemon()
+            }
+            lifecycleScope.launch(Dispatchers.Main) {
+                switchBattle(battleType, wildPokemon, trainerTeam)
+                delay(1000)
+                enableBattleButtons()
+            }
+        }
     }
 
     private fun switchBattle(type:String, wildPokemon : Pokemon?, trainerTeam: PokemonTeam?){
