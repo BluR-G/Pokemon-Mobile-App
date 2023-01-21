@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fight.BagFragment"
+    android:background="@drawable/pokemon_touch_background_v2">
+
+
+    <LinearLayout
+        android:id="@+id/pokemon_items"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/pokeball"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:text="@string/pokeball"
+            android:layout_margin="40dp"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/potion"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:text="@string/potion"
+            android:layout_margin="40dp"
+            />
+    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bagGoToFightMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pokemon_items" />
+</androidx.constraintlayout.widget.ConstraintLayout>

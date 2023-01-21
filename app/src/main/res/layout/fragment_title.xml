@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".TitleFragment">
+
+    <ImageView
+        android:id="@+id/pokemonLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pokemon_logo"
+        android:layout_marginHorizontal="20dp"
+        />
+
+    <ImageView
+        android:id="@+id/pokemonTitleImage"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:src="@drawable/pokemon_title_image"
+        android:layout_marginBottom="20dp"
+        />
+
+    <TextView
+        android:id="@+id/membersText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/members_text"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="12sp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/goToIntro"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/new_game"
+        android:layout_marginBottom="20dp"
+
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/continue_game"
+        android:layout_width="150dp"
+        android:enabled="false"
+        android:layout_height="wrap_content"
+        android:text="@string/continue_game"
+        />
+
+</LinearLayout>
